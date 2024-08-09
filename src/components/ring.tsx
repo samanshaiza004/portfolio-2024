@@ -9,7 +9,7 @@ interface Props {
   segments: number;
   position: Vector3;
 }
-import gsap from "gsap";
+
 import { Vector3 } from "three";
 export default function Ring({
   text,

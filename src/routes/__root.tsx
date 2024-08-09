@@ -1,4 +1,4 @@
-import { Link, createRootRoute } from "@tanstack/react-router";
+import { createRootRoute } from "@tanstack/react-router";
 import App from "../App";
 import SmoothScrolling from "../SmoothScrolling";
 

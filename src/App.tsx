@@ -6,9 +6,9 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/src/ScrollTrigger";
 import { useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Environment, Text, Text3D } from "@react-three/drei";
-import { Color, MathUtils, OctahedronGeometry, Vector3 } from "three";
-import Ring from "./components/ring";
+import { Environment, Text } from "@react-three/drei";
+import { Vector3 } from "three";
+
 import DodecahedronObject from "./components/dodecahedron";
 
 function Rig() {
@@ -21,7 +21,7 @@ function Rig() {
   });
 }
 
-function Box(props: any) {
+/* function Box(props: any) {
   const ref = useRef<any>(null);
   const [hovered, setHovered] = useState(false);
   const [rotate, setRotate] = useState(false);
@@ -95,7 +95,7 @@ function Box(props: any) {
     </mesh>
   );
 }
-
+ */
 function App() {
   const dialogRef1 = useRef<HTMLDivElement>(null);
   const [mouseInCanvas, setMouseInCanvas] = useState(false);

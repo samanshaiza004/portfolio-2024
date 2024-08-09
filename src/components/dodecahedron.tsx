@@ -1,8 +1,7 @@
-import { Dodecahedron, MeshTransmissionMaterial } from "@react-three/drei";
+import { MeshTransmissionMaterial } from "@react-three/drei";
 
 import { useFrame, useThree } from "@react-three/fiber";
 import { useRef, useState } from "react";
-import { Text } from "@react-three/drei";
 interface Props {
   text: string;
   radius: number;
@@ -10,8 +9,8 @@ interface Props {
   segments: number;
   position: Vector3;
 }
-import gsap from "gsap";
-import { DodecahedronGeometry, MOUSE, Vector3 } from "three";
+
+import { Vector3 } from "three";
 export default function DodecahedronObject({
   text,
   radius,
