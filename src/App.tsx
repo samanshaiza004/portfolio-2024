@@ -106,17 +106,12 @@ function App() {
 
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
-
-    /*  gsap.to(dialogRef1.current, {
-      scrollTrigger: dialogRef1.current,
-      x: 500,
-    }); */
   });
 
   return (
-    <>
+    <div className="">
       <Canvas
-        style={{ height: "92vh", width: "100%" }}
+        style={{ height: "92vh", width: "100vw" }}
         onPointerOver={() => setMouseInCanvas(true)}
         onPointerOut={() => setMouseInCanvas(false)}
       >
@@ -168,7 +163,7 @@ function App() {
         </Text>
         <Rig />
       </Canvas>
-      <div className="w-[1400px] flex-col flex justify-center mr-auto ml-auto">
+      <div className="lg:w-[1200px] sm:w-full flex-col flex justify-center mr-auto ml-auto">
         <p className="p-4 mb-24 mt-3 text-4xl">2024</p>
         <div className="text-2xl sm:text-4xl p-4 w-full">
           <p>
@@ -239,7 +234,7 @@ function App() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
