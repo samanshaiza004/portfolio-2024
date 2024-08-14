@@ -99,10 +99,33 @@ function Rig() {
 function App() {
   const dialogRef1 = useRef<HTMLDivElement>(null);
   const [mouseInCanvas, setMouseInCanvas] = useState(false);
-
+  const [envPreset, setEnvPreset] = useState<any>(undefined);
   useEffect(() => {
     document.body.style.cursor = mouseInCanvas ? "none" : "auto";
   });
+
+  useEffect(() => {
+    let randomValue = Math.random();
+    if (randomValue == 1) {
+      setEnvPreset("city");
+    } else if (randomValue > 0.9) {
+      setEnvPreset("forest");
+    } else if (randomValue > 0.8) {
+      setEnvPreset("apartment");
+    } else if (randomValue > 0.7) {
+      setEnvPreset("dawn");
+    } else if (randomValue > 0.6) {
+      setEnvPreset("lobby");
+    } else if (randomValue > 0.5) {
+      setEnvPreset("night");
+    } else if (randomValue > 0.4) {
+      setEnvPreset("park");
+    } else if (randomValue > 0.3) {
+      setEnvPreset("studio");
+    } else if (randomValue > 0.2) {
+      setEnvPreset("sunset");
+    }
+  }, []);
 
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -115,7 +138,11 @@ function App() {
         onPointerOver={() => setMouseInCanvas(true)}
         onPointerOut={() => setMouseInCanvas(false)}
       >
-        <Environment preset="forest" background backgroundBlurriness={0.15} />
+        <Environment
+          preset={envPreset}
+          background
+          backgroundBlurriness={0.15}
+        />
         <ambientLight intensity={0.1} />
         <directionalLight position={[0, 0, 1]} />
         {/* <Ring
@@ -182,7 +209,7 @@ function App() {
           </h2>
           <div className="text-lg sm:text-2xl pt-4">
             <a
-              className="hover:underline"
+              className="hover:underline italic"
               href="https://github.com/samanshaiza004/veiled"
             >
               Veiled
@@ -191,7 +218,7 @@ function App() {
           </div>
           <div className="text-lg sm:text-2xl pt-4">
             <a
-              className="hover:underline"
+              className="hover:underline italic"
               href="https://github.com/samanshaiza004/pixie"
             >
               pixie
@@ -204,7 +231,7 @@ function App() {
           <br />
           <div className="text-lg sm:text-2xl pt-4">
             <a
-              className="hover:underline"
+              className="hover:underline italic"
               href="https://github.com/samanshaiza004/statusquo"
             >
               statusquo
@@ -215,7 +242,7 @@ function App() {
           <br />
           <div className="text-lg sm:text-2xl pt-4">
             <a
-              className="hover:underline"
+              className="hover:underline italic"
               href="https://github.com/samanshaiza004/genbu"
             >
               Genbu
@@ -228,8 +255,10 @@ function App() {
           <br />
           <div className="flex flex-col">
             <h2 className="text-3xl sm:text-4xl font-semibold">contact me</h2>
-            <span>samanshaiza@yahoo.com</span>
-            <span>https://github.com/samanshaiza004</span>
+            <a href="mailto:samanshaiza@yahoo.com">samanshaiza@yahoo.com</a>
+            <a target="_blank" href="https://github.com/samanshaiza004">
+              github
+            </a>
             <span>972 654 2247</span>
           </div>
         </div>
