@@ -6,10 +6,11 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/src/ScrollTrigger";
 import { useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Environment, Text } from "@react-three/drei";
-import { Vector3 } from "three";
+import { Environment, Text, Text3D } from "@react-three/drei";
+import { Color, MathUtils, OctahedronGeometry, Vector3 } from "three";
 
 import DodecahedronObject from "./components/dodecahedron";
+import Ring from "./components/ring";
 
 function Rig() {
   const { camera, mouse } = useThree();
@@ -21,7 +22,7 @@ function Rig() {
   });
 }
 
-/* function Box(props: any) {
+function Box(props: any) {
   const ref = useRef<any>(null);
   const [hovered, setHovered] = useState(false);
   const [rotate, setRotate] = useState(false);
@@ -55,6 +56,15 @@ function Rig() {
       0.1
     );
     ref.current.material.color.lerp(color.set(hovered ? "cyan" : "white"), 0.1);
+  });
+
+  useFrame((_, delta) => {
+    ref.current.rotation.y -= 1 * delta;
+    if (ref.current.rotation.z > 0.5) {
+      ref.current.rotation.z -= 0.1 * delta;
+    } else if (ref.current.rotation.z < 0.3) {
+      ref.current.rotation.z += 0.1 * delta;
+    }
   });
 
   return (
@@ -95,11 +105,12 @@ function Rig() {
     </mesh>
   );
 }
- */
+
 function App() {
   const dialogRef1 = useRef<HTMLDivElement>(null);
   const [mouseInCanvas, setMouseInCanvas] = useState(false);
   const [envPreset, setEnvPreset] = useState<any>(undefined);
+  const [textColor, setTextColor] = useState("white");
   useEffect(() => {
     document.body.style.cursor = mouseInCanvas ? "none" : "auto";
   });
@@ -110,20 +121,33 @@ function App() {
       setEnvPreset("city");
     } else if (randomValue > 0.9) {
       setEnvPreset("forest");
+      setTextColor("white");
     } else if (randomValue > 0.8) {
       setEnvPreset("apartment");
+      console.log("setEnvPreset", "apartment");
+      setTextColor("purple");
     } else if (randomValue > 0.7) {
       setEnvPreset("dawn");
+      console.log("setEnvPreset", "dawn");
+      setTextColor("yellow");
     } else if (randomValue > 0.6) {
       setEnvPreset("lobby");
+      console.log("setEnvPreset", "lobby");
+      setTextColor("cyan");
     } else if (randomValue > 0.5) {
       setEnvPreset("night");
+      console.log("setEnvPreset", "night");
+      setTextColor("grey");
     } else if (randomValue > 0.4) {
       setEnvPreset("park");
+      console.log("setEnvPreset", "park");
     } else if (randomValue > 0.3) {
       setEnvPreset("studio");
+      console.log("setEnvPreset", "studio");
     } else if (randomValue > 0.2) {
       setEnvPreset("sunset");
+      console.log("setEnvPreset", "sunset");
+      setTextColor("pink");
     }
   }, []);
 
@@ -152,6 +176,7 @@ function App() {
           height={0.7}
           segments={4}
         /> */}
+        <Box position={new Vector3(0, 3, -1)} text=" aziahs namas " />
         <DodecahedronObject
           position={new Vector3(0, 2.2, -1)}
           text=" aziahs namas "
@@ -163,7 +188,7 @@ function App() {
         <Text
           font={"fonts/PPWriter-Bold.otf"}
           /* font={JSON.parse(JSON.stringify(PPWriter))} */
-          color={"white"}
+          color={textColor}
           scale={0.6}
           // anchorY={"bottom"}
           position={[-0.0, 1, -0.5]}
@@ -177,12 +202,14 @@ function App() {
           scale={0.22}
           anchorY={"bottom"}
           position={[0, 0.55, -1.5]}
+          color={textColor}
         >
           pronounced "suh-mon shy-zuh"
         </Text>
         <Text
           font="fonts/PPWriter-Regular.otf"
           scale={0.25}
+          color={textColor}
           anchorY={"bottom"}
           position={[0, 0.0, -0.5]}
         >
@@ -199,8 +226,8 @@ function App() {
             learning about older ones.
           </p>
           <p ref={dialogRef1}>
-            This is my portfolio website. It was built with React, Tailwind, and
-            React Three Fiber.
+            This is my portfolio website. It was built with React, React Three
+            Fiber, and Tailwind.
           </p>
         </div>
         <div className="p-4">

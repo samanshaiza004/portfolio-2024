@@ -37,7 +37,6 @@ export default function DodecahedronObject({
       }); */
       // ref.current.rotation.x += 0.01;
 
-      console.log(ref.current.rotation.z);
       if (ref.current.rotation.z > 0.5) {
         ref.current.rotation.z -= 0.1 * delta;
       } else if (ref.current.rotation.z < 0.3) {
