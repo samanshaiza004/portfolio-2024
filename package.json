@@ -13,6 +13,7 @@
     "@gsap/react": "^2.1.1",
     "@react-three/drei": "^9.109.2",
     "@react-three/fiber": "^8.16.8",
+    "@react-three/postprocessing": "^2.16.2",
     "@studio-freight/react-lenis": "^0.0.47",
     "@tanstack/react-router": "^1.46.8",
     "@types/three": "^0.167.1",

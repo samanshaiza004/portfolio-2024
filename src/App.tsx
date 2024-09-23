@@ -1,80 +1,58 @@
 // App.tsx
 
-import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import ScrollTrigger from "gsap/src/ScrollTrigger";
 import { useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Environment, Text, Text3D } from "@react-three/drei";
-import { Color, MathUtils, OctahedronGeometry, Vector3 } from "three";
+import { Environment, Text } from "@react-three/drei";
+import { Color, MathUtils, Vector3 } from "three";
 
-import DodecahedronObject from "./components/dodecahedron";
-import Ring from "./components/ring";
+import TetrahedronObject from "./components/tetrahedron";
+import { EffectComposer, Bloom } from "@react-three/postprocessing";
 
 function Rig() {
   const { camera, mouse } = useThree();
   const vec = new Vector3();
 
-  return useFrame(() => {
-    camera.position.lerp(vec.set(mouse.x, mouse.y, camera.position.z), 0.05);
+  useFrame(() => {
+    vec.set(mouse.x * -0.9, mouse.y * -0.95, camera.position.z); // Adjust multiplier as needed
+    camera.position.lerp(vec, 0.05);
     camera.lookAt(0, 0, 0);
   });
 }
 
-function Box(props: any) {
+const LinkText = ({ position = [0, 0, 0], children, ...props  }) => {
   const ref = useRef<any>(null);
+
   const [hovered, setHovered] = useState(false);
-  const [rotate, setRotate] = useState(false);
-
   const color = new Color();
-  const data = {
-    n: 2,
-  };
-
-  function generateSquircle(n: number) {
-    const g = new OctahedronGeometry(1, 16);
-    const p = g.attributes.position.array;
-
-    for (let i = 0; i < p.length; i += 3) {
-      const v = new Vector3(p[i], p[i + 1], p[i + 2]);
-      v.x = Math.tanh(v.x);
-      v.y = Math.tanh(v.y);
-      v.z = Math.tanh(v.z);
-      p[i] = MathUtils.lerp(p[i], v.x, n);
-      p[i + 1] = MathUtils.lerp(p[i + 1], v.y, n);
-      p[i + 2] = MathUtils.lerp(p[i + 2], v.z, n);
+  useFrame(({ camera }) => {
+    if (ref.current) {
+      ref.current.position.copy(camera.position).add(new Vector3(...position));
+      ref.current.quaternion.copy(camera.quaternion);
+      ref.current.scale.y = ref.current.scale.z = MathUtils.lerp(
+        ref.current.scale.y,
+        hovered ? 1.0 : 0.9,
+        0.1
+      );
+      ref.current.scale.x = MathUtils.lerp(
+        ref.current.scale.x,
+        hovered ? 0.9 : 0.8,
+        0.1
+      );
+      ref.current.position.z = MathUtils.lerp(
+        ref.current.scale.z,
+        hovered ? 1.1 : 1.2,
+        0.1
+      );
+      ref.current.material.color.lerp(color.set(hovered ? "cyan" : "white"), 0.1);
     }
-    g.computeBoundingBox();
-    return g;
-  }
-
-  useFrame((_, delta) => {
-    ref.current.scale.y = ref.current.scale.z = MathUtils.lerp(
-      ref.current.scale.y,
-      hovered ? 1.2 : 1,
-      0.1
-    );
-    ref.current.material.color.lerp(color.set(hovered ? "cyan" : "white"), 0.1);
-  });
-
-  useFrame((_, delta) => {
-    ref.current.rotation.y -= 1 * delta;
-    if (ref.current.rotation.z > 0.5) {
-      ref.current.rotation.z -= 0.1 * delta;
-    } else if (ref.current.rotation.z < 0.3) {
-      ref.current.rotation.z += 0.1 * delta;
-    }
+    
   });
 
   return (
-    <mesh
-      {...props}
-      ref={ref}
-      onPointerDown={(e) => {
-        e.stopPropagation();
-        setRotate(!rotate);
-      }}
+    <Text
       onPointerOver={(e) => {
         e.stopPropagation();
         setHovered(true);
@@ -83,28 +61,33 @@ function Box(props: any) {
         e.stopPropagation();
         setHovered(false);
       }}
-      geometry={generateSquircle(data.n)}
+      scale={3}
+      ref={ref}
+      {...props}
+      color={color}
+      onClick={() => window.location.replace("/about-saman")}
     >
-      {hovered && (
-        <Text3D position={[-0.9, -1, 1]} scale={0.2} font={"fonts/gt.json"}>
-          {props.text}
-        </Text3D>
-      )}
-
-      <boxGeometry onUpdate={(e) => e.rotateZ(Math.PI / 2)} />
-      <meshPhysicalMaterial
-        metalness={0}
-        roughness={0.36}
-        thickness={5}
-        clearcoat={1}
-        transmission={1}
-        ior={1.53}
-        color="blue"
-      />
-      {props.children}
-    </mesh>
+      {children}
+    </Text>
   );
-}
+};
+
+const StickyText = ({ position = [0, 0, 0], children, ...props }) => {
+  const ref = useRef();
+
+  useFrame(({ camera }) => {
+    if (ref.current) {
+      ref.current.position.copy(camera.position).add(new Vector3(...position));
+      ref.current.quaternion.copy(camera.quaternion);
+    }
+  });
+
+  return (
+    <Text ref={ref} {...props}>
+      {children}
+    </Text>
+  );
+};
 
 function App() {
   const dialogRef1 = useRef<HTMLDivElement>(null);
@@ -116,49 +99,33 @@ function App() {
   });
 
   useEffect(() => {
-    let randomValue = Math.random();
-    if (randomValue == 1) {
-      setEnvPreset("city");
-    } else if (randomValue > 0.9) {
-      setEnvPreset("forest");
-      setTextColor("white");
-    } else if (randomValue > 0.8) {
-      setEnvPreset("apartment");
-      console.log("setEnvPreset", "apartment");
-      setTextColor("purple");
-    } else if (randomValue > 0.7) {
-      setEnvPreset("dawn");
-      console.log("setEnvPreset", "dawn");
-      setTextColor("yellow");
-    } else if (randomValue > 0.6) {
-      setEnvPreset("lobby");
-      console.log("setEnvPreset", "lobby");
-      setTextColor("cyan");
-    } else if (randomValue > 0.5) {
-      setEnvPreset("night");
-      console.log("setEnvPreset", "night");
-      setTextColor("grey");
-    } else if (randomValue > 0.4) {
-      setEnvPreset("park");
-      console.log("setEnvPreset", "park");
-    } else if (randomValue > 0.3) {
-      setEnvPreset("studio");
-      console.log("setEnvPreset", "studio");
-    } else if (randomValue > 0.2) {
-      setEnvPreset("sunset");
-      console.log("setEnvPreset", "sunset");
-      setTextColor("pink");
-    }
+    const presets = [
+      { env: "city", color: "white" },
+      { env: "forest", color: "white" },
+      { env: "apartment", color: "purple" },
+      { env: "dawn", color: "yellow" },
+      { env: "lobby", color: "cyan" },
+      { env: "night", color: "grey" },
+      { env: "park", color: "white" },
+      { env: "studio", color: "white" },
+      { env: "sunset", color: "pink" },
+    ];
+
+    const randomIndex = Math.floor(Math.random() * presets.length);
+    const { env, color } = presets[randomIndex];
+
+    setEnvPreset(env);
+    setTextColor(color);
   }, []);
 
-  useGSAP(() => {
+  useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-  });
+  }, []);
 
   return (
-    <div className="">
+    <div>
       <Canvas
-        style={{ height: "92vh", width: "100vw" }}
+        style={{ height: "80vh", width: "100vw" }}
         onPointerOver={() => setMouseInCanvas(true)}
         onPointerOut={() => setMouseInCanvas(false)}
       >
@@ -169,52 +136,30 @@ function App() {
         />
         <ambientLight intensity={0.1} />
         <directionalLight position={[0, 0, 1]} />
-        {/* <Ring
-          position={new Vector3(0, 2.2, 0)}
-          text=" aziahs namas "
-          radius={1.2}
-          height={0.7}
-          segments={4}
-        /> */}
-        <Box position={new Vector3(0, 3, -1)} text=" aziahs namas " />
-        <DodecahedronObject
-          position={new Vector3(0, 2.2, -1)}
-          text=" aziahs namas "
-          radius={0.3}
-          segments={0}
-          height={0}
-        />
+        <TetrahedronObject radius={0.1} segments={0} />
 
-        <Text
-          font={"fonts/PPWriter-Bold.otf"}
-          /* font={JSON.parse(JSON.stringify(PPWriter))} */
+        <StickyText
+          font="fonts/PPWriter-Bold.otf"
+          scale={0.4}
           color={textColor}
-          scale={0.6}
-          // anchorY={"bottom"}
-          position={[-0.0, 1, -0.5]}
-          // </Canvas>font={"/PPWriter-Regular.orf"}
+          position={[0, 1.5, -5]} // Now correctly applied
         >
           My name is Saman Shaiza
-        </Text>
+        </StickyText>
 
-        <Text
+        <StickyText
           font="fonts/PPWriter-RegularItalic.otf"
-          scale={0.22}
-          anchorY={"bottom"}
-          position={[0, 0.55, -1.5]}
+          scale={0.2}
           color={textColor}
+          position={[0, 0.5, -6.5]}
         >
           pronounced "suh-mon shy-zuh"
-        </Text>
-        <Text
-          font="fonts/PPWriter-Regular.otf"
-          scale={0.25}
-          color={textColor}
-          anchorY={"bottom"}
-          position={[0, 0.0, -0.5]}
-        >
-          I like creating things on the internet and learn about software.
-        </Text>
+        </StickyText>
+
+        <StickyText font="fonts/PPWriter-Regular.otf" scale={0.15} color={textColor} position={[0, -0.2, -5.7]}>
+          I like creating things on the internet and {"\n"}
+          creating music.
+        </StickyText>
         <Rig />
       </Canvas>
       <div className="lg:w-[1200px] sm:w-full flex-col flex justify-center mr-auto ml-auto">
@@ -241,7 +186,7 @@ function App() {
             >
               Veiled
             </a>{" "}
-            is a minimal, quiet theme made to lessen distractions.
+            is a minimal, quiet VSCode theme made to lessen distractions.
           </div>
           <div className="text-lg sm:text-2xl pt-4">
             <a
