@@ -84,7 +84,7 @@ const WeirdText = ({ value }: { value: any }) => {
       ref.current.innerText = ref.current.innerText
         .split("")
         .map(
-          (letter: any, index: number) => {
+          (_letter: any, index: number) => {
             if(index < iterations) {
               return value[index]
             }
@@ -141,23 +141,6 @@ const StickyText = ({
     </Text>
   );
 };
-
-const Trailer = () => {
-  const ref = useRef<any>(null)
-
-  window.onmousemove = e => {
-    const x = e.clientX - ref.current.offsetWidth / 2,
-    y = e.clientY - ref.current.offsetHeight / 2
-
-    ref.current.position.transform = `translate(${x}px), translate(${y}px)`
-  }
-
-  ref.current.animate
-
-  return (
-    <div ref={ref} id="trailer"></div>
-  )
-}
 
 function App() {
   const dialogRef1 = useRef<HTMLDivElement>(null);
