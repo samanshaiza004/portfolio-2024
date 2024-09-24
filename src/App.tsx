@@ -129,12 +129,12 @@ function App() {
       { env: "city", color: "white" },
       { env: "forest", color: "white" },
       { env: "apartment", color: "purple" },
-      { env: "dawn", color: "yellow" },
-      { env: "lobby", color: "cyan" },
+      { env: "dawn", color: "black" },
+      { env: "lobby", color: "black" },
       { env: "night", color: "grey" },
       { env: "park", color: "white" },
-      { env: "studio", color: "white" },
-      { env: "sunset", color: "pink" },
+      { env: "studio", color: "black" },
+      { env: "sunset", color: "black" },
     ];
 
     const randomIndex = Math.floor(Math.random() * presets.length);
