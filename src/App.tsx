@@ -8,7 +8,6 @@ import { useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Environment, Text } from "@react-three/drei";
 import { Vector3 } from "three";
-
 import TetrahedronObject from "./components/tetrahedron";
 
 function Rig() {
@@ -76,6 +75,34 @@ const LinkText = ({ position = [0, 0, 0], children, ...props  }) => {
 };
 */
 
+const WeirdText = ({ value }: { value: any }) => {
+  const ref = useRef<any>(null);
+  const letters = "abcdefghijklmnopqrstuvwxyz";
+  const onHover = () => {
+    let iterations = 0;
+    const interval = setInterval(() => {
+      ref.current.innerText = ref.current.innerText
+        .split("")
+        .map(
+          (letter: any, index: number) => {
+            if(index < iterations) {
+              return value[index]
+            }
+            return letters[Math.floor(Math.random() * 26)]
+          }
+        )
+        .join("");
+      if (iterations >= value.length) clearInterval(interval);
+      iterations += 1 / 2;
+    }, 30);
+  };
+  return (
+    <span className="hover:underline" onMouseOver={onHover} ref={ref}>
+      {value}
+    </span>
+  );
+};
+
 const StickyText = ({
   position = [0, 0, 0],
   scale = 1,
@@ -115,6 +142,23 @@ const StickyText = ({
   );
 };
 
+const Trailer = () => {
+  const ref = useRef<any>(null)
+
+  window.onmousemove = e => {
+    const x = e.clientX - ref.current.offsetWidth / 2,
+    y = e.clientY - ref.current.offsetHeight / 2
+
+    ref.current.position.transform = `translate(${x}px), translate(${y}px)`
+  }
+
+  ref.current.animate
+
+  return (
+    <div ref={ref} id="trailer"></div>
+  )
+}
+
 function App() {
   const dialogRef1 = useRef<HTMLDivElement>(null);
   const [mouseInCanvas, setMouseInCanvas] = useState(false);
@@ -129,7 +173,6 @@ function App() {
       { env: "city", color: "white" },
       { env: "forest", color: "white" },
       { env: "apartment", color: "purple" },
-      { env: "dawn", color: "black" },
       { env: "lobby", color: "black" },
       { env: "night", color: "grey" },
       { env: "park", color: "white" },
@@ -185,7 +228,7 @@ function App() {
         <StickyText
           font="fonts/PPWriter-Regular.otf"
           color={textColor}
-          scale={0.20}
+          scale={0.2}
           position={[0, 0, -5.7]}
         >
           I like creating things on the internet and {"\n"}
@@ -215,16 +258,16 @@ function App() {
               className="hover:underline italic"
               href="https://github.com/samanshaiza004/veiled"
             >
-              Veiled
+              <WeirdText value={"Veiled"} />
             </a>{" "}
             is a minimal, quiet VSCode theme made to lessen distractions.
           </div>
           <div className="text-lg sm:text-2xl pt-4">
             <a
-              className="hover:underline italic"
+              className="hover:underline italic .c-home-about_link"
               href="https://github.com/samanshaiza004/pixie"
             >
-              pixie
+              <WeirdText value={"Pixie"} />
             </a>{" "}
             is a simple, multi-platform sample explorer designed to make music
             creation frictionless and fun again. With Pixie, you can easily
@@ -234,10 +277,10 @@ function App() {
           <br />
           <div className="text-lg sm:text-2xl pt-4">
             <a
-              className="hover:underline italic"
-              href="https://github.com/samanshaiza004/statusquo"
+              className="italic .c-home-about_link"
+              href="https://github.com/samanshaiza004/thestatusquo"
             >
-              statusquo
+              <WeirdText value={"thestatusquo"} />
             </a>{" "}
             is a social forum platform designed to facilitate the sharing of
             ideas and discussions among users.
@@ -245,10 +288,10 @@ function App() {
           <br />
           <div className="text-lg sm:text-2xl pt-4">
             <a
-              className="hover:underline italic"
+              className="hover:underline italic .c-home-about_link"
               href="https://github.com/samanshaiza004/genbu"
             >
-              Genbu
+              <WeirdText value={"Genbu"} />
             </a>{" "}
             is a minimal and frictionless budget and finance app made with Expo,
             Zustand for state management, and Tamagui for the UI. It is designed

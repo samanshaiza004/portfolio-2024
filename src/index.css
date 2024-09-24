@@ -11,3 +11,31 @@
   font-family: "PP Writer";
   width: 100vw;
 }
+
+.c-home-about_link:not(:last-child) {
+  margin-bottom: clamp(
+    calc(0.06667rem * var(--spacing-micro-mobile)),
+    calc(var(--spacing-micro) / 14.4 * 1vw),
+    calc(0.06667rem * var(--spacing-micro))
+  );
+}
+
+.c-button.focus-visible .c-button_label,
+.u-button-hover:hover .c-button_label {
+  text-decoration: underline;
+  text-decoration-thickness: var(--border-size);
+}
+
+#trailer {
+  height: 20px;
+  width: 20px;
+  background-color: white;
+  border-radius: 20px;
+
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 500ms ease;
+}
