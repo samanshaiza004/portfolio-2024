@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { MeshTransmissionMaterial } from "@react-three/drei";
 
 import { useFrame, useThree } from "@react-three/fiber";
@@ -28,14 +29,6 @@ export default function DodecahedronObject({
   useFrame((_, delta) => {
     if (hovered) {
       ref.current.rotation.y -= 1 * delta;
-      // ref.current.rotation.y -= 0.2 * delta;
-      /* gsap.to(ref.current.rotation, {
-        y: Math.PI,
-        ease: "power1.inOut",
-        repeat: 1,
-        duration: 2,
-      }); */
-      // ref.current.rotation.x += 0.01;
 
       if (ref.current.rotation.z > 0.5) {
         ref.current.rotation.z -= 0.1 * delta;

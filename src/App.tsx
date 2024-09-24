@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // App.tsx
 
 import gsap from "gsap";
@@ -6,10 +7,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Environment, Text } from "@react-three/drei";
-import { Color, MathUtils, Vector3 } from "three";
+import { Vector3 } from "three";
 
 import TetrahedronObject from "./components/tetrahedron";
-import { EffectComposer, Bloom } from "@react-three/postprocessing";
 
 function Rig() {
   const { camera, mouse } = useThree();
@@ -20,8 +20,11 @@ function Rig() {
     camera.position.lerp(vec, 0.05);
     camera.lookAt(0, 0, 0);
   });
+
+  return <></>;
 }
 
+/*
 const LinkText = ({ position = [0, 0, 0], children, ...props  }) => {
   const ref = useRef<any>(null);
 
@@ -71,19 +74,42 @@ const LinkText = ({ position = [0, 0, 0], children, ...props  }) => {
     </Text>
   );
 };
+*/
 
-const StickyText = ({ position = [0, 0, 0], children, ...props }) => {
-  const ref = useRef();
+const StickyText = ({
+  position = [0, 0, 0],
+  scale = 1,
+  color,
+  font,
+  children,
+  ...props
+}: {
+  position?: number[];
+  scale?: number;
+  font: string;
+  color?: string;
+  children: any;
+}) => {
+  const ref = useRef<any>(null);
 
   useFrame(({ camera }) => {
     if (ref.current) {
-      ref.current.position.copy(camera.position).add(new Vector3(...position));
-      ref.current.quaternion.copy(camera.quaternion);
+      ref.current.position.set(
+        camera.position.x + position[0],
+        camera.position.y + position[1],
+        camera.position.z + position[2]
+      );
+      ref.current.quaternion.set(
+        camera.quaternion.x,
+        camera.quaternion.y,
+        camera.quaternion.z,
+        camera.quaternion.w
+      );
     }
   });
 
   return (
-    <Text ref={ref} {...props}>
+    <Text font={font} color={color} scale={scale} ref={ref} {...props}>
       {children}
     </Text>
   );
@@ -140,8 +166,8 @@ function App() {
 
         <StickyText
           font="fonts/PPWriter-Bold.otf"
-          scale={0.4}
           color={textColor}
+          scale={0.5}
           position={[0, 1.5, -5]} // Now correctly applied
         >
           My name is Saman Shaiza
@@ -149,14 +175,19 @@ function App() {
 
         <StickyText
           font="fonts/PPWriter-RegularItalic.otf"
-          scale={0.2}
           color={textColor}
-          position={[0, 0.5, -6.5]}
+          scale={0.2}
+          position={[0, 1.0, -6.5]}
         >
           pronounced "suh-mon shy-zuh"
         </StickyText>
 
-        <StickyText font="fonts/PPWriter-Regular.otf" scale={0.15} color={textColor} position={[0, -0.2, -5.7]}>
+        <StickyText
+          font="fonts/PPWriter-Regular.otf"
+          color={textColor}
+          scale={0.20}
+          position={[0, 0, -5.7]}
+        >
           I like creating things on the internet and {"\n"}
           creating music.
         </StickyText>
