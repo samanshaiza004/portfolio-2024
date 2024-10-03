@@ -102,7 +102,7 @@ const WeirdText = ({ value }: { value: any }) => {
     : { onMouseOver: onHover };
 
   return (
-    <span className="hover:underline" ref={ref} {...eventHandler}>
+    <span className="hover:underline max-w-4" ref={ref} {...eventHandler}>
       {value}
     </span>
   );
@@ -236,9 +236,87 @@ function App() {
         <div className="lg:w-[1200px] sm:w-full flex-col flex justify-center mr-auto ml-auto">
           <header className="p-4 mb-24 mt-3 text-4xl">2024</header>
           <main>
-
+            <div className="text-2xl sm:text-4xl p-4 w-full">
+              <p>
+                I like working on websites, mobile, and desktop apps that help
+                people. I mainly work with bleeding edge technologies as well as
+                learning about older ones.
+              </p>
+              <p ref={dialogRef1}>
+                This is my portfolio website. It was built with React, React
+                Three Fiber, and Tailwind.
+              </p>
+            </div>
+            <section className="p-4">
+              <h2 className="text-3xl sm:text-4xl font-semibold">
+                Projects I've worked on
+              </h2>
+              <div className="text-lg sm:text-2xl pt-4">
+                <a
+                  className="hover:underline italic"
+                  target="_blank"
+                  href="https://github.com/samanshaiza004/veiled"
+                >
+                  <WeirdText value={"Veiled"} />
+                </a>{" "}
+                is a minimal, quiet VSCode theme made to lessen distractions.
+              </div>
+              <div className="text-lg sm:text-2xl pt-4">
+                <a
+                  className="hover:underline italic .c-home-about_link"
+                  target="_blank"
+                  href="https://github.com/samanshaiza004/pixie"
+                >
+                  <WeirdText value={"Pixie"} />
+                </a>{" "}
+                is a simple, multi-platform sample explorer designed to make
+                music creation frictionless and fun again. With Pixie, you can
+                easily browse, organize, and play your audio samples using an
+                intuitive interface powered by Electron and React.
+              </div>
+              <br />
+              <div className="text-lg sm:text-2xl pt-4">
+                <a
+                  className="italic .c-home-about_link"
+                  target="_blank"
+                  href="https://github.com/samanshaiza004/thestatusquo"
+                >
+                  <WeirdText value={"thestatusquo"} />
+                </a>{" "}
+                is a social forum platform designed to facilitate the sharing of
+                ideas and discussions among users.
+              </div>
+              <br />
+              <div className="text-lg sm:text-2xl pt-4">
+                <a
+                  className="hover:underline italic .c-home-about_link"
+                  href="https://github.com/samanshaiza004/genbu"
+                >
+                  <WeirdText value={"Genbu"} />
+                </a>{" "}
+                is a minimal and frictionless budget and finance app made with
+                Expo, Zustand for state management, and Tamagui for the UI. It
+                is designed to provide a simple and fast way to track your
+                money, focusing on simplicity and speed.
+              </div>
+              <br />
+              <div className="flex flex-col">
+                <h2 className="text-3xl sm:text-4xl font-semibold">
+                  contact me
+                </h2>
+                <a href="mailto:samanshaiza@yahoo.com">samanshaiza@yahoo.com</a>
+                <a
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  href="https://github.com/samanshaiza004"
+                >
+                  github
+                </a>
+                <span>972 654 2247</span>
+              </div>
+            </section>
           </main>
-          </div>
+        </div>
       </div>
     </div>
   );
