@@ -226,7 +226,7 @@ function App() {
             scale={0.2}
             position={[0, 0, -5.7]}
           >
-            I like creating things on the internet and {"\n"}
+            I like putting things on the internet and {"\n"}
             creating music.
           </StickyText>
           <Rig />
@@ -262,8 +262,9 @@ function App() {
                 >
                   FortunaDWS
                 </a>{" "}
-                is a custom web server built from scratch in C++ with a focus on
-                high-performance, event-driven, asynchronous I/O.
+                is a custom web server built in C++ and the Boost.ASIO library
+                with a focus on high-performance, event-driven, asynchronous
+                I/O.
               </div>
               <div className="text-lg sm:text-2xl pt-4">
                 <a
@@ -274,9 +275,9 @@ function App() {
                   Pixie
                 </a>{" "}
                 is a simple, multi-platform sample explorer designed to make
-                music creation frictionless and fun again. With Pixie, you can
-                easily browse, organize, and play your audio samples using an
-                intuitive interface powered by Electron and React.
+                music creation frictionless and fun again. You can easily
+                browse, organize, and play your audio samples using an intuitive
+                interface built on Electron and React.
               </div>
               <br />
               <div className="text-lg sm:text-2xl pt-4">
