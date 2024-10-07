@@ -8,8 +8,6 @@ import { useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Environment, Text } from "@react-three/drei";
 import { Vector3 } from "three";
-import TetrahedronObject from "./components/tetrahedron";
-import { Link } from "@tanstack/react-router";
 
 function Rig() {
   const { camera, mouse } = useThree();
@@ -75,7 +73,7 @@ const LinkText = ({ position = [0, 0, 0], children, ...props  }) => {
   );
 };
 */
-
+/*
 const WeirdText = ({ value }: { value: any }) => {
   const ref = useRef<any>(null);
   const letters = "abcdefghijklmnopqrstuvwxyz";
@@ -108,7 +106,7 @@ const WeirdText = ({ value }: { value: any }) => {
     </span>
   );
 };
-
+*/
 const StickyText = ({
   position = [0, 0, 0],
   scale = 1,
@@ -190,7 +188,7 @@ function App() {
         <Canvas
           aria-label="3D visualization of Saman Shaiza"
           role="img"
-          style={{ height: "88vh", width: "100vw" }}
+          style={{ height: "86vh", width: "100vw" }}
           onPointerOver={() => setMouseInCanvas(true)}
           onPointerOut={() => setMouseInCanvas(false)}
         >
@@ -234,7 +232,7 @@ function App() {
       )}
       <div>
         <div className="lg:w-[1200px] sm:w-full flex-col flex justify-center mr-auto ml-auto">
-          <header className="p-4 mb-24 mt-3 text-4xl flex gap-3">
+          <header className="p-3 mb-24 text-4xl flex gap-3">
             <span>2024</span>
           </header>
 
@@ -245,7 +243,7 @@ function App() {
                 people. I mainly work with bleeding edge technologies as well as
                 learning about older ones.
               </p>
-              <p ref={dialogRef1}>
+              <p className="pt-4" ref={dialogRef1}>
                 This is my portfolio website. It was built with React, React
                 Three Fiber, and Tailwind.
               </p>
