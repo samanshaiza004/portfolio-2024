@@ -13,17 +13,29 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as ThoughtsIdImport } from './routes/thoughts/$id'
 
 // Create Virtual Routes
 
+const BlogLazyImport = createFileRoute('/blog')()
 const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
+
+const BlogLazyRoute = BlogLazyImport.update({
+  path: '/blog',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/blog.lazy').then((d) => d.Route))
 
 const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+
+const ThoughtsIdRoute = ThoughtsIdImport.update({
+  path: '/thoughts/$id',
+  getParentRoute: () => rootRoute,
+} as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -36,12 +48,68 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/thoughts/$id': {
+      id: '/thoughts/$id'
+      path: '/thoughts/$id'
+      fullPath: '/thoughts/$id'
+      preLoaderRoute: typeof ThoughtsIdImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren({ IndexLazyRoute })
+export interface FileRoutesByFullPath {
+  '/': typeof IndexLazyRoute
+  '/blog': typeof BlogLazyRoute
+  '/thoughts/$id': typeof ThoughtsIdRoute
+}
+
+export interface FileRoutesByTo {
+  '/': typeof IndexLazyRoute
+  '/blog': typeof BlogLazyRoute
+  '/thoughts/$id': typeof ThoughtsIdRoute
+}
+
+export interface FileRoutesById {
+  __root__: typeof rootRoute
+  '/': typeof IndexLazyRoute
+  '/blog': typeof BlogLazyRoute
+  '/thoughts/$id': typeof ThoughtsIdRoute
+}
+
+export interface FileRouteTypes {
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths: '/' | '/blog' | '/thoughts/$id'
+  fileRoutesByTo: FileRoutesByTo
+  to: '/' | '/blog' | '/thoughts/$id'
+  id: '__root__' | '/' | '/blog' | '/thoughts/$id'
+  fileRoutesById: FileRoutesById
+}
+
+export interface RootRouteChildren {
+  IndexLazyRoute: typeof IndexLazyRoute
+  BlogLazyRoute: typeof BlogLazyRoute
+  ThoughtsIdRoute: typeof ThoughtsIdRoute
+}
+
+const rootRouteChildren: RootRouteChildren = {
+  IndexLazyRoute: IndexLazyRoute,
+  BlogLazyRoute: BlogLazyRoute,
+  ThoughtsIdRoute: ThoughtsIdRoute,
+}
+
+export const routeTree = rootRoute
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()
 
 /* prettier-ignore-end */
 
@@ -51,11 +119,19 @@ export const routeTree = rootRoute.addChildren({ IndexLazyRoute })
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/"
+        "/",
+        "/blog",
+        "/thoughts/$id"
       ]
     },
     "/": {
       "filePath": "index.lazy.tsx"
+    },
+    "/blog": {
+      "filePath": "blog.lazy.tsx"
+    },
+    "/thoughts/$id": {
+      "filePath": "thoughts/$id.tsx"
     }
   }
 }

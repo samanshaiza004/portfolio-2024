@@ -1,0 +1,316 @@
+<div style="max-width: 56rem; padding: 1.5rem">
+  <p style="font-size: 1rem; line-height: 1.625rem; margin-bottom: 1rem">
+    Linux often carries a reputation of being complicated and overly technical.
+    For a long time, I shared that perception. But after giving it a try, I
+    realized how much it has to offer.
+  </p>
+  <h2
+    style="
+      font-size: 1.5rem;
+      line-height: 2rem;
+      font-weight: 700;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    "
+  >
+    What is Linux?
+  </h2>
+  <p style="font-size: 1rem; line-height: 1.625rem; margin-bottom: 1rem">
+    Linux is the name for a family of open-source, Unix-like operating systems
+    based on the Linux kernel. First released by Linus Torvalds in 1991, the
+    Linux kernel is at the core of these systems. A Linux
+    <strong style="font-weight: 600">distribution</strong> (or distro) packages
+    the kernel with system software and libraries, many of which are provided by
+    the GNU Project.
+  </p>
+  <h3
+    style="
+      font-size: 1.25rem;
+      line-height: 1.75rem;
+      font-weight: 600;
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+    "
+  >
+    Common Misconception: &quot;Why should I? Windows is perfectly fine for all
+    my needs.&quot;
+  </h3>
+  <p style="font-size: 1rem; line-height: 1.625rem; margin-bottom: 1rem">
+    This is a common sentiment. And while Windows might meet your current needs,
+    it has become less user-friendly in recent years. Issues such as invasive
+    <a
+      style="color: #3b82f6; text-decoration: underline"
+      onMouseOver="this.style.color='#0F0'"
+      onMouseOut="this.style.color='#00F'"
+      href="https://www.zdnet.com/article/is-windows-10-telemetry-a-threat-to-your-personal-privacy/"
+      >telemetry</a
+    >, unnecessary bloatware (<a
+      style="color: #3b82f6; text-decoration: underline"
+      onMouseOver="this.style.color='#0F0'"
+      onMouseOut="this.style.color='#00F'"
+      href="https://www.zdnet.com/article/how-to-steer-clear-of-windows-10s-built-in-crapware/"
+      >I&#39;m looking at you Candy Crush...</a
+    >), the increasing presence of CoPilot being everywhere on Windows 11, the
+    requirement to
+    <strong style="font-weight: 600"
+      >SIGN IN WITH A MICROSOFT ACCOUNT TO USE YOUR COMPUTER</strong
+    >... it seemed a little much. That being said, there are a lot of resources
+    that aim to make Windows a better experience.
+  </p>
+  <p>
+    If you’ve been frustrated with Windows lately, Linux might be worth
+    considering.
+  </p>
+  <h3>Reasons You Shouldn&#39;t Daily Drive Linux</h3>
+  <p>
+    Before diving in, it’s important to recognize a few scenarios where Linux
+    may not be the best option for your daily driver:
+  </p>
+  <h4>1. You Rely on Windows-Only Software</h4>
+  <p>
+    If you depend on software like
+    <strong style="font-weight: 600">Adobe Photoshop</strong>,
+    <strong style="font-weight: 600">Premiere</strong>, or
+    <strong style="font-weight: 600">Microsoft 365</strong>, Linux might not be
+    the best fit. While some alternatives exist, such as
+    <strong style="font-weight: 600">LibreOffice</strong> for Microsoft Office,
+    these alternatives might not meet all your needs, especially for
+    resource-intensive tasks. Running these programs through compatibility
+    layers like <strong style="font-weight: 600">Wine</strong> often results in
+    poor performance.
+  </p>
+  <p>
+    A lot of developers even still primarily prioritize releasing on Windows and
+    MacOS, and Linux support, although on the rise, is still relatively scarce.
+  </p>
+  <h4>2. You&#39;re Not Prepared to Troubleshoot</h4>
+  <p>
+    Linux can be more technical than other operating systems, depending on the
+    distro you choose. Linux tends to be a pragmatic piece of software, and in a
+    lot of cases you will need to pull up a terminal to enter commands, install
+    software, or troubleshoot issues. Some distros, like Ubuntu, Pop!_OS, and
+    Linux Mint, offer user-friendly interfaces and polished GUIs, but technical
+    issues can still arise. If you&#39;re not comfortable with command-line
+    tools, Linux may not be for you.
+  </p>
+  <h4>3. Hardware Support Can Be Hit or Miss</h4>
+  <p>
+    Linux hardware compatibility has improved significantly in recent years, but
+    it can vary depending on the specific components and peripherals. Linux
+    works well with most CPUs from Intel and AMD. And most x86 and x86_64 CPUs
+    will work. ARM also has good support in devices like the Raspberry Pi and
+    most modern Chromebooks. However, modern MacBooks with the M-Series chips
+    will only work with one distro (check out
+    <a
+      style="color: #3b82f6; text-decoration: underline"
+      onMouseOver="this.style.color='#0F0'"
+      onMouseOut="this.style.color='#00F'"
+      href="https://asahilinux.org/about/"
+      >Asahi</a
+    >).
+  </p>
+  <p>
+    GPU support is quite different; Intel&#39;s integrated GPUs (Iris and UHD)
+    are very well supported. AMD/ATI&#39;s have open-source drivers (AMDGPU),
+    which have great support for both integrated and discrete GPUs, and recent
+    AMD cards are often supported out of the box.
+  </p>
+  <p>
+    Now, NVIDIA is now... pretty good! Recently,
+    <a
+      style="color: #3b82f6; text-decoration: underline"
+      onMouseOver="this.style.color='#0F0'"
+      onMouseOut="this.style.color='#00F'"
+      href="https://developer.nvidia.com/blog/nvidia-transitions-fully-towards-open-source-gpu-kernel-modules/"
+      >NVIDIA Open-Sourced their driver</a
+    >. While NVIDIA has started open-sourcing its GPU drivers, the process is
+    ongoing. You may still experience some instability or performance issues
+    compared to AMD&#39;s open-source drivers.
+  </p>
+  <p>
+    Basic peripherals like standard USB peripherals like keyboards, mice, and
+    webcams work out of the box. Now specialized peripherals like gaming
+    keyboards, mice, or other peripherals with RGB lighting or programmable keys
+    might have limited support. Some vendors don&#39;t provide Linux software,
+    but there are open-source tools.
+    <a
+      style="color: #3b82f6; text-decoration: underline"
+      onMouseOver="this.style.color='#0F0'"
+      onMouseOut="this.style.color='#00F'"
+      href="https://openrgb.org/"
+      >OpenRGB</a
+    >
+    and
+    <a
+      style="color: #3b82f6; text-decoration: underline"
+      onMouseOver="this.style.color='#0F0'"
+      onMouseOut="this.style.color='#00F'"
+      href="https://github.com/libratbag/piper"
+      >Piper</a
+    >
+    are excellent community solutions that allow Linux users to control RGB
+    lighting and gaming mouse/keyboard features. These projects have matured a
+    lot, but support can still be uneven depending on the specific hardware
+    model.
+  </p>
+  <p>
+    Many printers work well with Linux using CUPS (Common Unix Printing System)
+    (<a
+      style="color: #3b82f6; text-decoration: underline"
+      onMouseOver="this.style.color='#0F0'"
+      onMouseOut="this.style.color='#00F'"
+      href="http://www.cups.org/"
+      >http://www.cups.org/</a
+    >). HP and Brother generally provide good Linux support. Some Canon and
+    Epson printers have limited or no Linux support. Scanners may require
+    specific drivers and can sometimes be trickier to set up, depending on the
+    manufacturer.
+  </p>
+  <h4>4. Music Production Isn&#39;t Linux&#39;s Strong Suit (Yet)</h4>
+  <p>
+    Music production on Linux has made significant strides in recent years, but
+    it still faces challenges compared to platforms like Windows and macOS.
+    Native Linux DAWs like <strong style="font-weight: 600">Ardour</strong>,
+    <strong style="font-weight: 600">Bitwig</strong>, and
+    <strong style="font-weight: 600">Tracktion</strong> have great features, but
+    VST3 support, which is critical for many music producers (like me), is still
+    underdeveloped. Linux VSTs like
+    <strong style="font-weight: 600">LV2</strong>,
+    <strong style="font-weight: 600">LADSPA</strong>, and
+    <strong style="font-weight: 600">DSSI</strong> work well, but they are not
+    widely adopted in the commercial music industry. Most VSTs can be run on
+    Linux using tools like
+    <a
+      style="color: #3b82f6; text-decoration: underline"
+      onMouseOver="this.style.color='#0F0'"
+      onMouseOut="this.style.color='#00F'"
+      href="https://github.com/robbert-vdh/yabridge"
+      >Yabridge</a
+    >
+    or
+    <a
+      style="color: #3b82f6; text-decoration: underline"
+      onMouseOver="this.style.color='#0F0'"
+      onMouseOut="this.style.color='#00F'"
+      href="https://github.com/osxmidi/LinVst"
+      >LinVST</a
+    >. MIDI support on Linux is decent, though it can sometimes require more
+    manual setup compared to Windows.
+    <strong style="font-weight: 600">JACK</strong> and
+    <strong style="font-weight: 600">ALSA</strong> both support MIDI devices,
+    and most Linux DAWs are equipped to handle MIDI sequencing and routing.
+  </p>
+  <h2>Why should I try Linux?</h2>
+  <h4>1. It&#39;s free...</h4>
+  <p>
+    Most Linux distributions are completely free to download and use. Some
+    distributions offer paid versions with added support (e.g.,
+    <strong style="font-weight: 600">Red Hat Enterprise Linux</strong> and
+    <strong style="font-weight: 600">Zorin OS Pro</strong>), but the free
+    versions still have all the core functionality you need.
+  </p>
+  <h4>2. it&#39;s light...</h4>
+  <p>
+    It runs on almost anything (especially good on old hardware). Minimal
+    hardware requirements are a lot less on Linux compared to Windows, though
+    how much depends on the specific distro. Some Linux distributions are
+    particularly designed for older hardware, such as
+    <strong style="font-weight: 600">Lubuntu</strong>,
+    <strong style="font-weight: 600">Puppy Linux</strong>, and
+    <strong style="font-weight: 600">Linux Lite</strong>. These systems can run
+    on as little as 512 MB of RAM and older CPUs while still providing a usable
+    desktop experience. For extremely resource-limited machines,
+    <a
+      style="color: #3b82f6; text-decoration: underline"
+      onMouseOver="this.style.color='#0F0'"
+      onMouseOut="this.style.color='#00F'"
+      href="http://tinycorelinux.net/"
+      >Tiny Core Linux</a
+    >
+    which runs on just
+    <em>16MB of RAM!</em>
+  </p>
+  <h4>3. and it&#39;s fast</h4>
+  <p>
+    When games do run on Linux, they often perform exceptionally well. Linux’s
+    lightweight nature and efficient resource management mean that it doesn’t
+    carry the same overhead as Windows. Windows has numerous background
+    processes that can consume CPU and memory, limiting gaming performance. On
+    Linux, with its minimal resource usage, you’re often able to use more of
+    your hardware’s potential.
+  </p>
+  <h4>4. No Unwanted Updates</h4>
+  <p>
+    One of Linux&#39;s greatest features is what it doesn&#39;t do. I already
+    had my rant earlier, but I can keep on going. Microsoft&#39;s decisions for
+    the future of Windows is like watching a car crash in really slow motion.
+  </p>
+  <p>
+    Updates on Windows are done automatically and can take <em>hours</em>. Not
+    the case for Linux. In Linux, updates are managed through
+    <strong style="font-weight: 600">package managers</strong> (like
+    <strong style="font-weight: 600">apt</strong>,
+    <strong style="font-weight: 600">dnf</strong>, or
+    <strong style="font-weight: 600">pacman</strong>), and users have full
+    control over when updates are applied. Moreover, Linux typically does not
+    require reboots for most updates, except for kernel upgrades.
+  </p>
+  <h4>5. Security and Privacy by Design</h4>
+  <p>
+    The <strong style="font-weight: 600">open-source nature</strong> of Linux
+    also allows security vulnerabilities to be discovered and patched quickly by
+    the global community, unlike closed-source software where only the company
+    can fix bugs. Linux’s
+    <strong style="font-weight: 600">strict user privilege model</strong>
+    ensures that most tasks run without root (administrator) access. This
+    minimizes the risk of malware, as malicious programs need root permissions
+    to make critical system changes. Also coupled with the lack of telemetry
+    (<strong style="font-weight: 600">Ubuntu’s telemetry</strong> is minimal and
+    opt-in, focusing mostly on system specs and package usage data. However,
+    many privacy-focused users prefer to avoid telemetry altogether by using
+    distros like <strong style="font-weight: 600">Debian</strong>,
+    <strong style="font-weight: 600">Arch</strong>, or
+    <strong style="font-weight: 600">Manjaro</strong>, which have no built-in
+    telemetry).
+  </p>
+  <h4>6. Freedom and Community</h4>
+  <p>
+    Freedom and choice are, in my eyes, the most important factors of Linux and
+    free and open source software in general. The very alive and strong
+    community that Linux has and Linux&#39;s trust in it&#39;s users to give
+    them the freedom to do as they please is why I personally began using Linux.
+    Because of its strong populous philosophy. The Linux philosophy is centered
+    around the idea of freedom and trust for its users. Users are free to use
+    the software as they see fit. The open source philosophy is built on the
+    idea of collaboration and community. The belief that together we can create
+    something greater than what any one individual could achieve alone. This
+    collaborative approach to software development has led to the creation of a
+    vast array of open source software projects, from operating systems like
+    Linux to productivity tools like LibreOffice to social media platforms like
+    Mastodon.
+  </p>
+  <p>
+    Because of this quality, Linux is incredibly customizable and personable.
+    Unlike proprietary systems like Windows or macOS, you can tweak almost every
+    aspect of your Linux environment to suit your personal preferences. Whether
+    you&#39;re looking for a traditional desktop experience or a minimalist,
+    keyboard-driven setup, Linux can accommodate. You can even modify the core
+    functionality of the system through different distros or by compiling your
+    own
+    <strong style="font-weight: 600">Linux kernel</strong> to fit your needs.
+    Your desktop is completely personable via
+    <strong>Desktop Environments (DEs)</strong> like
+    <strong style="font-weight: 600">GNOME</strong>,
+    <strong style="font-weight: 600">KDE Plasma</strong>, <strong>Xfce</strong>,
+    and <strong style="font-weight: 600">Cinnamon</strong> provide full-fledged
+    graphical interfaces with their own sets of apps, window management systems,
+    and workflows. They cater to different preferences, from highly visual (KDE)
+    to minimal and lightweight (Xfce). Or maybe you&#39;d prefer a
+    <strong style="font-weight: 600">Window Managers (WMs)</strong>, like
+    <strong style="font-weight: 600">i3</strong>,
+    <strong style="font-weight: 600">Awesome</strong>, or
+    <strong style="font-weight: 600">bspwm</strong>, are more focused on
+    minimalism and efficiency. They allow for dynamic tiling and customization
+    without
+  </p>
+</div>

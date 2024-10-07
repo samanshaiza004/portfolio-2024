@@ -21,7 +21,8 @@
     "locomotive-scroll": "^5.0.0-beta.13",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "three": "^0.167.1"
+    "three": "^0.167.1",
+    "zero-md": "^3.1.6"
   },
   "devDependencies": {
     "@tanstack/router-devtools": "^1.46.9",

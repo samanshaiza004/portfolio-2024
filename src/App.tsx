@@ -9,6 +9,7 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Environment, Text } from "@react-three/drei";
 import { Vector3 } from "three";
 import TetrahedronObject from "./components/tetrahedron";
+import { Link } from "@tanstack/react-router";
 
 function Rig() {
   const { camera, mouse } = useThree();
@@ -153,7 +154,7 @@ function App() {
   const [envPreset, setEnvPreset] = useState<any>(undefined);
   const [textColor, setTextColor] = useState("white");
   useEffect(() => {
-    document.body.style.cursor = mouseInCanvas ? "none" : "auto";
+    document.body.style.cursor = mouseInCanvas ? "crosshair" : "auto";
   });
 
   useEffect(() => {
@@ -162,7 +163,7 @@ function App() {
       { env: "forest", color: "white" },
       { env: "apartment", color: "purple" },
       { env: "lobby", color: "black" },
-      { env: "night", color: "grey" },
+      { env: "night", color: "white" },
       { env: "park", color: "white" },
       { env: "studio", color: "black" },
       { env: "sunset", color: "black" },
@@ -200,7 +201,6 @@ function App() {
           />
           <ambientLight intensity={0.1} />
           <directionalLight position={[0, 0, 1]} />
-          <TetrahedronObject radius={0.1} segments={0} />
 
           <StickyText
             font="fonts/PPWriter-Bold.otf"
@@ -234,7 +234,10 @@ function App() {
       )}
       <div>
         <div className="lg:w-[1200px] sm:w-full flex-col flex justify-center mr-auto ml-auto">
-          <header className="p-4 mb-24 mt-3 text-4xl">2024</header>
+          <header className="p-4 mb-24 mt-3 text-4xl flex gap-3">
+            <span>2024</span>
+          </header>
+
           <main>
             <div className="text-2xl sm:text-4xl p-4 w-full">
               <p>
@@ -255,11 +258,12 @@ function App() {
                 <a
                   className="hover:underline italic"
                   target="_blank"
-                  href="https://github.com/samanshaiza004/veiled"
+                  href="https://github.com/samanshaiza004/fortunadws"
                 >
-                  <WeirdText value={"Veiled"} />
+                  FortunaDWS
                 </a>{" "}
-                is a minimal, quiet VSCode theme made to lessen distractions.
+                is a custom web server built from scratch in C++ with a focus on
+                high-performance, event-driven, asynchronous I/O.
               </div>
               <div className="text-lg sm:text-2xl pt-4">
                 <a
@@ -267,7 +271,7 @@ function App() {
                   target="_blank"
                   href="https://github.com/samanshaiza004/pixie"
                 >
-                  <WeirdText value={"Pixie"} />
+                  Pixie
                 </a>{" "}
                 is a simple, multi-platform sample explorer designed to make
                 music creation frictionless and fun again. With Pixie, you can
@@ -277,11 +281,11 @@ function App() {
               <br />
               <div className="text-lg sm:text-2xl pt-4">
                 <a
-                  className="italic .c-home-about_link"
+                  className="hover:underline italic .c-home-about_link"
                   target="_blank"
                   href="https://github.com/samanshaiza004/thestatusquo"
                 >
-                  <WeirdText value={"thestatusquo"} />
+                  thestatusquo
                 </a>{" "}
                 is a social forum platform designed to facilitate the sharing of
                 ideas and discussions among users.
@@ -292,12 +296,22 @@ function App() {
                   className="hover:underline italic .c-home-about_link"
                   href="https://github.com/samanshaiza004/genbu"
                 >
-                  <WeirdText value={"Genbu"} />
+                  Genbu
                 </a>{" "}
                 is a minimal and frictionless budget and finance app made with
                 Expo, Zustand for state management, and Tamagui for the UI. It
                 is designed to provide a simple and fast way to track your
                 money, focusing on simplicity and speed.
+              </div>
+              <div className="text-lg sm:text-2xl pt-4">
+                <a
+                  className="hover:underline italic"
+                  target="_blank"
+                  href="https://github.com/samanshaiza004/veiled"
+                >
+                  Veiled
+                </a>{" "}
+                is a minimal, quiet VSCode theme made to lessen distractions.
               </div>
               <br />
               <div className="flex flex-col">
@@ -306,6 +320,7 @@ function App() {
                 </h2>
                 <a href="mailto:samanshaiza@yahoo.com">samanshaiza@yahoo.com</a>
                 <a
+                  className="hover:underline"
                   rel="noopener noreferrer"
                   target="_blank"
                   href="https://github.com/samanshaiza004"
