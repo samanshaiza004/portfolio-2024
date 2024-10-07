@@ -6,7 +6,7 @@ export const Route = createLazyFileRoute("/blog")({
 
 function Blog() {
   return (
-    <div>
+    <div className="max-w-4xl mx-auto p-6">
       <div className="flex items-center gap-2">
         <h1 className="font-semibold text-3xl sm:text-4xl">Blog</h1>
         <p>Unbelievably, these are my thoughts.</p>
@@ -14,7 +14,7 @@ function Blog() {
       <div className="text-lg sm:text-2xl pt-4">
         <Link
           className="hover:underline"
-          to={`/thoughts/$id`}
+          to={`/blogs/$id`}
           params={{ id: "1" }}
         >
           You should give Linux a shot

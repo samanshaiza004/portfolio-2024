@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import MarkdownRenderer from "../../components/MarkdownRenderer";
-export const Route = createFileRoute("/thoughts/$id")({
+export const Route = createFileRoute("/blogs/$id")({
   component: Post,
   loader: async ({ params }) => {
     try {
-      const res = await fetch(`/api/thoughts/${params.id}.html`);
+      const res = await fetch(`/api/blogs/${params.id}.html`);
       const text = await res.text();
       if (!res.ok) {
         throw new Error("failed to load post");
