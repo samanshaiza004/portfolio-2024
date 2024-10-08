@@ -263,7 +263,7 @@ function App() {
                 is a custom web server built in C++ and the Boost.ASIO library
                 with a focus on high-performance, event-driven, asynchronous
                 I/O.
-              </div>
+              </div>®
               <div className="text-lg sm:text-2xl pt-4">
                 <a
                   className="hover:underline italic .c-home-about_link"

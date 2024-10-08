@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import MarkdownRenderer from "../../components/MarkdownRenderer";
+import MarkdownRenderer from "../../components/HtmlRenderer";
 export const Route = createFileRoute("/blogs/$id")({
   component: Post,
   loader: async ({ params }) => {
