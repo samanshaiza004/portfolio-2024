@@ -23,57 +23,6 @@ function Rig() {
 }
 
 /*
-const LinkText = ({ position = [0, 0, 0], children, ...props  }) => {
-  const ref = useRef<any>(null);
-
-  const [hovered, setHovered] = useState(false);
-  const color = new Color();
-  useFrame(({ camera }) => {
-    if (ref.current) {
-      ref.current.position.copy(camera.position).add(new Vector3(...position));
-      ref.current.quaternion.copy(camera.quaternion);
-      ref.current.scale.y = ref.current.scale.z = MathUtils.lerp(
-        ref.current.scale.y,
-        hovered ? 1.0 : 0.9,
-        0.1
-      );
-      ref.current.scale.x = MathUtils.lerp(
-        ref.current.scale.x,
-        hovered ? 0.9 : 0.8,
-        0.1
-      );
-      ref.current.position.z = MathUtils.lerp(
-        ref.current.scale.z,
-        hovered ? 1.1 : 1.2,
-        0.1
-      );
-      ref.current.material.color.lerp(color.set(hovered ? "cyan" : "white"), 0.1);
-    }
-    
-  });
-
-  return (
-    <Text
-      onPointerOver={(e) => {
-        e.stopPropagation();
-        setHovered(true);
-      }}
-      onPointerOut={(e) => {
-        e.stopPropagation();
-        setHovered(false);
-      }}
-      scale={3}
-      ref={ref}
-      {...props}
-      color={color}
-      onClick={() => window.location.replace("/about-saman")}
-    >
-      {children}
-    </Text>
-  );
-};
-*/
-/*
 const WeirdText = ({ value }: { value: any }) => {
   const ref = useRef<any>(null);
   const letters = "abcdefghijklmnopqrstuvwxyz";
@@ -231,8 +180,8 @@ function App() {
         </Canvas>
       )}
       <div>
-        <div className="lg:w-[1200px] sm:w-full flex-col flex justify-center mr-auto ml-auto">
-          <header className="p-3 mb-24 text-4xl flex gap-3">
+        <div className="lg:w-[1200px] sm:w-full flex-col flex max-w-4xl mx-auto p-6">
+          <header className="mb-24 text-4xl flex gap-3">
             <span>2024</span>
           </header>
 
@@ -263,7 +212,7 @@ function App() {
                 is a custom web server built in C++ and the Boost.ASIO library
                 with a focus on high-performance, event-driven, asynchronous
                 I/O.
-              </div>®
+              </div>
               <div className="text-lg sm:text-2xl pt-4">
                 <a
                   className="hover:underline italic .c-home-about_link"
