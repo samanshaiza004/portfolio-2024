@@ -12,17 +12,14 @@ export default function TetrahedronCursor({ radius, segments }: Props) {
   const { viewport } = useThree();
   const meshRef = useRef<THREE.Mesh>(null);
 
-
   const geometry = useMemo(
     () => new THREE.TetrahedronGeometry(radius, segments),
     [radius, segments]
   );
 
-
   const firstVertex = useMemo(() => {
     const positionAttribute = geometry.getAttribute("position");
     const positions = positionAttribute.array;
-
 
     const x = positions[6];
     const y = positions[7];
@@ -32,7 +29,10 @@ export default function TetrahedronCursor({ radius, segments }: Props) {
   }, [geometry]);
 
   // Define the rotation axis as the vector from the origin to the first vertex
-  const rotationAxis = useMemo(() => firstVertex.clone().normalize(), [firstVertex]);
+  const rotationAxis = useMemo(
+    () => firstVertex.clone().normalize(),
+    [firstVertex]
+  );
 
   // Set rotation speed
   const rotationSpeed = Math.PI / 2; // Adjust as needed (radians per second)
@@ -56,7 +56,6 @@ export default function TetrahedronCursor({ radius, segments }: Props) {
   return (
     <mesh ref={meshRef} geometry={geometry}>
       <MeshTransmissionMaterial backside backsideThickness={3} thickness={1} />
-      
     </mesh>
   );
 }
