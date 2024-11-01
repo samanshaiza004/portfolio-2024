@@ -17,9 +17,9 @@ import About from "./About";
 // Abstract 3D shape component
 function AbstractShape() {
   return (
-    <Float speed={4} rotationIntensity={1} floatIntensity={2}>
+    <Float speed={3} rotationIntensity={0.5} floatIntensity={1}>
       <mesh>
-        <torusKnotGeometry args={[9, 3, 100, 16]} />
+        <torusKnotGeometry args={[11, 3, 50, 8]} />
         <meshStandardMaterial
           color="#6366f1"
           wireframe
@@ -85,7 +85,7 @@ function Home() {
             <Hero
               name="Saman Shaiza"
               pronunciation="suh-mon shy-zuh"
-              description="Software developer focused on creating accessible and performant web applications"
+              description="Software developer focused on creating accessible and performant web and desktop applications"
               imageUrl="/Photo-1.jpeg"
             />
           </div>

@@ -23,6 +23,14 @@ export function BlogIndex() {
     },
   };
 
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+    },
+  };
+
   return (
     <motion.div
       initial="hidden"
@@ -37,30 +45,32 @@ export function BlogIndex() {
             (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
           )
           .map((post) => (
-            <Card key={post.id} className="hover:shadow-lg transition-shadow">
-              <Link to={`/blog/${post.id}`}>
-                <CardHeader>
-                  <CardTitle>{post.title}</CardTitle>
-                  <CardDescription>
-                    {new Date(post.date).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="mb-4">{post.description}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {post.tags.map((tag) => (
-                      <Badge key={tag} variant="secondary">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                </CardContent>
-              </Link>
-            </Card>
+            <motion.div variants={itemVariants}>
+              <Card key={post.id} className="hover:shadow-lg transition-shadow">
+                <Link to={`/blog/${post.id}`}>
+                  <CardHeader>
+                    <CardTitle>{post.title}</CardTitle>
+                    <CardDescription>
+                      {new Date(post.date).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="mb-4">{post.description}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {post.tags.map((tag) => (
+                        <Badge key={tag} variant="secondary">
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Link>
+              </Card>
+            </motion.div>
           ))}
       </div>
     </motion.div>

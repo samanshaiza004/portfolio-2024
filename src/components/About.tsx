@@ -29,15 +29,15 @@ function About() {
     },
     {
       category: "Backend",
-      items: ["Node.js", "Express", "RESTful APIs", "GraphQL"],
+      items: ["Node.js", "Express", "RESTful APIs", "Electron"],
     },
     {
       category: "Database",
-      items: ["PostgreSQL", "MongoDB", "Redis", "Prisma"],
+      items: ["PostgreSQL", "MongoDB", "Drizzle", "Prisma"],
     },
     {
       category: "Tools",
-      items: ["Git", "Docker", "AWS", "CI/CD"],
+      items: ["Git", "Docker"],
     },
   ];
 
@@ -93,9 +93,9 @@ function About() {
                     </h3>
                     <div className="flex flex-wrap gap-2">
                       {skillSet.items.map((skill) => (
-                        <Badge key={skill} className="px-3 py-1 text-sm">
+                        <p key={skill} className="px-3 py-1 text-sm">
                           {skill}
-                        </Badge>
+                        </p>
                       ))}
                     </div>
                   </motion.div>
