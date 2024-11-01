@@ -4,8 +4,6 @@ import matter from "gray-matter";
 
 import type { BlogPost } from "@/types/types";
 
-/*************  ✨ Codeium Command ⭐  *************/
-/******  aaa9c769-39bc-457c-afab-e6bf368c6f21  *******/
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
