@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { Badge } from "lucide-react";
 import { Card, CardContent } from "./ui/card";
 
 function About() {
