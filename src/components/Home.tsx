@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // App.tsx
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 /* import { ThemeProvider } from "@/components/theme-provider";
 import { Navigation } from "@/components/Navigation"; */
@@ -22,7 +22,7 @@ function LoadingSkeleton() {
 }
 
 function Home() {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, _setIsLoading] = useState(false);
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   if (isLoading) {

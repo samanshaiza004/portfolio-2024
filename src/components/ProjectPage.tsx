@@ -6,19 +6,6 @@ import { projects } from "@/data/projects";
 import { Button } from "./ui/button";
 import { ExternalLink, Github } from "lucide-react";
 
-// Types
-interface Project {
-  id: string; // URL-friendly identifier
-  title: string;
-  description: string;
-  link: string;
-  technologies: string[];
-  fullDescription?: string; // Detailed description for project page
-  images?: string[]; // Project screenshots/images
-  githubLink?: string;
-  demoLink?: string;
-}
-
 // Project Page Component
 function ProjectPage() {
   const { projectId } = useParams();
