@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Card, CardContent } from "./ui/card";
+import { Badge } from "./ui/badge";
 
 function About() {
   const containerVariants = {
@@ -92,9 +93,12 @@ function About() {
                     </h3>
                     <div className="flex flex-wrap gap-2">
                       {skillSet.items.map((skill) => (
-                        <p key={skill} className="px-3 py-1 text-sm">
+                        <Badge
+                          key={skill}
+                          className="px-3 py-1 text-sm cursor-default select-none"
+                        >
                           {skill}
-                        </p>
+                        </Badge>
                       ))}
                     </div>
                   </motion.div>
