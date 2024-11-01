@@ -1,9 +1,5 @@
-
 import { motion } from "framer-motion";
-import {
-  Card,
-  CardContent,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Mail,
   Github,
@@ -69,12 +65,14 @@ export function Contact({
       initial="hidden"
       animate="visible"
       variants={containerVariants}
-      className="min-h-screen flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4"
+      className="min-h-screen flex flex-col items-center justify-center  dark:bg-gray-900 py-12 px-4"
     >
       <div className="w-full max-w-3xl mx-auto">
         <motion.div variants={itemVariants} className="text-center mb-12">
           <h1 className="text-4xl font-bold tracking-tight mb-4">{title}</h1>
-          <p className="text-lg text-gray-600 dark:text-gray-400">{subtitle}</p>
+          <p className="text-lg text-gray-600 dabg-background/80 backdrop-blur-mdrk:text-gray-400">
+            {subtitle}
+          </p>
         </motion.div>
 
         <motion.div
