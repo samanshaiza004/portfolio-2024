@@ -2,7 +2,7 @@
 // App.tsx
 
 import { useState } from "react";
-import { useMediaQuery } from "@/hooks/useMediaQuery";
+// import { useMediaQuery } from "@/hooks/useMediaQuery";
 /* import { ThemeProvider } from "@/components/theme-provider";
 import { Navigation } from "@/components/Navigation"; */
 import { Hero } from "@/components/Hero";
@@ -23,7 +23,7 @@ function LoadingSkeleton() {
 
 function Home() {
   const [isLoading, _setIsLoading] = useState(false);
-  const isMobile = useMediaQuery("(max-width: 768px)");
+  // const isMobile = useMediaQuery("(max-width: 768px)");
 
   if (isLoading) {
     return <LoadingSkeleton />;
@@ -36,7 +36,7 @@ function Home() {
           name="Saman Shaiza"
           pronunciation="suh-mon shy-zuh"
           description="Software developer focused on creating accessible and performant web applications"
-          isMobile={isMobile}
+          /* isMobile={isMobile} */
           imageUrl="/Photo-1.jpeg"
         />
         <Projects projects={projects} />
