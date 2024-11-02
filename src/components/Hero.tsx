@@ -64,7 +64,7 @@ export function Hero({
                 </h1>
                 <div className="space-y-2">
                   <span className="animate-opacity-pulse text-sm md:text-md text-muted-foreground">
-                    @samanshaiza
+                    @samanshaiza on everything
                   </span>
                   <p className="text-lg md:text-xl text-muted-foreground">
                     {pronunciation}

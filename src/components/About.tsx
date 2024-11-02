@@ -66,6 +66,7 @@ function About() {
                   started with a curiosity about how things work, which evolved
                   into a career building solutions that make a difference.
                 </p>
+                <br />
                 <p className="text-lg text-muted-foreground">
                   When I'm not coding, you'll find me exploring new
                   technologies, contributing to open-source projects, or sharing

@@ -85,8 +85,8 @@ function Home() {
             <Hero
               name="Saman Shaiza"
               pronunciation="suh-mon shy-zuh"
-              description="Software developer focused on creating accessible and performant web and desktop applications"
-              imageUrl="/Photo-1.jpeg"
+              description="Software developer focused on creating accessible and performant web and desktop applications. (and i love serif fonts!)"
+              imageUrl="https://pbs.twimg.com/profile_images/1668322144848060416/KERAb-I0_400x400.jpg"
             />
           </div>
 

@@ -101,7 +101,7 @@
 }
 
 .animate-spin-slow {
-  animation: spin-slow 500s ease-in infinite;
+  animation: spin-slow 120s ease-in infinite;
 }
 
 @keyframes opacity-pulse {
