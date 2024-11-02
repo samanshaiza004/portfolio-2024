@@ -69,7 +69,11 @@ export function Projects({ projects }: ProjectsProps) {
                   <CardContent className="flex-grow">
                     <div className="flex flex-wrap gap-2">
                       {project.technologies.map((tech) => (
-                        <Badge key={tech} variant="secondary">
+                        <Badge
+                          key={tech}
+                          variant="secondary"
+                          className="select-none font-thin"
+                        >
                           {tech}
                         </Badge>
                       ))}

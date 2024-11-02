@@ -215,7 +215,11 @@ export function BlogPost() {
         </motion.div>
         <motion.div variants={itemVariants} className="flex flex-wrap gap-2">
           {post.tags.map((tag) => (
-            <Badge key={tag} variant="secondary">
+            <Badge
+              key={tag}
+              variant="secondary"
+              className="font-thin select-none"
+            >
               {tag}
             </Badge>
           ))}

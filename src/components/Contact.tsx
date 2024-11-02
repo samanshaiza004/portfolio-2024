@@ -65,7 +65,7 @@ export function Contact({
       initial="hidden"
       animate="visible"
       variants={containerVariants}
-      className="min-h-screen flex flex-col items-center justify-center  dark:bg-gray-900 py-12 px-4"
+      className="min-h-screen flex flex-col items-center justify-center  py-12 px-4"
     >
       <div className="w-full max-w-3xl mx-auto">
         <motion.div variants={itemVariants} className="text-center mb-12">

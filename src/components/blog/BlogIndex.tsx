@@ -62,7 +62,11 @@ export function BlogIndex() {
                     <p className="mb-4">{post.description}</p>
                     <div className="flex flex-wrap gap-2">
                       {post.tags.map((tag) => (
-                        <Badge key={tag} variant="secondary">
+                        <Badge
+                          key={tag}
+                          variant="secondary"
+                          className="font-thin select-none"
+                        >
                           {tag}
                         </Badge>
                       ))}

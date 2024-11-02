@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { projects } from "@/data/projects";
 import { Button } from "./ui/button";
 import { ExternalLink, Github } from "lucide-react";
+import { Badge } from "./ui/badge";
 
 // Project Page Component
 function ProjectPage() {
@@ -53,12 +54,13 @@ function ProjectPage() {
               | undefined,
             index: React.Key | null | undefined
           ) => (
-            <span
+            <Badge
               key={index}
-              className="px-3 py-1 bg-gray-100 rounded-full text-sm font-light"
+              variant="secondary"
+              className="font-thin select-none"
             >
               {tech}
-            </span>
+            </Badge>
           )
         )}
       </div>
