@@ -25,6 +25,14 @@ export function BlogPost() {
     },
   };
 
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+    },
+  };
+
   if (!post) {
     return <Navigate to="/404" replace />;
   }
@@ -195,30 +203,36 @@ export function BlogPost() {
     >
       <header className="mb-8">
         <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
-        <div className="text-muted-foreground mb-4">
+        <motion.div
+          variants={itemVariants}
+          className="text-muted-foreground mb-4"
+        >
           {new Date(post.date).toLocaleDateString("en-US", {
             year: "numeric",
             month: "long",
             day: "numeric",
           })}
-        </div>
-        <div className="flex flex-wrap gap-2">
+        </motion.div>
+        <motion.div variants={itemVariants} className="flex flex-wrap gap-2">
           {post.tags.map((tag) => (
             <Badge key={tag} variant="secondary">
               {tag}
             </Badge>
           ))}
-        </div>
+        </motion.div>
       </header>
 
-      <div className="prose dark:prose-invert max-w-none">
+      <motion.div
+        variants={itemVariants}
+        className="prose dark:prose-invert max-w-none"
+      >
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           components={markdownComponents}
         >
           {post.content}
         </ReactMarkdown>
-      </div>
+      </motion.div>
     </motion.article>
   );
 }

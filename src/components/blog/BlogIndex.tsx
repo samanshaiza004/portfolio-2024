@@ -39,14 +39,14 @@ export function BlogIndex() {
       className="container mx-auto px-4 py-8 max-w-4xl"
     >
       <h1 className="text-4xl font-bold mb-8">Blog</h1>
-      <div className="grid gap-6">
+      <motion.div variants={itemVariants} className="grid gap-6">
         {blogPosts
           .sort(
             (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
           )
           .map((post) => (
-            <motion.div variants={itemVariants}>
-              <Card key={post.id} className="hover:shadow-lg transition-shadow">
+            <motion.div key={post.id} variants={itemVariants}>
+              <Card className="hover:shadow-lg transition-shadow">
                 <Link to={`/blog/${post.id}`}>
                   <CardHeader>
                     <CardTitle>{post.title}</CardTitle>
@@ -72,7 +72,7 @@ export function BlogIndex() {
               </Card>
             </motion.div>
           ))}
-      </div>
+      </motion.div>
     </motion.div>
   );
 }

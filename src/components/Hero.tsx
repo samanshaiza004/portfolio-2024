@@ -58,11 +58,11 @@ export function Hero({
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Content Column */}
             <div className="space-y-8">
-              <motion.div variants={itemVariants} className="space-y-4">
+              <motion.div variants={itemVariants} className="">
                 <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
                   {name}
                 </h1>
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <span className="animate-opacity-pulse text-sm md:text-md text-muted-foreground">
                     @samanshaiza on everything
                   </span>
@@ -115,7 +115,7 @@ export function Hero({
               {/* Image container */}
               <div className="relative">
                 {/* Decorative rotating circle */}
-                <div className="absolute -inset-4 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-full animate-[spin_20s_linear_infinite]" />
+                <div className="absolute -inset-4 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-full animate-[spin_60s_linear_infinite]" />
 
                 {/* Image */}
                 <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-white dark:border-gray-800 shadow-xl">

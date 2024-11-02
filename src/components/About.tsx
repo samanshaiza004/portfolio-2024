@@ -68,9 +68,9 @@ function About() {
                 </p>
                 <br />
                 <p className="text-lg text-muted-foreground">
-                  When I'm not coding, you'll find me exploring new
-                  technologies, contributing to open-source projects, or sharing
-                  my knowledge through technical writing and mentoring.
+                  When I'm not coding, you'll find me making music, exploring
+                  new technologies, contributing to open-source projects, or
+                  sharing my knowledge through technical writing and mentoring.
                 </p>
               </div>
             </motion.div>

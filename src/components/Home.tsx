@@ -2,29 +2,30 @@
 // App.tsx
 
 import { Suspense, useState } from "react";
-// import { useMediaQuery } from "@/hooks/useMediaQuery";
-/* import { ThemeProvider } from "@/components/theme-provider";
-import { Navigation } from "@/components/Navigation"; */
+
 import { Hero } from "@/components/Hero";
 import { Projects } from "@/components/Projects";
-/* import { Contact } from "@/components/Contact"; */
+
 import { Skeleton } from "@/components/ui/skeleton";
 import { projects } from "@/data/projects";
 import { Float, OrbitControls, Stars } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import About from "./About";
 
-// Abstract 3D shape component
+import { DepthOfField, EffectComposer } from "@react-three/postprocessing";
+import { useTheme } from "@/hooks/ThemeContext";
+
 function AbstractShape() {
+  const { theme } = useTheme();
   return (
     <Float speed={3} rotationIntensity={0.5} floatIntensity={1}>
       <mesh>
         <torusKnotGeometry args={[11, 3, 50, 8]} />
         <meshStandardMaterial
-          color="#6366f1"
+          color={theme === "dark" ? "#818cf8" : "#6366f1"} // Lighter color for dark mode
           wireframe
           transparent
-          opacity={0.1}
+          opacity={theme === "dark" ? 0.15 : 0.1}
         />
       </mesh>
     </Float>
@@ -43,14 +44,13 @@ function LoadingSkeleton() {
 
 function Home() {
   const [isLoading, _setIsLoading] = useState(false);
-
+  // const { theme } = useTheme();
   if (isLoading) {
     return <LoadingSkeleton />;
   }
 
   return (
     <div className="relative">
-      {/* 3D Background */}
       <div className="fixed inset-0" style={{ zIndex: 1 }}>
         <Canvas camera={{ position: [0, 0, 20], fov: 75 }}>
           <Suspense fallback={null}>
@@ -74,13 +74,13 @@ function Home() {
               autoRotateSpeed={0.5}
             />
           </Suspense>
+          <EffectComposer>
+            <DepthOfField focusDistance={0} focalLength={0.02} bokehScale={4} />
+          </EffectComposer>
         </Canvas>
       </div>
-
-      {/* Content */}
       <div className="relative" style={{ zIndex: 2 }}>
         <div className="container mx-auto px-4">
-          {/* Hero section */}
           <div className="min-h-[60vh] flex items-center pt-16">
             <Hero
               name="Saman Shaiza"
@@ -90,10 +90,8 @@ function Home() {
             />
           </div>
 
-          {/* About section */}
           <About />
 
-          {/* Projects section */}
           <Projects projects={projects} />
         </div>
       </div>
