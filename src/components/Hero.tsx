@@ -81,7 +81,7 @@ export function Hero({
 
               <motion.div
                 variants={itemVariants}
-                className="flex flex-col sm:flex-row gap-4"
+                className="flex flex-col sm:flex-row gap-4 "
               >
                 <Button size="lg" className="group" asChild>
                   <a
@@ -91,14 +91,14 @@ export function Hero({
                   >
                     <Github className="mr-2 h-5 w-5" />
                     GitHub
-                    <ArrowRight className="ml-2 h-5 w-5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <ArrowRight className="ml-2 h-5 w-5 opacity-0 group-hover:opacity-100 transition-all" />
                   </a>
                 </Button>
                 <Button variant="outline" size="lg" className="group" asChild>
                   <Link to="/contact">
                     <Mail className="mr-2 h-5 w-5" />
                     Contact Me
-                    <ArrowRight className="ml-2 h-5 w-5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <ArrowRight className="ml-2 h-5 w-5 opacity-0 group-hover:opacity-100 transition-all" />
                   </Link>
                 </Button>
               </motion.div>

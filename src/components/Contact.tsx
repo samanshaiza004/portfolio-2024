@@ -68,9 +68,12 @@ export function Contact({
       className="min-h-screen flex flex-col items-center justify-center  py-12 px-4"
     >
       <div className="w-full max-w-3xl mx-auto">
-        <motion.div variants={itemVariants} className="text-center mb-12">
+        <motion.div
+          variants={itemVariants}
+          className="text-center mb-12 transition-all"
+        >
           <h1 className="text-4xl font-bold tracking-tight mb-4">{title}</h1>
-          <p className="text-lg text-gray-600 dabg-background/80 backdrop-blur-mdrk:text-gray-400">
+          <p className="text-lg text-gray-600 bg-background/80 backdrop-blur-mdrk:text-gray-400">
             {subtitle}
           </p>
         </motion.div>
@@ -82,7 +85,7 @@ export function Contact({
           {contactMethods.map((method, index) => (
             <Card
               key={index}
-              className="transform transition-all duration-300 hover:scale-105 hover:shadow-lg"
+              className="transform transition-all duration-100 hover:scale-[1.02] hover:shadow-lg"
             >
               <CardContent className="flex flex-col items-center justify-center p-6">
                 <div className="rounded-full bg-gray-100 dark:bg-gray-800 p-4 mb-4">

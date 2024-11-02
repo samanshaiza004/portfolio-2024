@@ -22,7 +22,7 @@ function AbstractShape() {
       <mesh>
         <torusKnotGeometry args={[11, 3, 50, 8]} />
         <meshStandardMaterial
-          color={theme === "dark" ? "#818cf8" : "#6366f1"} // Lighter color for dark mode
+          color={theme === "dark" ? "#818cf8" : "#880808"} // Lighter color for dark mode
           wireframe
           transparent
           opacity={theme === "dark" ? 0.15 : 0.1}
@@ -59,11 +59,10 @@ function Home() {
             <AbstractShape />
             <Stars
               radius={100}
-              depth={50}
-              count={5000}
-              factor={4}
+              depth={100}
+              count={3000}
+              factor={3}
               saturation={0}
-              fade
               speed={1}
             />
             <OrbitControls
@@ -75,7 +74,7 @@ function Home() {
             />
           </Suspense>
           <EffectComposer>
-            <DepthOfField focusDistance={0} focalLength={0.02} bokehScale={4} />
+            <DepthOfField focusDistance={0} focalLength={0.1} bokehScale={4} />
           </EffectComposer>
         </Canvas>
       </div>

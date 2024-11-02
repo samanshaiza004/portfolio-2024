@@ -55,7 +55,7 @@ export function Projects({ projects }: ProjectsProps) {
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project) => (
             <motion.div key={project.title} variants={projectVariants}>
-              <Card className="h-full flex flex-col hover:shadow-lg transition-shadow">
+              <Card className="h-full flex flex-col hover:shadow-lg transition-all hover:scale-[1.02] transform duration-100">
                 <Link to={`/project/${project.id}`}>
                   <CardHeader>
                     <CardTitle className="flex items-start justify-between">

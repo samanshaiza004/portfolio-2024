@@ -96,6 +96,7 @@ function About() {
                       {skillSet.items.map((skill) => (
                         <Badge
                           key={skill}
+                          variant={"outline"}
                           className="px-3 py-1 text-sm cursor-default select-none"
                         >
                           {skill}
