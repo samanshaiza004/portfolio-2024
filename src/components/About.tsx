@@ -97,7 +97,7 @@ function About() {
                         <Badge
                           key={skill}
                           variant={"outline"}
-                          className="px-3 py-1 text-sm cursor-default select-none"
+                          className="px-3 py-1 font-thin text-sm cursor-default select-none"
                         >
                           {skill}
                         </Badge>

@@ -54,6 +54,7 @@ function RootLayout() {
                   github="https://github.com/samanshaiza004"
                   phone="972 654 2247"
                   linkedin="https://linkedin.com/in/samanshaiza"
+                  discord="samanshaiza"
                 />
               }
             />

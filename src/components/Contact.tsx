@@ -8,6 +8,7 @@ import {
   Twitter,
   Instagram,
 } from "lucide-react";
+import Discord from "./icons/Discord";
 
 interface ContactProps {
   email?: string;
@@ -16,6 +17,7 @@ interface ContactProps {
   phone?: string;
   twitter?: string;
   instagram?: string;
+  discord?: string;
   title?: string;
   subtitle?: string;
 }
@@ -25,6 +27,7 @@ export function Contact({
   github,
   linkedin,
   phone,
+  discord,
   twitter,
   instagram,
   title = "Get in Touch",
@@ -58,6 +61,7 @@ export function Contact({
     { icon: Phone, value: phone, href: `tel:${phone}`, label: "Phone" },
     { icon: Twitter, value: twitter, href: twitter, label: "Twitter" },
     { icon: Instagram, value: instagram, href: instagram, label: "Instagram" },
+    { icon: Discord, value: discord, href: discord, label: "Discord" },
   ].filter((method) => method.value);
 
   return (
