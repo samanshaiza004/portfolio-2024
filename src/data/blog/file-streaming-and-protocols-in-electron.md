@@ -5,15 +5,17 @@ description: "This post is part one of a series of the different tribulations to
 tags: ["punks", "electron"]
 ---
 
+This post is part one of a series of the different tribulations to develop [punks](https://www.github.com/samanshaiza004/punks), my experimental audio sample explorer made in Electron.
+
 # Streaming audio from the user's file system
 
 The fundamental aspect of an audio explorer is... well, streaming audio from the user's file system, duh. This isn't trivial in the slightest, but, luckily, Electron's flexibility allows us to easily create custom protocols to handle these requirements.
 
 ## "Why custom protocols?!"
 
-Electron apps, by default, don't have a straight-forward way to handle large, continuous media files, like audio, directly from the file system. Traditional web apps load media over HTTP, but Electron allows file access directly. However, for security and performance reasons, Electron's build-in APIs are required for this.
+Electron apps, by default, don't have a straight-forward way Traditional web apps load media over HTTP, but Electron allows file access directly. However, for security and performance reasons, Electron's build-in APIs are to be handled with care and thoughtfulness. This is crucial to handle large, continuous media files, like audio, directly from the file system.
 
-Protocols are standardized sets of rules for transmitting data, used in everything from HTTP for websites to FTP for file transfers. In Electron, a custom protocol enables efficient and secure access to files and data outside the web’s limitations, making it ideal for an audio explorer.
+Protocols are standardized sets of rules for transmitting data, used in everything from HTTP for websites to FTP for file transfers. In Electron, a custom protocol enables efficient and secure access to files and data outside the web’s limitations.
 
 Electron’s APIs allow fine-grained control over local resources, making custom protocols effective for secure, high-performance file access without relying on web servers.
 

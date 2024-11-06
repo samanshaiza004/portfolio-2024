@@ -5,13 +5,15 @@ import { Badge } from "@/components/ui/badge";
 import ReactMarkdown, { Components, ExtraProps } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { ClassAttributes, HTMLAttributes } from "react";
-import { Highlight } from "prism-react-renderer";
+import { Highlight, themes } from "prism-react-renderer";
 import { cn } from "@/lib/utils";
 import { ExternalLink } from "lucide-react";
+import { useTheme } from "@/hooks/ThemeContext";
 
 export function BlogPost() {
   const { postId } = useParams();
   const post = blogPosts.find((p) => p.id === postId);
+  const { theme } = useTheme();
 
   const containerVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -56,69 +58,9 @@ export function BlogPost() {
           <Highlight
             code={String(children).replace(/\n$/, "")}
             language={language}
-            theme={{
-              plain: {
-                color: "#F8F8F2",
-                backgroundColor: "#282A36",
-              },
-              styles: [
-                {
-                  types: ["prolog", "constant", "builtin"],
-                  style: {
-                    color: "#FF79C6",
-                  },
-                },
-                {
-                  types: ["inserted", "function"],
-                  style: {
-                    color: "#50FA7B",
-                  },
-                },
-                {
-                  types: ["deleted"],
-                  style: {
-                    color: "#FF5555",
-                  },
-                },
-                {
-                  types: ["changed"],
-                  style: {
-                    color: "#FFB86C",
-                  },
-                },
-                {
-                  types: ["punctuation", "symbol"],
-                  style: {
-                    color: "#F8F8F2",
-                  },
-                },
-                {
-                  types: ["string", "char", "tag", "selector"],
-                  style: {
-                    color: "#FF79C6",
-                  },
-                },
-                {
-                  types: ["keyword", "variable"],
-                  style: {
-                    color: "#BD93F9",
-                    fontStyle: "italic",
-                  },
-                },
-                {
-                  types: ["comment"],
-                  style: {
-                    color: "#6272A4",
-                  },
-                },
-                {
-                  types: ["attr-name"],
-                  style: {
-                    color: "#50FA7B",
-                  },
-                },
-              ],
-            }}
+            theme={
+              theme === "dark" ? themes.jettwaveDark : themes.jettwaveLight
+            }
           >
             {({ className, style, tokens, getLineProps, getTokenProps }) => (
               <pre
