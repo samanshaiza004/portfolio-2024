@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// App.tsx
 
 import { Hero } from "@/components/Hero";
 import { Projects } from "@/components/Projects";
@@ -11,23 +10,7 @@ import About from "./About";
 
 import { Background } from "./Background";
 
-/* function LoadingSkeleton() {
-  return (
-    <div className="container mx-auto px-4 py-8 space-y-4">
-      <Skeleton className="h-12 w-[250px]" />
-      <Skeleton className="h-4 w-[300px]" />
-      <Skeleton className="h-32 w-full" />
-    </div>
-  );
-} */
-
 function Home() {
-  // const [isLoading, _setIsLoading] = useState(false);
-  // const { theme } = useTheme();
-  /* if (isLoading) {
-    return <LoadingSkeleton />;
-  } */
-
   return (
     <div className="relative">
       <Background />

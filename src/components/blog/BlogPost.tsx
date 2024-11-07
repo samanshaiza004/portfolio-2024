@@ -15,20 +15,31 @@ export function BlogPost() {
   const post = blogPosts.find((p) => p.id === postId);
   const { theme } = useTheme();
 
+  const motionPreferences = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  );
+  const shouldReduceMotion = motionPreferences.matches;
+
   const containerVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: {
+      opacity: shouldReduceMotion ? 1 : 0,
+      y: shouldReduceMotion ? 0 : 20,
+    },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.5,
+        duration: shouldReduceMotion ? 0 : 0.6,
         staggerChildren: 0.2,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: {
+      opacity: shouldReduceMotion ? 1 : 0,
+      y: shouldReduceMotion ? 0 : 20,
+    },
     visible: {
       opacity: 1,
       y: 0,

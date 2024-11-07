@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createContext, useContext, useEffect, useState } from "react";
 import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,7 +11,6 @@ const ThemeContext = createContext({
 
 // Custom hook for using theme
 export const useTheme = () => useContext(ThemeContext);
-
 export const ThemeProvider = ({ children }: { children: any }) => {
   const [theme, setTheme] = useState("light");
 
@@ -52,7 +52,10 @@ export const ThemeToggle = () => {
       variant="ghost"
       size="icon"
       onClick={toggleTheme}
-      className="w-9 h-9 rounded-full"
+      type="button"
+      aria-pressed={theme === "dark"}
+      aria-label={`Switch to ${theme ? "light" : "dark"} theme`}
+      className="transition-all focus:ring-2 focus:ring-primary focus:outline-none w-9 h-9 rounded-full"
     >
       {theme === "dark" ? (
         <Moon className="h-4 w-4" />
