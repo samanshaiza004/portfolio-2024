@@ -88,7 +88,7 @@ export function BlogPost() {
 
       return (
         <code
-          className={cn("px-1.5 py-0.5 rounded-md bg-muted", className)}
+          className={cn("px-1.5 py-0.5 rounded-md bg-muted text-sm", className)}
           {...props}
         >
           {children}
@@ -100,6 +100,7 @@ export function BlogPost() {
       return (
         <a
           href={href}
+          target="_blank"
           className={cn(
             "text-primary underline decoration-primary/30 underline-offset-2",
             "transition-all duration-200",
@@ -122,7 +123,10 @@ export function BlogPost() {
     h3: ({ children }) => (
       <h3 className="text-xl font-bold mt-6 mb-3">{children}</h3>
     ),
-    p: ({ children }) => <p className="mb-4 leading-7">{children}</p>,
+    h4: ({ children }) => (
+      <h4 className="text-lg font-bold mt-6 mb-3">{children}</h4>
+    ),
+    p: ({ children }) => <p className="mb-4 leading-7 text-lg">{children}</p>,
     ul: ({ children }) => (
       <ul className="list-disc pl-6 mb-4 space-y-2">{children}</ul>
     ),

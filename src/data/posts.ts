@@ -1,4 +1,4 @@
-import { parseMarkdown } from "@/lib/utils";
+import { parseMetadata } from "@/lib/utils";
 
 const modules = import.meta.glob("./blog/**/*.md", {
   eager: true,
@@ -8,7 +8,7 @@ const modules = import.meta.glob("./blog/**/*.md", {
 
 const posts = Object.entries(modules).map(([path, content]) => {
   const id = path.split("/").pop()?.replace(".md", "") || "";
-  return parseMarkdown(id, content as string);
+  return parseMetadata(id, content as string);
 });
 
 export const blogPosts = posts.sort(
