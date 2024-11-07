@@ -7,27 +7,31 @@ tags: ["punks", "electron"]
 
 This post is part one of a series of the different tribulations to develop [punks](https://www.github.com/samanshaiza004/punks), my experimental audio sample explorer made in Electron.
 
-# Streaming audio from the user's file system
+Creating an audio sample explorer might seem straightforward at first glance – after all, we just need to play some audio files, right? However, building a robust, secure, and performant solution isn't trivial in the slightest. So, in this first part of our series on building punks, we'll explore how I implemented a secure audio streaming using Electron's custom protocols.
 
-The fundamental aspect of an audio explorer is... well, streaming audio from the user's file system, duh. This isn't trivial in the slightest, but, luckily, Electron's flexibility allows us to easily create custom protocols to handle these requirements.
+## The Challenge: Streaming Audio Files Securely
 
-## "Why custom protocols?!"
+When building a desktop application that handles media files, we immediately face several challenges:
 
-Electron apps, by default, don't have a straight-forward way Traditional web apps load media over HTTP, but Electron allows file access directly. However, for security and performance reasons, Electron's build-in APIs are to be handled with care and thoughtfulness. This is crucial to handle large, continuous media files, like audio, directly from the file system.
+- How do we access files from the user's system securely?
+- How do we stream large audio files efficiently?
+- How do we maintain web security principles while working with local files?
 
-Protocols are standardized sets of rules for transmitting data, used in everything from HTTP for websites to FTP for file transfers. In Electron, a custom protocol enables efficient and secure access to files and data outside the web’s limitations.
+Traditional web applications typically serve media through HTTP endpoints, but this approach isn't ideal for a desktop application. We don't want to run a local web server just to play audio files – that would be dumb in a dumb complicated way.
 
-Electron’s APIs allow fine-grained control over local resources, making custom protocols effective for secure, high-performance file access without relying on web servers.
+## Enter Custom Protocols
 
-In this situation, custom protocols are ideal because:
+Before diving into the implementation, let's understand what protocols are and why they're crucial for our application. A protocol is essentially a set of rules that define how data should be transmitted. Just as `http://` tells your browser to fetch data from a web server, or `file://` indicates direct file system access, we can create our own protocol for handling audio files.
 
-- They give **control over how media is accessed** (I don't want a web server, obviously).
-- The registered protocol handler ensures the app does not expose unintended files.
-- Custom protocols with streaming support let us work with audio data efficiently.
+In our case, we'll create a `sample://` protocol that provides:
+
+- Secure access to local audio files
+- Efficient streaming capabilities
+- Integration with Electron's security model
 
 ## Setting up a custom protocol
 
-In **punks**, I registered a custom `sample://` protocol, which tells the app how to handle audio files. This protocol supports the Electron environment's `net` and `protocol` modules, giving us more control over how files are loaded and played.
+First, we need to register our custom protocol with Electron. This involves two steps: declaring the protocol's privileges and implementing the protocol handler.
 
 This can be setup really easily. The `protocol.registerSchemesAsPrivileged` function is used here to grant out custom protocol certain privileges, such as bypassing CSP restrictions and supporting streaming.
 
@@ -75,11 +79,106 @@ When a file path is given to `playAudio`, WaveSurfer loads it using our `sample:
 
 WaveSurfer then manages audio playback, while `AudioProvider` functions (e.g., `playAudio`, `stopAudio`) provide control.
 
-### Challenges: Security and Privileges
+## Challenges: Security and Privileges
 
 Electron’s default settings prevent files from being accessed directly for security reasons. Using a custom protocol with `registerSchemesAsPrivileged` allowed secure access by explicitly listing privileges.
 
-On my first attempt of this app, I was using Wails and they use a static file server which was not an intuitive option for this app. The big reason why I chose Electron was the from a small prototype I made in order to see how easy it is to stream audio files. It was really easy as you can see.
+On my first attempt of this app, I was using Wails and they use a static file server which was not an intuitive option for this app. The big reason why I chose Electron in the first place was the from a small prototype I made in order to see how easy it is to stream audio files.
+
+## Challenges: Cross-Platform File Path Handling
+
+One of the most challenging aspects of building a desktop application is ensuring compatibility across different operating systems. Windows, in particular, requires special attention due to its unique file system conventions.
+
+### The Windows File Path Challenge
+
+Windows file paths differ from Unix-based systems in several key ways:
+
+- Use of backslashes (\\) instead of forward slashes (/)
+- Drive letters (e.g., C:\\)
+- Different handling of special characters
+- Unique path length limitations
+
+Here's how we handle these challenges in our sample protocol:
+
+```typescript
+protocol.handle("sample", async (request) => {
+  try {
+    // Remove the protocol prefix
+    const rawPath = request.url.replace("sample:///", "");
+
+    // Handle special characters for Windows compatibility
+    const decodedPath = rawPath
+      .replace(/%23/g, "#")
+      .replace(/%20/g, " ")
+      .replace(/%5C/g, "\\")
+      .replace(/%3A/g, ":");
+    // ... other special character handling
+
+    // Normalize the path for the current platform
+    const normalizedPath = path.normalize(decodedPath);
+
+    // Platform-specific URL construction
+    let fileUrl: string;
+    if (process.platform === "win32") {
+      // Windows-specific path handling
+      const forwardSlashPath = normalizedPath.replace(/\\/g, "/");
+      const [drive, ...pathParts] = forwardSlashPath.split(":");
+      const encodedPath = pathParts
+        .join(":")
+        .split("/")
+        .map((segment) => encodeSpecialChars(segment))
+        .join("/");
+      fileUrl = `file:///${drive}:${encodedPath}`;
+    } else {
+      // Unix path handling
+      const segments = normalizedPath.split("/");
+      const encodedPath = segments
+        .map((segment) => encodeSpecialChars(segment))
+        .join("/");
+      fileUrl = `file://${encodedPath}`;
+    }
+
+    return await net.fetch(fileUrl);
+  } catch (error) {
+    console.error("Protocol handler error:", error);
+    throw error;
+  }
+});
+```
+
+## Key Considerations for Cross-Platform Compatibility
+
+1. Path Normalization
+   Always normalize paths using Node.js's `path.normalize()`:
+
+```typescript
+const normalizedPath = path.normalize(decodedPath);
+```
+
+This ensures consistent path separators and resolves relative path segments regardless of the operating system.
+
+2. Special Character Handling
+   Windows file paths can contain characters that need special handling:
+
+   ```typescript
+   const encodeSpecialChars = (str: string): string => {
+     return str
+       .replace(/#/g, "%23")
+       .replace(/\s/g, "%20")
+       .replace(/\(/g, "%28")
+       .replace(/\)/g, "%29");
+     // ... other special characters
+   };
+   ```
+
+3. Drive Letter Processing
+   Windows drive letters require specific handling:
+   ```typescript
+   if (process.platform === "win32") {
+     const [drive, ...pathParts] = forwardSlashPath.split(":");
+     fileUrl = `file:///${drive}:${encodedPath}`;
+   }
+   ```
 
 ## Future Plans
 

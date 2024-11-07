@@ -128,10 +128,10 @@ export function BlogPost() {
     ),
     p: ({ children }) => <p className="mb-4 leading-7 text-lg">{children}</p>,
     ul: ({ children }) => (
-      <ul className="list-disc pl-6 mb-4 space-y-2">{children}</ul>
+      <ul className="list-disc pl-6 mb-4 space-y-2 text-lg">{children}</ul>
     ),
     ol: ({ children }) => (
-      <ol className="list-decimal pl-6 mb-4 space-y-2">{children}</ol>
+      <ol className="list-decimal pl-6 mb-4 space-y-2 text-lg">{children}</ol>
     ),
     blockquote: ({ children }) => (
       <blockquote className="border-l-4 border-primary/20 pl-4 italic mb-4 text-muted-foreground">
