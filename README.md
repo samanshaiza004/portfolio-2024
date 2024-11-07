@@ -1,30 +1,7 @@
-# React + TypeScript + Vite
+# personal website, portfolio, and blog
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+welcome to my personal website's repository! this project showcases my work, experience, and blog posts, offering an insight into my journey as a developer. it serves as both a portfolio of my projects and a blog where i share insights, tutorials, and personal thoughts on technology and software development.
 
-Currently, two official plugins are available:
+## tech stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
-    project: ["./tsconfig.json", "./tsconfig.node.json", "./tsconfig.app.json"],
-    tsconfigRootDir: __dirname,
-  },
-};
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+stupid simple. React with Typescript, React Router, Tailwind CSS, Framer Motion, and lil bit of React Three Fiber.

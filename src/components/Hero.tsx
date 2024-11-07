@@ -103,23 +103,18 @@ export function Hero({
                 </Button>
               </motion.div>
             </div>
-
-            {/* Image Column */}
             <motion.div
               variants={itemVariants}
               className="relative flex justify-center lg:justify-end"
             >
-              {/* Background blur effect */}
               <div className="absolute inset-0 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20 rounded-full blur-3xl opacity-30" />
 
-              {/* Image container */}
               <div className="relative">
-                {/* Decorative rotating circle */}
                 <div className="absolute -inset-4 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-full animate-[spin_60s_linear_infinite]" />
 
-                {/* Image */}
                 <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-white dark:border-gray-800 shadow-xl">
                   <img
+                    loading="lazy"
                     src={imageUrl}
                     alt={`${name} profile`}
                     className="w-full h-full object-cover"

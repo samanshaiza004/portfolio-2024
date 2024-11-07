@@ -46,7 +46,7 @@ export function BlogPost() {
       children,
       ...props
     }: {
-      inline?: boolean; // Add this line
+      inline?: boolean;
     } & ClassAttributes<HTMLElement> &
       HTMLAttributes<HTMLElement> &
       ExtraProps) => {
@@ -168,10 +168,7 @@ export function BlogPost() {
         </motion.div>
       </header>
 
-      <motion.div
-        variants={itemVariants}
-        className="prose dark:prose-invert max-w-none"
-      >
+      <motion.div variants={itemVariants} className="max-w-none">
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           components={markdownComponents}
