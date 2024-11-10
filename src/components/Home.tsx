@@ -21,7 +21,6 @@ function Home() {
               name="Saman Shaiza"
               pronunciation="suh-mon shy-zuh"
               description="Software developer focused on creating accessible and performant web and desktop applications.
-              When I'm not coding, I'm making music...
               "
               imageUrl="/saman.jpg"
             />

@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import { Card, CardContent } from "./ui/card";
 import { Badge } from "./ui/badge";
+import { Link } from "react-router-dom";
+import { cn } from "@/lib/utils";
 
 function About() {
   const motionPreferences = window.matchMedia(
@@ -74,14 +76,26 @@ function About() {
                 <p className="text-lg text-muted-foreground">
                   I'm a passionate software developer with a strong focus on
                   creating exceptional web experiences. My journey in tech
-                  started with a curiosity about how things work, which evolved
-                  into a career building solutions that make a difference.
+                  started with a curiosity about how the web worked, which
+                  evolved into a passion building software that improves
+                  people's lives.
                 </p>
                 <br />
                 <p className="text-lg text-muted-foreground">
                   When I'm not coding, you'll find me making music, exploring
                   new technologies, contributing to open-source projects, or
-                  sharing my knowledge through technical writing and mentoring.
+                  sharing my knowledge through{" "}
+                  <Link
+                    className={cn(
+                      "text-primary underline decoration-primary/30 underline-offset-2",
+                      "transition-all duration-200",
+                      "hover:decoration-primary/100 hover:text-primary/80",
+                      "inline-flex items-center gap-1"
+                    )}
+                    to="/blog"
+                  >
+                    blogs and technical writing.
+                  </Link>
                 </p>
               </div>
             </motion.div>
