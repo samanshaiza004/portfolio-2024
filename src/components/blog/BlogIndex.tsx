@@ -47,7 +47,7 @@ export function BlogIndex() {
       initial="hidden"
       animate="visible"
       variants={containerVariants}
-      className="container mx-auto px-4 py-8 max-w-4xl"
+      className="container min-h-screen mx-auto px-4 py-8 max-w-4xl"
     >
       <h1 className="text-4xl font-bold mb-8">Blog</h1>
       <motion.div variants={itemVariants} className="grid gap-6">

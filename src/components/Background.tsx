@@ -87,7 +87,7 @@ export const Background = () => {
   }
 
   return (
-    <div className="fixed inset-0" style={{ zIndex: 1 }}>
+    <div className="fixed inset-0" style={{ zIndex: -1 }}>
       <Canvas
         camera={{ position: [0, 0, 20], fov: 75 }}
         dpr={[1, isLowPerfDevice ? 1.5 : 2]}

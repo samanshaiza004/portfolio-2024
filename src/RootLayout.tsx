@@ -69,7 +69,7 @@ function RootLayout() {
           </Routes>
         </main>
 
-        <footer className="mt-auto border-t bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50">
+        <footer className="mt-auto border-t bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-100">
           <div className="max-w-4xl mx-auto px-4 py-4">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <p className="text-sm text-muted-foreground">
