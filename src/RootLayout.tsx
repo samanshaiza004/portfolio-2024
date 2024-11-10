@@ -1,4 +1,3 @@
-// RootLayout.tsx
 import { Link, Route, Routes } from "react-router-dom";
 import ProjectPage from "./components/ProjectPage";
 import NotFound from "./components/notFound";
@@ -7,11 +6,12 @@ import { BlogPost } from "./components/blog/BlogPost";
 import { BlogIndex } from "./components/blog/BlogIndex";
 import Home from "./components/Home";
 import { ThemeProvider, ThemeToggle } from "./hooks/ThemeContext";
+import { Github } from "lucide-react";
 
 function RootLayout() {
   return (
     <ThemeProvider>
-      <div className="relative min-h-screen">
+      <div className="relative min-h-screen flex flex-col">
         <header className="fixed top-0 left-0 right-0 border-b bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50">
           <nav className="max-w-4xl mx-auto px-4 py-4">
             <div className="flex gap-4 items-center">
@@ -40,7 +40,7 @@ function RootLayout() {
           </nav>
         </header>
 
-        <main className="pt-16">
+        <main className="pt-16 flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/project/:projectId" element={<ProjectPage />} />
@@ -61,6 +61,29 @@ function RootLayout() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
+
+        <footer className="mt-auto border-t bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50">
+          <div className="max-w-4xl mx-auto px-4 py-4">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+              <p className="text-sm text-muted-foreground">
+                © {new Date().getFullYear()} Saman Shaiza. All rights reserved.
+              </p>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <span>Crafted by</span>
+                <a
+                  href="https://github.com/samanshaiza004"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1 hover:text-primary transition-colors font-medium"
+                  aria-label="Visit Saman Shaiza's GitHub profile (opens in new tab)"
+                >
+                  <Github className="h-4 w-4" />
+                  Saman Shaiza
+                </a>
+              </div>
+            </div>
+          </div>
+        </footer>
       </div>
     </ThemeProvider>
   );

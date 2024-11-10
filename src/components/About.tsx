@@ -52,7 +52,6 @@ function About() {
       <Card className="w-full bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <CardContent className="p-6 md:p-12">
           <div className="grid lg:grid-cols-2 gap-12">
-            {/* Left Column - About Me */}
             <motion.div variants={itemVariants} className="space-y-6">
               <div className="space-y-4">
                 <h2 className="text-3xl font-bold tracking-tight">About Me</h2>
@@ -74,8 +73,6 @@ function About() {
                 </p>
               </div>
             </motion.div>
-
-            {/* Right Column - Skills */}
             <motion.div variants={itemVariants} className="space-y-6">
               <div className="space-y-4">
                 <h2 className="text-3xl font-bold tracking-tight">Skills</h2>
