@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// App.tsx
 
 import { Hero } from "@/components/Hero";
 import { Projects } from "@/components/Projects";
@@ -11,23 +10,7 @@ import About from "./About";
 
 import { Background } from "./Background";
 
-/* function LoadingSkeleton() {
-  return (
-    <div className="container mx-auto px-4 py-8 space-y-4">
-      <Skeleton className="h-12 w-[250px]" />
-      <Skeleton className="h-4 w-[300px]" />
-      <Skeleton className="h-32 w-full" />
-    </div>
-  );
-} */
-
 function Home() {
-  // const [isLoading, _setIsLoading] = useState(false);
-  // const { theme } = useTheme();
-  /* if (isLoading) {
-    return <LoadingSkeleton />;
-  } */
-
   return (
     <div className="relative">
       <Background />
@@ -37,8 +20,10 @@ function Home() {
             <Hero
               name="Saman Shaiza"
               pronunciation="suh-mon shy-zuh"
-              description="Software developer focused on creating accessible and performant web and desktop applications. (and i love serif fonts!)"
-              imageUrl="https://pbs.twimg.com/profile_images/1668322144848060416/KERAb-I0_400x400.jpg"
+              description="Software developer focused on creating accessible and performant web and desktop applications.
+              When I'm not coding, I'm making music...
+              "
+              imageUrl="/saman.jpg"
             />
           </div>
 

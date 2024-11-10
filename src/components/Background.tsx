@@ -4,7 +4,7 @@ import { Canvas } from "@react-three/fiber";
 import { DepthOfField, EffectComposer } from "@react-three/postprocessing";
 import { useTheme } from "@/hooks/ThemeContext";
 import { TorusKnotGeometry } from "three";
-// Utility to detect WebGL support
+
 const hasWebGL = () => {
   try {
     const canvas = document.createElement("canvas");
@@ -17,7 +17,6 @@ const hasWebGL = () => {
   }
 };
 
-// Fallback component for when WebGL isn't available
 const FallbackBackground = ({ theme }: { theme: string }) => {
   return (
     <div
@@ -41,9 +40,7 @@ const FallbackBackground = ({ theme }: { theme: string }) => {
   );
 };
 
-// Optimized Abstract Shape
 const AbstractShape = ({ theme }: { theme: string }) => {
-  // Memoize geometry to prevent recreating it on every render
   const geometry = useMemo(() => new TorusKnotGeometry(11, 3, 50, 8), []);
 
   return (
@@ -60,7 +57,6 @@ const AbstractShape = ({ theme }: { theme: string }) => {
   );
 };
 
-// Performance-optimized stars
 const OptimizedStars = () => {
   return (
     <Stars
@@ -82,7 +78,6 @@ export const Background = () => {
   const [isLowPerfDevice, setIsLowPerfDevice] = useState(false);
 
   useEffect(() => {
-    // Check WebGL support and device performance
     setWebGLSupported(hasWebGL());
     setIsLowPerfDevice(window.navigator.hardwareConcurrency <= 4);
   }, []);
@@ -95,8 +90,8 @@ export const Background = () => {
     <div className="fixed inset-0" style={{ zIndex: 1 }}>
       <Canvas
         camera={{ position: [0, 0, 20], fov: 75 }}
-        dpr={[1, isLowPerfDevice ? 1.5 : 2]} // Limit DPR on low-performance devices
-        performance={{ min: 0.5 }} // Allow frame rate to drop to 30fps
+        dpr={[1, isLowPerfDevice ? 1.5 : 2]}
+        performance={{ min: 0.5 }}
         gl={{
           powerPreference: "high-performance",
           antialias: !isLowPerfDevice, // Disable antialiasing on low-performance devices

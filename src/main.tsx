@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 
+import { SmoothScrollProvider } from "./hooks/SmoothScrollContext";
 import SmoothScrolling from "./SmoothScrolling.tsx";
 import App from "./App.tsx";
 
@@ -10,9 +11,11 @@ if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
-      <SmoothScrolling>
-        <App />
-      </SmoothScrolling>
+      <SmoothScrollProvider>
+        <SmoothScrolling>
+          <App />
+        </SmoothScrolling>
+      </SmoothScrollProvider>
     </StrictMode>
   );
 }

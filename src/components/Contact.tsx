@@ -33,24 +33,34 @@ export function Contact({
   title = "Get in Touch",
   subtitle = "Feel free to reach out through any of these channels",
 }: ContactProps) {
+  const motionPreferences = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  );
+  const shouldReduceMotion = motionPreferences.matches;
+
   const containerVariants = {
-    hidden: { opacity: 0 },
+    hidden: {
+      opacity: shouldReduceMotion ? 1 : 0,
+      y: shouldReduceMotion ? 0 : 20,
+    },
     visible: {
       opacity: 1,
+      y: 0,
       transition: {
+        duration: shouldReduceMotion ? 0 : 0.6,
         staggerChildren: 0.2,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: {
+      opacity: shouldReduceMotion ? 1 : 0,
+      y: shouldReduceMotion ? 0 : 20,
+    },
     visible: {
       opacity: 1,
       y: 0,
-      transition: {
-        duration: 0.5,
-      },
     },
   };
 
@@ -72,15 +82,15 @@ export function Contact({
       className="min-h-screen flex flex-col items-center justify-center  py-12 px-4"
     >
       <div className="w-full max-w-3xl mx-auto">
-        <motion.div
-          variants={itemVariants}
-          className="text-center mb-12 transition-all"
-        >
+        <div className="text-center mb-12 transition-all">
           <h1 className="text-4xl font-bold tracking-tight mb-4">{title}</h1>
-          <p className="text-lg text-gray-600 bg-background/80 backdrop-blur-mdrk:text-gray-400">
+          <motion.p
+            variants={itemVariants}
+            className="text-lg text-gray-600 bg-background/80 backdrop-blur-mdrk:text-gray-400"
+          >
             {subtitle}
-          </p>
-        </motion.div>
+          </motion.p>
+        </div>
 
         <motion.div
           variants={itemVariants}

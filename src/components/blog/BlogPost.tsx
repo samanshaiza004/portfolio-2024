@@ -5,28 +5,41 @@ import { Badge } from "@/components/ui/badge";
 import ReactMarkdown, { Components, ExtraProps } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { ClassAttributes, HTMLAttributes } from "react";
-import { Highlight } from "prism-react-renderer";
+import { Highlight, themes } from "prism-react-renderer";
 import { cn } from "@/lib/utils";
 import { ExternalLink } from "lucide-react";
+import { useTheme } from "@/hooks/ThemeContext";
 
 export function BlogPost() {
   const { postId } = useParams();
   const post = blogPosts.find((p) => p.id === postId);
+  const { theme } = useTheme();
+
+  const motionPreferences = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  );
+  const shouldReduceMotion = motionPreferences.matches;
 
   const containerVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: {
+      opacity: shouldReduceMotion ? 1 : 0,
+      y: shouldReduceMotion ? 0 : 20,
+    },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.5,
+        duration: shouldReduceMotion ? 0 : 0.6,
         staggerChildren: 0.2,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: {
+      opacity: shouldReduceMotion ? 1 : 0,
+      y: shouldReduceMotion ? 0 : 20,
+    },
     visible: {
       opacity: 1,
       y: 0,
@@ -44,7 +57,7 @@ export function BlogPost() {
       children,
       ...props
     }: {
-      inline?: boolean; // Add this line
+      inline?: boolean;
     } & ClassAttributes<HTMLElement> &
       HTMLAttributes<HTMLElement> &
       ExtraProps) => {
@@ -56,69 +69,9 @@ export function BlogPost() {
           <Highlight
             code={String(children).replace(/\n$/, "")}
             language={language}
-            theme={{
-              plain: {
-                color: "#F8F8F2",
-                backgroundColor: "#282A36",
-              },
-              styles: [
-                {
-                  types: ["prolog", "constant", "builtin"],
-                  style: {
-                    color: "#FF79C6",
-                  },
-                },
-                {
-                  types: ["inserted", "function"],
-                  style: {
-                    color: "#50FA7B",
-                  },
-                },
-                {
-                  types: ["deleted"],
-                  style: {
-                    color: "#FF5555",
-                  },
-                },
-                {
-                  types: ["changed"],
-                  style: {
-                    color: "#FFB86C",
-                  },
-                },
-                {
-                  types: ["punctuation", "symbol"],
-                  style: {
-                    color: "#F8F8F2",
-                  },
-                },
-                {
-                  types: ["string", "char", "tag", "selector"],
-                  style: {
-                    color: "#FF79C6",
-                  },
-                },
-                {
-                  types: ["keyword", "variable"],
-                  style: {
-                    color: "#BD93F9",
-                    fontStyle: "italic",
-                  },
-                },
-                {
-                  types: ["comment"],
-                  style: {
-                    color: "#6272A4",
-                  },
-                },
-                {
-                  types: ["attr-name"],
-                  style: {
-                    color: "#50FA7B",
-                  },
-                },
-              ],
-            }}
+            theme={
+              theme === "dark" ? themes.jettwaveDark : themes.jettwaveLight
+            }
           >
             {({ className, style, tokens, getLineProps, getTokenProps }) => (
               <pre
@@ -146,7 +99,7 @@ export function BlogPost() {
 
       return (
         <code
-          className={cn("px-1.5 py-0.5 rounded-md bg-muted", className)}
+          className={cn("px-1.5 py-0.5 rounded-md bg-muted text-sm", className)}
           {...props}
         >
           {children}
@@ -158,6 +111,7 @@ export function BlogPost() {
       return (
         <a
           href={href}
+          target="_blank"
           className={cn(
             "text-primary underline decoration-primary/30 underline-offset-2",
             "transition-all duration-200",
@@ -180,12 +134,15 @@ export function BlogPost() {
     h3: ({ children }) => (
       <h3 className="text-xl font-bold mt-6 mb-3">{children}</h3>
     ),
-    p: ({ children }) => <p className="mb-4 leading-7">{children}</p>,
+    h4: ({ children }) => (
+      <h4 className="text-lg font-bold mt-6 mb-3">{children}</h4>
+    ),
+    p: ({ children }) => <p className="mb-4 leading-7 text-lg">{children}</p>,
     ul: ({ children }) => (
-      <ul className="list-disc pl-6 mb-4 space-y-2">{children}</ul>
+      <ul className="list-disc pl-6 mb-4 space-y-2 text-lg">{children}</ul>
     ),
     ol: ({ children }) => (
-      <ol className="list-decimal pl-6 mb-4 space-y-2">{children}</ol>
+      <ol className="list-decimal pl-6 mb-4 space-y-2 text-lg">{children}</ol>
     ),
     blockquote: ({ children }) => (
       <blockquote className="border-l-4 border-primary/20 pl-4 italic mb-4 text-muted-foreground">
@@ -226,10 +183,7 @@ export function BlogPost() {
         </motion.div>
       </header>
 
-      <motion.div
-        variants={itemVariants}
-        className="prose dark:prose-invert max-w-none"
-      >
+      <motion.div variants={itemVariants} className="max-w-none">
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           components={markdownComponents}

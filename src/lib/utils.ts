@@ -9,7 +9,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 // Parsing Markdown Content and Extracting Frontmatter
-export function parseMarkdown(id: string, content: string): BlogPost {
+export function parseMetadata(id: string, content: string): BlogPost {
   try {
     const { data, content: markdownContent } = matter(content);
     return {

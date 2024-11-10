@@ -28,4 +28,7 @@ export default defineConfig({
     global: "window",
   },
   optimizeDeps: {},
+  build: {
+    minify: true,
+  },
 });
