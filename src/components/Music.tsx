@@ -39,12 +39,12 @@ const tracks: Track[] = [
     type: "video",
     url: "oRY0kGJzxjY",
     tags: ["sound design", "anime"],
-  }
+  },
 ];
 
 const AudioPlayer = ({ track }: { track: Track }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
+  /* const [isPlaying, setIsPlaying] = useState(false); 
+  const [isMuted, setIsMuted] = useState(false);*/
   const audioRef = useState<HTMLAudioElement | null>(null);
 
   /* const togglePlay = () => {
@@ -75,17 +75,18 @@ const AudioPlayer = ({ track }: { track: Track }) => {
       >
         {isPlaying ? <Pause className="h-6 w-6" /> : <Play className="h-6 w-6" />}
       </Button> */}
-      
+
       <div className="flex-1">
         <audio
-          ref={audioRef}
+          ref={(node) => {
+            audioRef[1](node); // Update the state variable with the DOM node
+          }}
           src={track.url}
-          onEnded={() => setIsPlaying(false)}
+          /* onEnded={() => setIsPlaying(false)} */
           className="w-full"
           controls
         />
       </div>
-
     </div>
   );
 };
@@ -170,10 +171,7 @@ export default function Music() {
         </motion.div>
 
         {/* Tags filter */}
-        <motion.div 
-          className="flex gap-2 flex-wrap"
-          variants={itemVariants}
-        >
+        <motion.div className="flex gap-2 flex-wrap" variants={itemVariants}>
           {uniqueTags.map((tag) => (
             <Badge
               key={tag}
@@ -196,7 +194,9 @@ export default function Music() {
           >
             <Card className="p-6 space-y-4">
               <h2 className="text-2xl font-semibold">{selectedTrack.title}</h2>
-              <p className="text-muted-foreground">{selectedTrack.description}</p>
+              <p className="text-muted-foreground">
+                {selectedTrack.description}
+              </p>
               {selectedTrack.type === "audio" ? (
                 <AudioPlayer track={selectedTrack} />
               ) : (
@@ -207,7 +207,7 @@ export default function Music() {
         )}
 
         {/* Track grid */}
-        <motion.div 
+        <motion.div
           className="grid grid-cols-1 md:grid-cols-2 gap-4"
           variants={containerVariants}
         >
