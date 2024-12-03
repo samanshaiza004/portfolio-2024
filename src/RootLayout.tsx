@@ -7,6 +7,7 @@ import { BlogIndex } from "./components/blog/BlogIndex";
 import Home from "./components/Home";
 import { ThemeProvider, ThemeToggle } from "./hooks/ThemeContext";
 import { Github } from "lucide-react";
+import Music from "./components/Music";
 
 function RootLayout() {
   return (
@@ -35,6 +36,12 @@ function RootLayout() {
                 Blog
               </Link>
               <Link
+                to="/music"
+                className="hover:underline transition-colors hover:text-primary focus:ring-2 focus:ring-primary focus:outline-none rounded-md px-1 py-1"
+              >
+                Music
+              </Link>
+              <Link
                 to="/contact"
                 className="hover:underline transition-colors hover:text-primary focus:ring-2 focus:ring-primary focus:outline-none rounded-md px-1 py-1"
               >
@@ -53,6 +60,7 @@ function RootLayout() {
             <Route path="/project/:projectId" element={<ProjectPage />} />
             <Route path="/blog" element={<BlogIndex />} />
             <Route path="/blog/:postId" element={<BlogPost />} />
+            <Route path="/music" element={<Music />} />
             <Route
               path="/contact"
               element={
@@ -73,7 +81,7 @@ function RootLayout() {
           <div className="max-w-4xl mx-auto px-4 py-4">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <p className="text-sm text-muted-foreground">
-                © {new Date().getFullYear()} Saman Shaiza. All rights reserved.
+                {new Date().getFullYear()} Saman Shaiza. All rights reserved.
               </p>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <span>Crafted by</span>

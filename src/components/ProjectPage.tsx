@@ -29,7 +29,7 @@ function ProjectPage() {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="max-w-4xl mx-auto px-4 py-8"
+      className="max-w-4xl min-h-screen mx-auto px-4 py-8"
     >
       <Link to="/" className="text-blue-500 hover:underline mb-8 block">
         ← Back to Projects
