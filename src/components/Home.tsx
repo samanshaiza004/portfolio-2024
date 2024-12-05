@@ -12,7 +12,7 @@ import { Background } from "./Background";
 
 function Home() {
   return (
-    <div className="relative">
+    <div className="relative overflow-x-hidden">
       <Background />
       <div className="relative" style={{ zIndex: 2 }}>
         <div className="container mx-auto px-4">
