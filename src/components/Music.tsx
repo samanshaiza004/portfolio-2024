@@ -24,14 +24,14 @@ const tracks: Track[] = [
     url: "/music/binutils ( if ur down ).mp3",
     tags: ["composition", "rnb"],
   },
-  {
+  /* {
     id: "2",
     title: "triple",
     description: "old guitar demo",
     type: "audio",
     url: "/music/alt electronic demo.mp3",
     tags: ["composition", "alt"],
-  },
+  }, */
   {
     id: "3",
     title: "heh",
@@ -40,6 +40,14 @@ const tracks: Track[] = [
     url: "oRY0kGJzxjY",
     tags: ["sound design", "anime"],
   },
+  {
+    id: "4",
+    title: "oath",
+    description: "i honestly have no idea what this is, but i like it",
+    type: "audio",
+    url: "https://utfs.io/f/59HxlDoACmIkTrjIN3q6PvmCqTRVJUM9khx5ty3DbczKnOIp",
+    tags: ["composition", "electronic"],
+  }
 ];
 
 const AudioPlayer = ({ track }: { track: Track }) => {
@@ -47,39 +55,14 @@ const AudioPlayer = ({ track }: { track: Track }) => {
   const [isMuted, setIsMuted] = useState(false);*/
   const audioRef = useState<HTMLAudioElement | null>(null);
 
-  /* const togglePlay = () => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-      } else {
-        audioRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
-
-  const toggleMute = () => {
-    if (audioRef.current) {
-      audioRef.current.muted = !isMuted;
-      setIsMuted(!isMuted);
-    }
-  }; */
-
   return (
     <div className="flex items-center gap-4 p-4 bg-secondary/50 rounded-lg">
-      {/* <Button
-        variant="ghost"
-        size="icon"
-        onClick={togglePlay}
-        aria-label={isPlaying ? "Pause" : "Play"}
-      >
-        {isPlaying ? <Pause className="h-6 w-6" /> : <Play className="h-6 w-6" />}
-      </Button> */}
+      
 
       <div className="flex-1">
         <audio
           ref={(node) => {
-            audioRef[1](node); // Update the state variable with the DOM node
+            audioRef[1](node);
           }}
           src={track.url}
           /* onEnded={() => setIsPlaying(false)} */
@@ -125,8 +108,8 @@ export default function Music() {
       opacity: 1,
       y: 0,
       transition: {
-        duration: shouldReduceMotion ? 0 : 0.4,
-        staggerChildren: 0.2,
+        duration: shouldReduceMotion ? 0 : 0.2,
+        staggerChildren: 0.1,
       },
     },
   };
@@ -140,7 +123,7 @@ export default function Music() {
       opacity: 1,
       y: 0,
       transition: {
-        duration: shouldReduceMotion ? 0 : 0.2,
+        duration: shouldReduceMotion ? 0 : 0.1,
       },
     },
   };

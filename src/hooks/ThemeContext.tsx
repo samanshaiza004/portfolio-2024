@@ -3,6 +3,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import useSound from "./useSound";
 
 // Create theme context
 const ThemeContext = createContext({
@@ -14,7 +15,7 @@ const ThemeContext = createContext({
 export const useTheme = () => useContext(ThemeContext);
 export const ThemeProvider = ({ children }: { children: any }) => {
   const [theme, setTheme] = useState("light");
-
+  const [play] = useSound("/audio/switch.mp3", { volume: 0.5 });
   useEffect(() => {
     // Check for user's preferred theme on first load
     const savedTheme = localStorage.getItem("theme");
@@ -36,6 +37,7 @@ export const ThemeProvider = ({ children }: { children: any }) => {
     setTheme(newTheme);
     localStorage.setItem("theme", newTheme);
     document.documentElement.classList.toggle("dark");
+    play();
   };
 
   return (

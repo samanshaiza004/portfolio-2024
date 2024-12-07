@@ -20,7 +20,7 @@ function Home() {
             <Hero
               name="Saman Shaiza"
               pronunciation="suh-mon shy-zuh"
-              description="Software developer focused on creating accessible and performant web and desktop applications."
+              description="Software developer by day, composer and sound designer by night. I blend technical expertise with creative artistry."
               imageUrl="/saman.jpg"
             />
           </div>
