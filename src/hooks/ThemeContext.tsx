@@ -1,9 +1,8 @@
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, useCallback } from "react";
 import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import useSound from "./useSound";
 
 // Create theme context
 const ThemeContext = createContext({
@@ -13,9 +12,20 @@ const ThemeContext = createContext({
 
 // Custom hook for using theme
 export const useTheme = () => useContext(ThemeContext);
+
+const darkSounds = [
+  "https://utfs.io/f/59HxlDoACmIkMWgFm1lMY5L0DdkXj7I8qizUtaOBZvE1b2my",
+  "https://utfs.io/f/59HxlDoACmIkDB2eIN5sHZweln0qYQr456R3IGy1LXVEAuDM"
+];
+
+const lightSounds = [
+  "https://utfs.io/f/59HxlDoACmIkXzPz1zSvdFnlLPJz5QYp4OoWjhSc9TiM6AsN",
+  "https://utfs.io/f/59HxlDoACmIkqJMwJp2xDm0R65zYkHo9vfj1KOFSngAUrB7t"
+];
+
 export const ThemeProvider = ({ children }: { children: any }) => {
   const [theme, setTheme] = useState("light");
-  const [play] = useSound("/audio/switch.mp3", { volume: 0.5 });
+
   useEffect(() => {
     // Check for user's preferred theme on first load
     const savedTheme = localStorage.getItem("theme");
@@ -32,13 +42,21 @@ export const ThemeProvider = ({ children }: { children: any }) => {
     }
   }, []);
 
-  const toggleTheme = () => {
+  const toggleTheme = useCallback(() => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
     localStorage.setItem("theme", newTheme);
     document.documentElement.classList.toggle("dark");
-    play();
-  };
+    
+    // Play random sound based on theme
+    const soundUrls = newTheme === "dark" ? darkSounds : lightSounds;
+    const randomSound = soundUrls[Math.floor(Math.random() * soundUrls.length)];
+    
+    // Create a new Audio object to play the sound
+    const audio = new Audio(randomSound);
+    audio.volume = 0.5;
+    audio.play().catch(error => console.error("Error playing sound:", error));
+  }, [theme]);
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
