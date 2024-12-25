@@ -1,122 +1,125 @@
-import { Suspense, useState, useEffect, useMemo } from "react";
-import { Float, OrbitControls, Stars } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
-import { DepthOfField, EffectComposer } from "@react-three/postprocessing";
+import { useRef } from "react";
+import { useThree, useFrame, extend, Canvas } from "@react-three/fiber";
+import { shaderMaterial } from "@react-three/drei";
+import { Vector3 } from "three";
 import { useTheme } from "@/hooks/ThemeContext";
-import { TorusKnotGeometry } from "three";
 
-const hasWebGL = () => {
-  try {
-    const canvas = document.createElement("canvas");
-    return !!(
-      window.WebGLRenderingContext &&
-      (canvas.getContext("webgl") || canvas.getContext("experimental-webgl"))
-    );
-  } catch (e) {
-    return false;
+// Create the shader material
+const BackgroundMaterial = shaderMaterial(
+  {
+    time: 0,
+    isDarkMode: 0,
+    resolution: new Vector3(),
+  },
+  // Vertex shader
+  `
+    varying vec2 vUv;
+    
+    void main() {
+      vUv = uv;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }
+  `,
+  // Fragment shader
+  `
+    uniform vec3 resolution;
+    uniform float time;
+    uniform float isDarkMode;
+    varying vec2 vUv;
+
+    vec3 getLightThemeColor(vec3 baseColor) {
+      return mix(vec3(0.95, 0.95, 0.97), vec3(0.85, 0.85, 0.9), baseColor);
+    }
+
+    vec3 getDarkThemeColor(vec3 baseColor) {
+      return mix(vec3(0.05, 0.02, 0.08), vec3(0.08, 0.08, 0.02), baseColor);
+    }
+
+    void main() {
+      vec3 c;
+      float l;
+      float z = time * 0.5;
+      
+      for(int i=0; i<3; i++) {
+        vec2 uv;
+        vec2 p = vUv;
+        p = p * 2.0 - 1.0;
+        p.x *= resolution.x/resolution.y;
+        z += 0.07;
+        l = length(p);
+        uv = p/l * (sin(z) + 1.0) * abs(sin(l*9.0 - z*2.0));
+        c[i] = 0.01/length(abs(mod(uv, 1.0) - 0.5));
+      }
+      
+      // Normalize the color values
+      vec3 baseColor = c/l;
+      
+      // Mix between light and dark theme colors based on isDarkMode
+      vec3 lightColor = getLightThemeColor(baseColor);
+      vec3 darkColor = getDarkThemeColor(baseColor);
+      vec3 finalColor = mix(lightColor, darkColor, isDarkMode);
+      
+      gl_FragColor = vec4(finalColor, 1.0);
+    }
+  `
+);
+
+// Extend Three.js with our custom material
+extend({ BackgroundMaterial });
+
+// Extend JSX Intrinsic Elements for the custom material
+declare module "@react-three/fiber" {
+  interface ThreeElements {
+    backgroundMaterial: JSX.IntrinsicElements["meshStandardMaterial"] & {
+      time?: number;
+      isDarkMode: number;
+      resolution?: Vector3;
+    };
   }
-};
+}
 
-const FallbackBackground = ({ theme }: { theme: string }) => {
-  return (
-    <div
-      className="fixed inset-0 transition-colors duration-300"
-      style={{
-        background:
-          theme === "dark"
-            ? "radial-gradient(circle at 50% 50%, #1e1e2e 0%, #0f0f1f 100%)"
-            : "radial-gradient(circle at 50% 50%, #f8fafc 0%, #e2e8f0 100%)",
-      }}
-    >
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 50% 50%, transparent 90%, rgba(0,0,0,0.1) 100%)",
-          opacity: 0.5,
-        }}
-      />
-    </div>
-  );
-};
-
-const AbstractShape = ({ theme }: { theme: string }) => {
-  const geometry = useMemo(() => new TorusKnotGeometry(11, 3, 50, 8), []);
-
-  return (
-    <Float speed={2} rotationIntensity={0.3} floatIntensity={0.8}>
-      <mesh geometry={geometry}>
-        <meshStandardMaterial
-          color={theme === "dark" ? "#818cf8" : "#880808"}
-          wireframe
-          transparent
-          opacity={theme === "dark" ? 0.15 : 0.1}
-        />
-      </mesh>
-    </Float>
-  );
-};
-
-const OptimizedStars = () => {
-  return (
-    <Stars
-      radius={80}
-      depth={50}
-      count={1500}
-      factor={3}
-      saturation={0}
-      fade
-      speed={0.5}
-    />
-  );
-};
-
-// Main background component
-export const Background = () => {
+// Background mesh component
+const ShaderBackground = () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const materialRef = useRef<any>(null);
+  const { viewport } = useThree();
   const { theme } = useTheme();
-  const [webGLSupported, setWebGLSupported] = useState(true);
-  const [isLowPerfDevice, setIsLowPerfDevice] = useState(false);
 
-  useEffect(() => {
-    setWebGLSupported(hasWebGL());
-    setIsLowPerfDevice(window.navigator.hardwareConcurrency <= 4);
-  }, []);
-
-  if (!webGLSupported) {
-    return <FallbackBackground theme={theme} />;
-  }
+  useFrame((_, delta) => {
+    if (materialRef.current) {
+      materialRef.current.time += delta;
+      materialRef.current.resolution.set(viewport.width, viewport.height, 1);
+      materialRef.current.isDarkMode = theme === "dark" ? 1.0 : 0.0;
+      materialRef.current.needsUpdate = true;
+    }
+  });
 
   return (
-    <div className="fixed inset-0" style={{ zIndex: -1 }}>
+    <mesh scale={[viewport.width, viewport.height, 1]}>
+      <planeGeometry args={[1, 1]} />
+      <backgroundMaterial
+        ref={materialRef}
+        isDarkMode={theme === "dark" ? 1.0 : 0.0}
+      />
+    </mesh>
+  );
+};
+
+// Main component
+const Background = () => {
+  return (
+    <div className="fixed inset-0 w-full h-full" style={{ zIndex: -1 }}>
       <Canvas
-        camera={{ position: [0, 0, 20], fov: 75 }}
-        dpr={[1, isLowPerfDevice ? 1.5 : 2]}
-        performance={{ min: 0.5 }}
+        camera={{ position: [0, 0, 1] }}
         gl={{
-          powerPreference: "high-performance",
-          antialias: !isLowPerfDevice, // Disable antialiasing on low-performance devices
+          antialias: true,
           alpha: true,
         }}
       >
-        <Suspense fallback={null}>
-          <ambientLight intensity={0.5} />
-          <pointLight position={[10, 10, 10]} />
-          <AbstractShape theme={theme} />
-          <OptimizedStars />
-          <OrbitControls
-            enableZoom={false}
-            enablePan={false}
-            enableRotate={true}
-            autoRotate
-            autoRotateSpeed={0.5}
-          />
-        </Suspense>
-        {!isLowPerfDevice && (
-          <EffectComposer>
-            <DepthOfField focusDistance={0} focalLength={0.1} bokehScale={4} />
-          </EffectComposer>
-        )}
+        <ShaderBackground />
       </Canvas>
     </div>
   );
 };
+
+export default Background;

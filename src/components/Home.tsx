@@ -8,7 +8,7 @@ import { projects } from "@/data/projects";
 
 import About from "./About";
 
-import { Background } from "./Background";
+import Background from "./Background";
 
 function Home() {
   return (
