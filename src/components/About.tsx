@@ -82,7 +82,15 @@ function About() {
                 </p>
                 <br />
                 <p className="text-lg text-muted-foreground">
-                  When I'm not coding, you'll find me making music, exploring
+                  Beyond coding, I'm an avid composer and sound designer. This creative background
+                  influences my approach to software development, where I apply the same attention
+                  to detail and creative problem-solving that I use in music composition. I love
+                  exploring the intersection of technology and audio, whether it's building
+                  interactive sound experiences or crafting unique sonic landscapes.
+                </p>
+                <br />
+                <p className="text-lg text-muted-foreground">
+                  When I'm not coding or composing, you'll find me exploring
                   new technologies, contributing to open-source projects, or
                   sharing my knowledge through{" "}
                   <Link
