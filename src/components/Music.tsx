@@ -24,20 +24,13 @@ const tracks: Track[] = [
     url: "/music/binutils ( if ur down ).mp3",
     tags: ["composition", "rnb"],
   },
-  /* {
-    id: "2",
-    title: "triple",
-    description: "old guitar demo",
-    type: "audio",
-    url: "/music/alt electronic demo.mp3",
-    tags: ["composition", "alt"],
-  }, */
   {
     id: "3",
-    title: "heh",
-    description: "10000 bars, 10 seconds",
+    title: "okuran unlocks turbo granny power sound re design ",
+    description:
+      "recording is super scuffed lol ignore my mouse. first time i've sound designed something like this so i had no idea what i was doing, but it was fun to make.",
     type: "video",
-    url: "oRY0kGJzxjY",
+    url: "kG7mv9KuNhc",
     tags: ["sound design", "anime"],
   },
   {
@@ -47,7 +40,7 @@ const tracks: Track[] = [
     type: "audio",
     url: "https://utfs.io/f/59HxlDoACmIkTrjIN3q6PvmCqTRVJUM9khx5ty3DbczKnOIp",
     tags: ["composition", "electronic"],
-  }
+  },
 ];
 
 const AudioPlayer = ({ track }: { track: Track }) => {
@@ -57,8 +50,6 @@ const AudioPlayer = ({ track }: { track: Track }) => {
 
   return (
     <div className="flex items-center gap-4 p-4 bg-secondary/50 rounded-lg">
-      
-
       <div className="flex-1">
         <audio
           ref={(node) => {

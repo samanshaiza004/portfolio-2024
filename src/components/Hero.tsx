@@ -92,7 +92,6 @@ export function Hero({
                 className="max-w-[42rem] text-lg md:text-xl text-muted-foreground"
               >
                 <p>{description}</p>
-                
               </motion.div>
 
               <motion.div

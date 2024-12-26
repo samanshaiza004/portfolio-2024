@@ -8,79 +8,79 @@ import { useTheme } from "@/hooks/ThemeContext";
 const BackgroundMaterial = shaderMaterial(
   {
     time: 0,
-    isDarkMode: 0,
     resolution: new Vector3(),
+    isDarkMode: 0,
   },
-  // Vertex shader
+  // Vertex Shader
   `
-    varying vec2 vUv;
-    
-    void main() {
-      vUv = uv;
-      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-    }
-  `,
+varying vec2 vUv;
+
+void main() {
+  vUv = uv;
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+}
+`,
+
   // Fragment shader
   `
-    uniform vec3 resolution;
-    uniform float time;
-    uniform float isDarkMode;
-    varying vec2 vUv;
+uniform vec3 resolution; // Screen resolution
+uniform float time; // Time for animation
+uniform float isDarkMode; // Flag for dark mode
+varying vec2 vUv; // Interpolated UV coordinates
 
-    vec3 getLightThemeColor(vec3 baseColor) {
-      return mix(vec3(0.95, 0.95, 0.97), vec3(0.85, 0.85, 0.9), baseColor);
-    }
+vec3 getLightThemeColor(vec3 baseColor) {
+  return mix(vec3(0.95, 0.95, 0.97), vec3(0.85, 0.85, 0.9), baseColor);
+}
 
-    vec3 getDarkThemeColor(vec3 baseColor) {
-      return mix(vec3(0.05, 0.02, 0.08), vec3(0.08, 0.08, 0.02), baseColor);
-    }
+vec3 getDarkThemeColor(vec3 baseColor) {
+  return mix(vec3(0.03, 0.02, 0.08), vec3(0.08, 0.08, 0.10), baseColor);
+}
 
-    void main() {
-      vec3 c;
-      float l;
-      float z = time * 0.5;
-      
-      for(int i=0; i<3; i++) {
-        vec2 uv;
-        vec2 p = vUv;
-        p = p * 2.0 - 1.0;
-        p.x *= resolution.x/resolution.y;
-        z += 0.07;
-        l = length(p);
-        uv = p/l * (sin(z) + 1.0) * abs(sin(l*9.0 - z*2.0));
-        c[i] = 0.01/length(abs(mod(uv, 1.0) - 0.5));
-      }
-      
-      // Normalize the color values
-      vec3 baseColor = c/l;
-      
-      // Mix between light and dark theme colors based on isDarkMode
-      vec3 lightColor = getLightThemeColor(baseColor);
-      vec3 darkColor = getDarkThemeColor(baseColor);
-      vec3 finalColor = mix(lightColor, darkColor, isDarkMode);
-      
-      gl_FragColor = vec4(finalColor, 1.0);
-    }
-  `
+void main() {
+  vec2 fragCoord = vUv * resolution.xy; // Convert UV to screen coordinates
+  vec3 c; // Color components
+  float l, z = time; // Length and time variable
+
+  for (int i = 0; i < 3; i++) {
+    vec2 uv, p = fragCoord / resolution.xy; // Normalize fragCoord
+    uv = p; // Copy normalized coordinates
+    p -= 0.5; // Center coordinates
+    p.x *= resolution.x / resolution.y; // Adjust aspect ratio
+    z += 0.07; // Increment z for each color channel
+    l = length(p); // Calculate distance from center
+    uv += p / l * (sin(z) + 1.0) * abs(sin(l * 9.0 - z - z)); // Apply distortion
+    c[i] = 0.01 / length(mod(uv, 1.0) - 0.5); // Calculate color component
+  }
+
+  // Normalize the color values
+  vec3 baseColor = c / l;
+
+  // Mix between light and dark theme colors based on isDarkMode
+  vec3 lightColor = getLightThemeColor(baseColor);
+  vec3 darkColor = getDarkThemeColor(baseColor);
+  vec3 finalColor = mix(lightColor, darkColor, isDarkMode);
+
+  // Set the final fragment color
+  gl_FragColor = vec4(finalColor, 1.0);
+}
+`
 );
 
 // Extend Three.js with our custom material
 extend({ BackgroundMaterial });
 
-// Extend JSX Intrinsic Elements for the custom material
+// Extend JSX Intrinsic Elements
 declare module "@react-three/fiber" {
   interface ThreeElements {
-    backgroundMaterial: JSX.IntrinsicElements["meshStandardMaterial"] & {
+    backgroundMaterial: JSX.IntrinsicElements["shaderMaterial"] & {
       time?: number;
-      isDarkMode: number;
       resolution?: Vector3;
+      isDarkMode?: number;
     };
   }
 }
 
-// Background mesh component
 const ShaderBackground = () => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const materialRef = useRef<any>(null);
   const { viewport } = useThree();
   const { theme } = useTheme();
@@ -105,7 +105,6 @@ const ShaderBackground = () => {
   );
 };
 
-// Main component
 const Background = () => {
   return (
     <div className="fixed inset-0 w-full h-full" style={{ zIndex: -1 }}>
