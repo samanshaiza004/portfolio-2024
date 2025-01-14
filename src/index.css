@@ -4,9 +4,11 @@
 
 @font-face {
   font-family: "PP Writer";
-  src: url("fonts/PPWriter-Regular.otf");
+  src: url("./assets/fonts/PPWriter-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
-
 :root {
   font-family: "PP Writer";
   width: 100vw;

@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import ProjectPage from "./components/ProjectPage";
 import NotFound from "./components/notFound";
 import Contact from "./components/Contact";
@@ -11,13 +11,15 @@ import Music from "./components/Music";
 import About from "./components/About";
 import NavBox from "./components/NavBox";
 import Background from "./components/Background";
+import BlogBackground from "./components/BlogBackground";
 
 function RootLayout() {
+  const location = useLocation();
+  const isBlogPost = location.pathname.match(/^\/blog\/[^/]+$/);
   return (
     <ThemeProvider>
       <div className="min-h-screen">
-        <Background />
-
+        {isBlogPost ? <BlogBackground /> : <Background />}
         <main
           className="relative md:grid flex-col flex md:grid-cols-3 gap-1 min-h-screen p-1 md:p-2"
           id="main-content"
