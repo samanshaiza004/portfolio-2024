@@ -1,22 +1,25 @@
-import { Link, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import ProjectPage from "./components/ProjectPage";
 import NotFound from "./components/notFound";
 import Contact from "./components/Contact";
 import { BlogPost } from "./components/blog/BlogPost";
 import { BlogIndex } from "./components/blog/BlogIndex";
 import Home from "./components/Home";
-import { ThemeProvider, ThemeToggle } from "./hooks/ThemeContext";
+import { ThemeProvider } from "./hooks/ThemeContext";
 import { Github } from "lucide-react";
 import Music from "./components/Music";
 import About from "./components/About";
 import NavBox from "./components/NavBox";
+import Background from "./components/Background";
 
 function RootLayout() {
   return (
     <ThemeProvider>
-      <div className="relative min-h-screen">
+      <div className="min-h-screen">
+        <Background />
+
         <main
-          className="relative grid grid-cols-1 md:grid-cols-3 gap-1 min-h-screen p-1 md:p-2"
+          className="relative md:grid flex-col flex md:grid-cols-3 gap-1 min-h-screen p-1 md:p-2"
           id="main-content"
           role="main"
           tabIndex={-1}

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import Gravity, { MatterBody } from "./fancy/gravity";
 import { useState, useEffect } from "react";
+import Background from "./Background";
 
 function About() {
   const [shouldReduceMotion, setShouldReduceMotion] = useState(false);
@@ -67,7 +68,7 @@ function About() {
       whileInView="visible"
       viewport={{ once: true }}
       variants={containerVariants}
-      className="relative z-10"
+      className="relative"
     >
       <Card className="w-full bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <CardContent className="p-6 md:p-12">

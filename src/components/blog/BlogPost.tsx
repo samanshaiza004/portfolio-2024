@@ -9,6 +9,7 @@ import { Highlight, themes } from "prism-react-renderer";
 import { cn } from "@/lib/utils";
 import { ExternalLink } from "lucide-react";
 import { useTheme } from "@/hooks/ThemeContext";
+import { Card, CardHeader } from "../ui/card";
 
 export function BlogPost() {
   const { postId } = useParams();
@@ -152,45 +153,47 @@ export function BlogPost() {
   };
 
   return (
-    <motion.article
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}
-      className="container mx-auto px-4 py-8 max-w-4xl"
-    >
-      <header className="mb-8">
-        <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
-        <motion.div
-          variants={itemVariants}
-          className="text-muted-foreground mb-4"
-        >
-          {new Date(post.date).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
-        </motion.div>
-        <motion.div variants={itemVariants} className="flex flex-wrap gap-2">
-          {post.tags.map((tag) => (
-            <Badge
-              key={tag}
-              variant="secondary"
-              className="font-thin select-none"
-            >
-              {tag}
-            </Badge>
-          ))}
-        </motion.div>
-      </header>
+    <Card className="bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <motion.article
+        initial="hidden"
+        animate="visible"
+        variants={containerVariants}
+        className="container mx-auto px-4 py-8 max-w-4xl "
+      >
+        <header className="mb-8">
+          <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
+          <motion.div
+            variants={itemVariants}
+            className="text-muted-foreground mb-4"
+          >
+            {new Date(post.date).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </motion.div>
+          <motion.div variants={itemVariants} className="flex flex-wrap gap-2">
+            {post.tags.map((tag) => (
+              <Badge
+                key={tag}
+                variant="secondary"
+                className="font-thin select-none"
+              >
+                {tag}
+              </Badge>
+            ))}
+          </motion.div>
+        </header>
 
-      <motion.div variants={itemVariants} className="max-w-none">
-        <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
-          components={markdownComponents}
-        >
-          {post.content}
-        </ReactMarkdown>
-      </motion.div>
-    </motion.article>
+        <motion.div variants={itemVariants} className="max-w-none">
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            components={markdownComponents}
+          >
+            {post.content}
+          </ReactMarkdown>
+        </motion.div>
+      </motion.article>
+    </Card>
   );
 }

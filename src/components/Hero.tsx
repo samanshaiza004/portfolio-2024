@@ -1,9 +1,8 @@
-import { useState, useEffect, useRef } from "react";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { useState, useEffect } from "react";
+import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import VerticalCutReveal from "./fancy/vertical-cut-reveal";
-import NavBox from "./NavBox";
-import { useTheme } from "@/hooks/ThemeContext";
+
 interface HeroProps {
   name: string;
   pronunciation: string;
@@ -15,11 +14,11 @@ export function Hero({
   name,
   pronunciation,
   description,
-  imageUrl,
-}: HeroProps) {
+}: /*   imageUrl,
+ */ HeroProps) {
   const [mounted, setMounted] = useState(false);
-  const { theme } = useTheme();
-
+  /*   const { theme } = useTheme();
+   */
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -29,7 +28,7 @@ export function Hero({
   );
   const shouldReduceMotion = motionPreferences.matches;
 
-  const containerVariants = {
+  /*  const containerVariants = {
     hidden: {
       opacity: shouldReduceMotion ? 1 : 0,
     },
@@ -40,7 +39,7 @@ export function Hero({
         staggerChildren: 0.2,
       },
     },
-  };
+  }; */
 
   const itemVariants = {
     hidden: {
@@ -56,7 +55,7 @@ export function Hero({
   if (!mounted) return null;
 
   return (
-    <Card className="bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <Card className="md:h-full h-[700px] bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <CardContent className="relative w-full h-screen p-3">
         {/* Name Section - Responsive positioning */}
         <div className="flex flex-col">
@@ -126,7 +125,7 @@ export function Hero({
                 />
               </div>
               <span className="font-medium">working on:</span>
-              <span>studying maths, computer science and making music!</span>
+              <span>studying computer science and making music!</span>
             </li>
 
             <li className="flex items-center gap-2">

@@ -1,17 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Hero } from "@/components/Hero";
-import { Projects } from "@/components/Projects";
-
+/* import { Projects } from "@/components/Projects";
+ */
 // import { Skeleton } from "@/components/ui/skeleton";
-import { projects } from "@/data/projects";
-
-import Background from "./Background";
+/* import { projects } from "@/data/projects";
+ */
 
 function Home() {
   return (
     <div className="">
-      <Background />
       <div className="relative" style={{ zIndex: 2 }}>
         <Hero
           name="welcome to saman!"

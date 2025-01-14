@@ -33,14 +33,14 @@ export interface GravityRef {
   reset: () => void;
 }
 
-interface PhysicsBody {
+/* interface PhysicsBody {
   element: HTMLElement;
   body: Matter.Body;
   props: MatterBodyProps;
-}
+} */
 
 // Helper function to calculate position
-const calculatePosition = (
+/* const calculatePosition = (
   value: string | number | undefined,
   containerSize: number,
   elementSize: number
@@ -50,14 +50,14 @@ const calculatePosition = (
     return (parseFloat(value) / 100) * containerSize - elementSize / 2;
   }
   return containerSize / 2 - elementSize / 2;
-};
+}; */
 
 // MatterBody Component
 export const MatterBody: React.FC<MatterBodyProps> = ({
   children,
-  x = "50%",
+  /* x = "50%",
   y = "50%",
-  matterBodyOptions = {},
+  matterBodyOptions = {}, */
   className,
 }) => {
   const elementRef = useRef<HTMLDivElement>(null);
@@ -91,8 +91,8 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
     const engineRef = useRef(Matter.Engine.create());
     const renderRef = useRef<Matter.Render>();
     const runnerRef = useRef<Matter.Runner>();
-    const bodiesMapRef = useRef(new Map<string, PhysicsBody>());
-    const [isInitialized, setIsInitialized] = useState(false);
+    /*     const bodiesMapRef = useRef(new Map<string, PhysicsBody>());
+     */ const [isInitialized, setIsInitialized] = useState(false);
 
     // Initialize Matter.js engine and renderer
     const initializePhysics = () => {
