@@ -3,8 +3,7 @@ import { motion } from "framer-motion";
 import { blogPosts } from "@/data/posts";
 import { Badge } from "@/components/ui/badge";
 import { useTheme } from "@/hooks/ThemeContext";
-import AnimatedGradient from "../AnimatedGradient";
-import { Card } from "../ui/card";
+import { Card, CardContent } from "../ui/card";
 
 interface BlogCardProps {
   title: string;
@@ -146,9 +145,7 @@ export function BlogIndex() {
       opacity: 1,
       y: 0,
     },
-  };
-
-  // Light mode gradients
+  }; // Light mode gradients
   const lightGradients = [
     ["#A8E6CF", "#DCEDC1"],
     ["#95E1D3", "#EAFFD0"],
@@ -160,14 +157,6 @@ export function BlogIndex() {
     ["#D36161", "#DCc36A"],
   ];
 
-  /*************  ✨ Codeium Command ⭐  *************/
-  /**
-   * Returns a random color pair from the list of gradients. If the theme is
-   * dark, it will return a random color pair from the darkGradients array,
-   * otherwise it will return a random color pair from the lightGradients array.
-   * @returns {string[]} A random color pair.
-   */
-
   /******  0dba0bb8-e892-4848-9e3e-d4ddd0d0f62b  *******/
   const getRandomColors = () => {
     const gradients = theme === "dark" ? darkGradients : lightGradients;
@@ -176,32 +165,37 @@ export function BlogIndex() {
 
   return (
     <div>
-      <AnimatedGradient colors={lightGradients[0]} speed={0.05} blur="medium" />
       {/* Main Content Card */}
-      <Card className="bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <motion.div variants={itemVariants} className="grid gap-6">
-          {blogPosts
-            .sort(
-              (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-            )
-            .map((post, index) => (
-              <motion.div key={post.id} variants={itemVariants}>
-                <BlogCard
-                  title={post.title}
-                  value={new Date(post.date).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                  description={post.description}
-                  tags={post.tags}
-                  colors={getRandomColors()}
-                  delay={index * 0.1}
-                  link={`/blog/${post.id}`}
-                />
-              </motion.div>
-            ))}
-        </motion.div>
+      <Card className="w-full bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <CardContent className="h-screen p-6">
+          <motion.div variants={itemVariants} className="grid gap-6">
+            <div className="space-y-4">
+              <h2 className="text-3xl font-bold tracking-tight">blog</h2>
+            </div>
+            {blogPosts
+              .sort(
+                (a, b) =>
+                  new Date(b.date).getTime() - new Date(a.date).getTime()
+              )
+              .map((post, index) => (
+                <motion.div key={post.id} variants={itemVariants}>
+                  <BlogCard
+                    title={post.title}
+                    value={new Date(post.date).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                    description={post.description}
+                    tags={post.tags}
+                    colors={getRandomColors()}
+                    delay={index * 0.1}
+                    link={`/blog/${post.id}`}
+                  />
+                </motion.div>
+              ))}
+          </motion.div>
+        </CardContent>
       </Card>
     </div>
   );

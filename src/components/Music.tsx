@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Card } from "./ui/card";
+import { Card, CardContent, CardHeader } from "./ui/card";
 import { Badge } from "./ui/badge";
 /* import { Button } from "./ui/button";
 import { Play, Pause, Volume2, VolumeX } from "lucide-react"; */
@@ -83,12 +83,14 @@ export default function Music() {
 
   useEffect(() => {
     setMounted(true);
+
+    const motionPreferences = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    );
+    setShouldReduceMotion(motionPreferences.matches);
   }, []);
 
-  const motionPreferences = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  );
-  const shouldReduceMotion = motionPreferences.matches;
+  const [shouldReduceMotion, setShouldReduceMotion] = useState(false);
 
   const containerVariants = {
     hidden: {
@@ -99,8 +101,8 @@ export default function Music() {
       opacity: 1,
       y: 0,
       transition: {
-        duration: shouldReduceMotion ? 0 : 0.2,
-        staggerChildren: 0.1,
+        duration: shouldReduceMotion ? 0 : 0.6,
+        staggerChildren: 0.2,
       },
     },
   };
@@ -130,90 +132,97 @@ export default function Music() {
   if (!mounted) return null;
 
   return (
-    <motion.div
-      className="max-w-4xl mx-auto px-4 py-8"
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-    >
-      <motion.section className="space-y-4" variants={containerVariants}>
-        <motion.div variants={itemVariants}>
-          <h1 className="text-4xl font-bold">Music & Sound Design</h1>
-          <p className="text-lg text-muted-foreground">
-            Explore my portfolio of original compositions and sound design work.
-          </p>
-        </motion.div>
-
-        {/* Tags filter */}
-        <motion.div className="flex gap-2 flex-wrap" variants={itemVariants}>
-          {uniqueTags.map((tag) => (
-            <Badge
-              key={tag}
-              variant={filter === tag ? "default" : "secondary"}
-              className="cursor-pointer"
-              onClick={() => setFilter(filter === tag ? null : tag)}
-            >
-              {tag}
-            </Badge>
-          ))}
-        </motion.div>
-
-        {/* Featured track */}
-        {selectedTrack && (
-          <motion.div
-            variants={itemVariants}
-            initial="hidden"
-            animate="visible"
-            layout
-          >
-            <Card className="p-6 space-y-4">
-              <h2 className="text-2xl font-semibold">{selectedTrack.title}</h2>
-              <p className="text-muted-foreground">
-                {selectedTrack.description}
-              </p>
-              {selectedTrack.type === "audio" ? (
-                <AudioPlayer track={selectedTrack} />
-              ) : (
-                <YouTubeEmbed videoId={selectedTrack.url} />
-              )}
-            </Card>
+    <div className="relative">
+      <Card className="w-full bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <CardHeader>
+          <motion.div variants={itemVariants}>
+            <h1 className="text-4xl font-bold">Music & Sound Design</h1>
+            <p className="text-lg text-muted-foreground">
+              Explore my portfolio of original compositions and sound design
+              work.
+            </p>
           </motion.div>
-        )}
-
-        {/* Track grid */}
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 gap-4"
-          variants={containerVariants}
-        >
-          {filteredTracks.map((track) => (
+        </CardHeader>
+        <CardContent className="p-6 h-screen">
+          <motion.section className="space-y-4" variants={containerVariants}>
             <motion.div
-              key={track.id}
+              className="flex gap-2 flex-wrap"
               variants={itemVariants}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
             >
-              <Card
-                className={`p-4 cursor-pointer transition-colors hover:bg-secondary/50 ${
-                  selectedTrack?.id === track.id ? "ring-2 ring-primary" : ""
-                }`}
-                onClick={() => setSelectedTrack(track)}
-              >
-                <h3 className="font-semibold">{track.title}</h3>
-                <p className="text-sm text-muted-foreground line-clamp-2">
-                  {track.description}
-                </p>
-                <div className="mt-2 flex gap-2">
-                  {track.tags.map((tag) => (
-                    <Badge key={tag} variant="secondary">
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
-              </Card>
+              {uniqueTags.map((tag) => (
+                <Badge
+                  key={tag}
+                  variant={filter === tag ? "default" : "secondary"}
+                  className="cursor-pointer"
+                  onClick={() => setFilter(filter === tag ? null : tag)}
+                >
+                  {tag}
+                </Badge>
+              ))}
             </motion.div>
-          ))}
-        </motion.div>
-      </motion.section>
-    </motion.div>
+
+            {/* Featured track */}
+            {selectedTrack && (
+              <motion.div
+                variants={itemVariants}
+                initial="hidden"
+                animate="visible"
+                layout
+              >
+                <Card className="p-6 space-y-4">
+                  <h2 className="text-2xl font-semibold">
+                    {selectedTrack.title}
+                  </h2>
+                  <p className="text-muted-foreground">
+                    {selectedTrack.description}
+                  </p>
+                  {selectedTrack.type === "audio" ? (
+                    <AudioPlayer track={selectedTrack} />
+                  ) : (
+                    <YouTubeEmbed videoId={selectedTrack.url} />
+                  )}
+                </Card>
+              </motion.div>
+            )}
+
+            {/* Track grid */}
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-2 gap-4"
+              variants={containerVariants}
+            >
+              {filteredTracks.map((track) => (
+                <motion.div
+                  key={track.id}
+                  variants={itemVariants}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <Card
+                    className={`p-4 cursor-pointer transition-colors hover:bg-secondary/50 ${
+                      selectedTrack?.id === track.id
+                        ? "ring-2 ring-primary"
+                        : ""
+                    }`}
+                    onClick={() => setSelectedTrack(track)}
+                  >
+                    <h3 className="font-semibold">{track.title}</h3>
+                    <p className="text-sm text-muted-foreground line-clamp-2">
+                      {track.description}
+                    </p>
+                    <div className="mt-2 flex gap-2">
+                      {track.tags.map((tag) => (
+                        <Badge key={tag} variant="secondary">
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+                  </Card>
+                </motion.div>
+              ))}
+            </motion.div>
+          </motion.section>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

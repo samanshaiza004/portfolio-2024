@@ -1,5 +1,4 @@
 import { ThemeToggle, useTheme } from "@/hooks/ThemeContext";
-import { Music } from "lucide-react";
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardHeader, CardContent } from "./ui/card";
@@ -206,12 +205,18 @@ const FavoriteTunes = () => {
 
   return (
     <div className="mt-6">
-      <h2 className="text-xl font-bold mb-4 font-georgia text-[#009900] flex items-center gap-2">
-        <Music className="inline-block mr-1" /> my fav tunes rn
+      <h2 className=" text-xl font-bold mb-4 font-georgia text-[#009900] flex items-center gap-2">
+        <img
+          src="https://web.archive.org/web/20091026193637/http://geocities.com/EdiMusic/vorlagen/note.gif"
+          alt="soundcloud"
+          className="h-5 w-5 inline-block"
+        />{" "}
+        my fav tunes rn
       </h2>
       <div className="space-y-2">
-        {tracks.map((track) => (
+        {tracks.map((track, index) => (
           <SoundCloudEmbed
+            key={index}
             artistUrl={track.artistUrl}
             name={track.name}
             link={track.link}
