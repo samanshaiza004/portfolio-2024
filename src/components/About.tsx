@@ -16,21 +16,6 @@ function About() {
     setShouldReduceMotion(motionPreferences.matches);
   }, []);
 
-  const containerVariants = {
-    hidden: {
-      opacity: shouldReduceMotion ? 1 : 0,
-      y: shouldReduceMotion ? 0 : 20,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: shouldReduceMotion ? 0 : 0.6,
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
   const itemVariants = {
     hidden: {
       opacity: shouldReduceMotion ? 1 : 0,
