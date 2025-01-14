@@ -5,7 +5,6 @@ import { Badge } from "@/components/ui/badge";
 import { useTheme } from "@/hooks/ThemeContext";
 import AnimatedGradient from "../AnimatedGradient";
 import { Card } from "../ui/card";
-import NavBox from "../NavBox";
 
 interface BlogCardProps {
   title: string;
@@ -22,7 +21,6 @@ const BlogCard: React.FC<BlogCardProps> = ({
   title,
   value,
   subtitle,
-  colors,
   delay,
   description,
   tags,
@@ -131,24 +129,6 @@ const BlogCard: React.FC<BlogCardProps> = ({
 };
 
 // Helper function to adjust colors for dark mode
-const adjustColorForDarkMode = (color: string) => {
-  // Convert hex to RGB, darken it slightly, and return new hex
-  // This is a simple implementation - you might want to use a color library
-  // for more sophisticated color manipulation
-  const hex = color.replace("#", "");
-  const r = parseInt(hex.substring(0, 2), 16);
-  const g = parseInt(hex.substring(2, 4), 16);
-  const b = parseInt(hex.substring(4, 6), 16);
-
-  // Darken the color by reducing brightness
-  const darkR = Math.max(0, r - 40);
-  const darkG = Math.max(0, g - 40);
-  const darkB = Math.max(0, b - 40);
-
-  return `#${darkR.toString(16).padStart(2, "0")}${darkG
-    .toString(16)
-    .padStart(2, "0")}${darkB.toString(16).padStart(2, "0")}`;
-};
 
 export function BlogIndex() {
   const { theme } = useTheme();
@@ -156,18 +136,6 @@ export function BlogIndex() {
     "(prefers-reduced-motion: reduce)"
   );
   const shouldReduceMotion = motionPreferences.matches;
-  const containerVariants = {
-    hidden: {
-      opacity: shouldReduceMotion ? 1 : 0,
-    },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: shouldReduceMotion ? 0 : 0.6,
-        staggerChildren: 0.2,
-      },
-    },
-  };
 
   const itemVariants = {
     hidden: {

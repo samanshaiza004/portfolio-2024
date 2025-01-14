@@ -9,7 +9,7 @@ import { Highlight, themes } from "prism-react-renderer";
 import { cn } from "@/lib/utils";
 import { ExternalLink } from "lucide-react";
 import { useTheme } from "@/hooks/ThemeContext";
-import { Card, CardHeader } from "../ui/card";
+import { Card } from "../ui/card";
 
 export function BlogPost() {
   const { postId } = useParams();

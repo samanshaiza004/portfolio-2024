@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import Gravity, { MatterBody } from "./fancy/gravity";
 import { useState, useEffect } from "react";
-import Background from "./Background";
 
 function About() {
   const [shouldReduceMotion, setShouldReduceMotion] = useState(false);
