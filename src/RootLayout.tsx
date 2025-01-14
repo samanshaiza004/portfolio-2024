@@ -8,73 +8,43 @@ import Home from "./components/Home";
 import { ThemeProvider, ThemeToggle } from "./hooks/ThemeContext";
 import { Github } from "lucide-react";
 import Music from "./components/Music";
+import About from "./components/About";
+import NavBox from "./components/NavBox";
 
 function RootLayout() {
   return (
     <ThemeProvider>
       <div className="relative min-h-screen">
-        <header
-          role="banner"
-          aria-label="Main navigation"
-          className="fixed top-0 left-0 right-0 border-b bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50"
+        <main
+          className="relative grid grid-cols-1 md:grid-cols-3 gap-1 min-h-screen p-1 md:p-2"
+          id="main-content"
+          role="main"
+          tabIndex={-1}
         >
-          <nav role="navigation" className="max-w-4xl mx-auto px-4 py-4">
-            <a href="#main-content" className="skip-link">
-              Skip to main content
-            </a>
-            <div className="flex gap-4 items-center">
-              <Link
-                to="/"
-                className="hover:underline transition-colors hover:text-primary focus:ring-2 focus:ring-primary focus:outline-none rounded-md px-1 py-1"
-              >
-                Home
-              </Link>
-              <Link
-                to="/blog"
-                className="hover:underline transition-colors hover:text-primary focus:ring-2 focus:ring-primary focus:outline-none rounded-md px-1 py-1"
-              >
-                Blog
-              </Link>
-              <Link
-                to="/music"
-                className="hover:underline transition-colors hover:text-primary focus:ring-2 focus:ring-primary focus:outline-none rounded-md px-1 py-1"
-              >
-                Music
-              </Link>
-              <Link
-                to="/contact"
-                className="hover:underline transition-colors hover:text-primary focus:ring-2 focus:ring-primary focus:outline-none rounded-md px-1 py-1"
-              >
-                Contact
-              </Link>
-              <div className="ml-auto">
-                <ThemeToggle />
-              </div>
-            </div>
-          </nav>
-        </header>
-
-        <main className="pt-16" id="main-content" role="main" tabIndex={-1}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/project/:projectId" element={<ProjectPage />} />
-            <Route path="/blog" element={<BlogIndex />} />
-            <Route path="/blog/:postId" element={<BlogPost />} />
-            <Route path="/music" element={<Music />} />
-            <Route
-              path="/contact"
-              element={
-                <Contact
-                  email="samanshaiza@yahoo.com"
-                  github="https://github.com/samanshaiza004"
-                  phone="972 654 2247"
-                  linkedin="https://linkedin.com/in/samanshaiza"
-                  discord="samanshaiza"
-                />
-              }
-            />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <div className="page-info col-span-1 md:col-span-2">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/project/:projectId" element={<ProjectPage />} />
+              <Route path="/blog" element={<BlogIndex />} />
+              <Route path="/blog/:postId" element={<BlogPost />} />
+              <Route path="/music" element={<Music />} />
+              <Route path="/about" element={<About />} />
+              <Route
+                path="/contact"
+                element={
+                  <Contact
+                    email="samanshaiza@yahoo.com"
+                    github="https://github.com/samanshaiza004"
+                    phone="972 654 2247"
+                    linkedin="https://linkedin.com/in/samanshaiza"
+                    discord="samanshaiza"
+                  />
+                }
+              />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </div>
+          <NavBox />
         </main>
 
         <footer className="mt-auto border-t bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-100">

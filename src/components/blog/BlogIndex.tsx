@@ -4,6 +4,8 @@ import { blogPosts } from "@/data/posts";
 import { Badge } from "@/components/ui/badge";
 import { useTheme } from "@/hooks/ThemeContext";
 import AnimatedGradient from "../AnimatedGradient";
+import { Card } from "../ui/card";
+import NavBox from "../NavBox";
 
 interface BlogCardProps {
   title: string;
@@ -56,7 +58,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5, delay }}
     >
-      <AnimatedGradient
+      {/* <AnimatedGradient
         colors={
           theme === "dark"
             ? colors.map((color) => adjustColorForDarkMode(color))
@@ -64,7 +66,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
         }
         speed={0.05}
         blur="medium"
-      />
+      /> */}
       <motion.div
         className={`relative z-10 p-3 sm:p-5 md:p-8
           ${theme === "dark" ? "text-gray-100" : "text-foreground"}`}
@@ -154,15 +156,12 @@ export function BlogIndex() {
     "(prefers-reduced-motion: reduce)"
   );
   const shouldReduceMotion = motionPreferences.matches;
-
   const containerVariants = {
     hidden: {
       opacity: shouldReduceMotion ? 1 : 0,
-      y: shouldReduceMotion ? 0 : 20,
     },
     visible: {
       opacity: 1,
-      y: 0,
       transition: {
         duration: shouldReduceMotion ? 0 : 0.6,
         staggerChildren: 0.2,
@@ -183,60 +182,60 @@ export function BlogIndex() {
 
   // Light mode gradients
   const lightGradients = [
-    ["#FF6B6B", "#4ECDC4"],
     ["#A8E6CF", "#DCEDC1"],
-    ["#FFD93D", "#FF6B6B"],
     ["#95E1D3", "#EAFFD0"],
-    ["#F38181", "#FCE38A"],
   ];
 
   // Dark mode gradients - slightly darker and more saturated
   const darkGradients = [
-    ["#FF4B4B", "#2EADA4"],
     ["#88C6AF", "#BCCD91"],
-    ["#DFB91D", "#FF4B4B"],
-    ["#75C1B3", "#CADFA0"],
     ["#D36161", "#DCc36A"],
   ];
 
+  /*************  ✨ Codeium Command ⭐  *************/
+  /**
+   * Returns a random color pair from the list of gradients. If the theme is
+   * dark, it will return a random color pair from the darkGradients array,
+   * otherwise it will return a random color pair from the lightGradients array.
+   * @returns {string[]} A random color pair.
+   */
+
+  /******  0dba0bb8-e892-4848-9e3e-d4ddd0d0f62b  *******/
   const getRandomColors = () => {
     const gradients = theme === "dark" ? darkGradients : lightGradients;
     return gradients[Math.floor(Math.random() * gradients.length)];
   };
 
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}
-      className={`container min-h-screen mx-auto px-4 py-8 max-w-4xl
-        ${theme === "dark" ? "text-gray-100" : ""}`}
-    >
-      <h1 className="text-4xl font-bold mb-8">Blog</h1>
-      <motion.div variants={itemVariants} className="grid gap-6">
-        {blogPosts
-          .sort(
-            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-          )
-          .map((post, index) => (
-            <motion.div key={post.id} variants={itemVariants}>
-              <BlogCard
-                title={post.title}
-                value={new Date(post.date).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-                description={post.description}
-                tags={post.tags}
-                colors={getRandomColors()}
-                delay={index * 0.1}
-                link={`/blog/${post.id}`}
-              />
-            </motion.div>
-          ))}
-      </motion.div>
-    </motion.div>
+    <div>
+      <AnimatedGradient colors={lightGradients[0]} speed={0.05} blur="medium" />
+      {/* Main Content Card */}
+      <Card className="bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <motion.div variants={itemVariants} className="grid gap-6">
+          {blogPosts
+            .sort(
+              (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+            )
+            .map((post, index) => (
+              <motion.div key={post.id} variants={itemVariants}>
+                <BlogCard
+                  title={post.title}
+                  value={new Date(post.date).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                  description={post.description}
+                  tags={post.tags}
+                  colors={getRandomColors()}
+                  delay={index * 0.1}
+                  link={`/blog/${post.id}`}
+                />
+              </motion.div>
+            ))}
+        </motion.div>
+      </Card>
+    </div>
   );
 }
 

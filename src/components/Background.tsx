@@ -1,121 +1,90 @@
-import { useRef } from "react";
-import { useThree, useFrame, extend, Canvas } from "@react-three/fiber";
-import { shaderMaterial } from "@react-three/drei";
-import { Vector3 } from "three";
+import { useRef, useState } from "react";
+import { useThree, useFrame, Canvas } from "@react-three/fiber";
 import { useTheme } from "@/hooks/ThemeContext";
+import { Suspense } from "react";
+import * as THREE from "three";
+import { Environment } from "@react-three/drei";
+import { DepthOfField, EffectComposer } from "@react-three/postprocessing";
 
-// Create the shader material
-const BackgroundMaterial = shaderMaterial(
-  {
-    time: 0,
-    resolution: new Vector3(),
-    isDarkMode: 0,
-  },
-  // Vertex Shader
-  `
-varying vec2 vUv;
+function Box({ z }: { z: number }) {
+  const ref = useRef<any>();
+  const { viewport, camera } = useThree();
+  const { width, height } = viewport.getCurrentViewport(camera, [0, 0, z]);
 
-void main() {
-  vUv = uv;
-  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-}
-`,
+  // Initialize box properties
+  const [data] = useState({
+    x: THREE.MathUtils.randFloatSpread(2),
+    y: THREE.MathUtils.randFloatSpread(height),
+    rX: Math.random() * Math.PI,
+    rY: Math.random() * Math.PI,
+    rZ: Math.random() * Math.PI,
+  });
 
-  // Fragment shader
-  `
-uniform vec3 resolution; // Screen resolution
-uniform float time; // Time for animation
-uniform float isDarkMode; // Flag for dark mode
-varying vec2 vUv; // Interpolated UV coordinates
-
-vec3 getLightThemeColor(vec3 baseColor) {
-  return mix(vec3(0.95, 0.95, 0.97), vec3(0.85, 0.85, 0.9), baseColor);
-}
-
-vec3 getDarkThemeColor(vec3 baseColor) {
-  return mix(vec3(0.03, 0.02, 0.08), vec3(0.08, 0.08, 0.10), baseColor);
-}
-
-void main() {
-  vec2 fragCoord = vUv * resolution.xy; // Convert UV to screen coordinates
-  vec3 c; // Color components
-  float l, z = time; // Length and time variable
-
-  for (int i = 0; i < 3; i++) {
-    vec2 uv, p = fragCoord / resolution.xy; // Normalize fragCoord
-    uv = p; // Copy normalized coordinates
-    p -= 0.5; // Center coordinates
-    p.x *= resolution.x / resolution.y; // Adjust aspect ratio
-    z += 0.07; // Increment z for each color channel
-    l = length(p); // Calculate distance from center
-    uv += p / l * (sin(z) + 1.0) * abs(sin(l * 9.0 - z - z)); // Apply distortion
-    c[i] = 0.01 / length(mod(uv, 1.0) - 0.5); // Calculate color component
-  }
-
-  // Normalize the color values
-  vec3 baseColor = c / l;
-
-  // Mix between light and dark theme colors based on isDarkMode
-  vec3 lightColor = getLightThemeColor(baseColor);
-  vec3 darkColor = getDarkThemeColor(baseColor);
-  vec3 finalColor = mix(lightColor, darkColor, isDarkMode);
-
-  // Set the final fragment color
-  gl_FragColor = vec4(finalColor, 1.0);
-}
-`
-);
-
-// Extend Three.js with our custom material
-extend({ BackgroundMaterial });
-
-// Extend JSX Intrinsic Elements
-declare module "@react-three/fiber" {
-  interface ThreeElements {
-    backgroundMaterial: JSX.IntrinsicElements["shaderMaterial"] & {
-      time?: number;
-      resolution?: Vector3;
-      isDarkMode?: number;
-    };
-  }
-}
-
-const ShaderBackground = () => {
-  const materialRef = useRef<any>(null);
-  const { viewport } = useThree();
-  const { theme } = useTheme();
-
-  useFrame((_, delta) => {
-    if (materialRef.current) {
-      materialRef.current.time += delta;
-      materialRef.current.resolution.set(viewport.width, viewport.height, 1);
-      materialRef.current.isDarkMode = theme === "dark" ? 1.0 : 0.0;
-      materialRef.current.needsUpdate = true;
+  useFrame(() => {
+    ref.current.rotation.set(
+      (data.rX += 0.001),
+      (data.rY += 0.004),
+      (data.rZ += 0.005)
+    );
+    ref.current.position.set(data.x * width, (data.y += 0.01), z);
+    if (data.y > height / 1.5) {
+      data.y = -height / 1.5;
     }
   });
 
   return (
-    <mesh scale={[viewport.width, viewport.height, 1]}>
-      <planeGeometry args={[1, 1]} />
-      <backgroundMaterial
-        ref={materialRef}
-        isDarkMode={theme === "dark" ? 1.0 : 0.0}
+    <mesh ref={ref}>
+      <boxGeometry />
+      <meshStandardMaterial
+        color={z > -20 ? "#b6e3c2" : "#93cca3"}
+        roughness={0.2}
+        metalness={0.0}
       />
     </mesh>
   );
-};
+}
 
-const Background = () => {
+/**
+ * Renders a 3D background using React Three Fiber and Drei, with dynamic lighting
+ * and environment based on the current theme context.
+ *
+ * @param {Object} props - Component properties.
+ * @param {number} [props.count=200] - Number of box elements to render.
+ * @param {number} [props.depth=60] - Depth of the 3D scene.
+ * @returns {JSX.Element} The background component.
+ */
+
+const Background = ({ count = 200, depth = 60 }) => {
+  const { theme } = useTheme();
+
   return (
     <div className="fixed inset-0 w-full h-full" style={{ zIndex: -1 }}>
-      <Canvas
-        camera={{ position: [0, 0, 1] }}
-        gl={{
-          antialias: true,
-          alpha: true,
-        }}
-      >
-        <ShaderBackground />
+      <Canvas gl={{ alpha: false }} camera={{ near: 0.01, far: 110, fov: 37 }}>
+        <color
+          attach="background"
+          args={[theme === "dark" ? "#030712" : "#ffffff"]}
+        />
+        <ambientLight intensity={theme === "dark" ? 0.5 : 0.8} />
+        <spotLight
+          position={[10, 10, 10]}
+          intensity={theme === "dark" ? 0.8 : 1}
+          color={theme === "dark" ? "#4444ff" : "#ffffff"}
+        />
+
+        <Suspense fallback={null}>
+          <Environment preset={theme === "dark" ? "night" : "sunset"} />
+          {Array.from({ length: count }, (_, i) => (
+            <Box key={i} z={-(i / count) * depth - 10} />
+          ))}
+          <EffectComposer>
+            <DepthOfField
+              target={[0, 0, depth / 4]}
+              focalLength={0.5}
+              bokehScale={theme === "dark" ? 8 : 11}
+              height={700}
+            />
+          </EffectComposer>
+        </Suspense>
       </Canvas>
     </div>
   );

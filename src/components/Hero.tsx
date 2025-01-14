@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, Github, Mail } from "lucide-react";
-import { Link } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { motion } from "framer-motion";
-
+import VerticalCutReveal from "./fancy/vertical-cut-reveal";
+import NavBox from "./NavBox";
+import { useTheme } from "@/hooks/ThemeContext";
 interface HeroProps {
   name: string;
   pronunciation: string;
@@ -19,6 +18,7 @@ export function Hero({
   imageUrl,
 }: HeroProps) {
   const [mounted, setMounted] = useState(false);
+  const { theme } = useTheme();
 
   useEffect(() => {
     setMounted(true);
@@ -32,11 +32,9 @@ export function Hero({
   const containerVariants = {
     hidden: {
       opacity: shouldReduceMotion ? 1 : 0,
-      y: shouldReduceMotion ? 0 : 20,
     },
     visible: {
       opacity: 1,
-      y: 0,
       transition: {
         duration: shouldReduceMotion ? 0 : 0.6,
         staggerChildren: 0.2,
@@ -58,88 +56,120 @@ export function Hero({
   if (!mounted) return null;
 
   return (
-    <motion.section
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}
-      aria-labelledby="hero-title"
-      className="min-h-[80vh] flex items-center py-8"
-    >
-      <Card className="w-full bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <CardContent className="p-6 md:p-12">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Content Column */}
-            <div className="space-y-8">
-              <motion.div variants={itemVariants} className="">
-                <h1
-                  id="hero-title"
-                  className="text-4xl md:text-6xl font-bold tracking-tight"
-                >
-                  {name}
-                </h1>
-                <div role="doc-subtitle" className="space-y-3">
-                  <span className="animate-opacity-pulse text-sm md:text-md text-muted-foreground">
-                    @samanshaiza on everything
-                  </span>
-                  <p className="text-lg md:text-xl text-muted-foreground">
-                    {pronunciation}
-                  </p>
-                </div>
-              </motion.div>
-
-              <motion.div
-                variants={itemVariants}
-                className="max-w-[42rem] text-lg md:text-xl text-muted-foreground"
-              >
-                <p>{description}</p>
-              </motion.div>
-
-              <motion.div
-                variants={itemVariants}
-                className="flex flex-col sm:flex-row gap-4 "
-              >
-                <Button size="lg" className="group" asChild>
-                  <a
-                    href="https://github.com/samanshaiza004"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Github className="mr-2 h-5 w-5" />
-                    GitHub
-                    <ArrowRight className="ml-2 h-5 w-5 opacity-0 group-hover:opacity-100 transition-all" />
-                  </a>
-                </Button>
-                <Button variant="outline" size="lg" className="group" asChild>
-                  <Link to="/contact">
-                    <Mail className="mr-2 h-5 w-5" />
-                    Contact Me
-                    <ArrowRight className="ml-2 h-5 w-5 opacity-0 group-hover:opacity-100 transition-all" />
-                  </Link>
-                </Button>
-              </motion.div>
-            </div>
-            <motion.div
-              variants={itemVariants}
-              className="relative flex justify-center lg:justify-end"
+    <Card className="bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <CardContent className="relative w-full h-screen p-3">
+        {/* Name Section - Responsive positioning */}
+        <div className="flex flex-col">
+          <p
+            className="text-lg animate-opacity-flicker"
+            style={{
+              fontFamily: "'Courier New', monospace",
+              color: "#00aaff",
+            }}
+          >
+            &lt;website is under construction&gt;
+          </p>
+        </div>
+        <motion.div
+          variants={itemVariants}
+          className=" md:top-12 md:left-12 mb-8 md:mb-0"
+        >
+          <h1 id="hero-title" className="tracking-tight break-words">
+            <VerticalCutReveal
+              splitBy="characters"
+              staggerDuration={0.025}
+              staggerFrom="first"
+              containerClassName="text-[4rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] xl:text-[12rem] font-bold bg-clip-text"
+              transition={{
+                type: "spring",
+                stiffness: 200,
+                damping: 21,
+              }}
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20 rounded-full blur-3xl opacity-30" />
-
-              <div className="relative">
-                <div className="absolute -inset-4 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-full animate-[spin_60s_linear_infinite]" />
-
-                <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-white dark:border-gray-800 shadow-xl">
-                  <img
-                    src={imageUrl}
-                    alt={`${name}'s profile`}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+              {name}
+            </VerticalCutReveal>
+          </h1>
+          <p className="text-base md:text-2xl text-gray-300">
+            pronounced {pronunciation}
+          </p>
+          <ul className="space-y-3 mt-12 text-sm md:text-base text-muted-foreground">
+            <li className="flex items-center gap-2 group">
+              <div className="w-6 h-6 flex items-center justify-center">
+                <img
+                  className="w-6 h-5 transition-transform"
+                  src="https://web.archive.org/web/20090831092929/http://geocities.com/shanelaffond13/gamerzfirexboxlogo2.gif"
+                  alt="xbox logo on fire"
+                />
               </div>
-            </motion.div>
+              <span className="font-medium">playing:</span>
+              <span>Metaphor: ReFantazio | Yakuza: Like a Dragon</span>
+            </li>
+
+            <li className="flex items-center gap-2">
+              <div className="flex items-center gap-2">
+                <img
+                  className="w-6 h-6 flex items-center justify-center"
+                  src="https://web.archive.org/web/20091027073622/http://www.geocities.com/daisy_my_girl/Cheesedancing.gif"
+                  alt="cheese dancing"
+                />
+              </div>
+              <span className="font-medium">watching:</span>
+              <span>The Simpsons S3 | Puchi Puri * Yuushi</span>
+            </li>
+
+            <li className="flex items-center gap-2">
+              <div className="flex items-center gap-2">
+                <img
+                  className="w-6 h-6 flex items-center justify-center"
+                  src="https://web.archive.org/web/20091019205144/http://www.geocities.com/specopsairsoftteam/usaflag.gif"
+                  alt="usa flag"
+                />
+              </div>
+              <span className="font-medium">working on:</span>
+              <span>studying maths, computer science and making music!</span>
+            </li>
+
+            <li className="flex items-center gap-2">
+              <div className="flex items-center gap-2">
+                <img
+                  className="w-6 h-6 flex items-center justify-center"
+                  src="https://web.archive.org/web/20091024184824/http://www.geocities.com/lankan_blood_rd/a-starsngl.gif"
+                  alt="star"
+                />
+              </div>
+              <span className="font-medium">recently just watched:</span>
+              <span>Blade Runner 2047 (2017)</span>
+            </li>
+
+            <li className="flex items-center gap-2 pt-2 text-xs md:text-sm border-t border-border/40">
+              <span>Last updated: 1/13/2025</span>
+            </li>
+          </ul>
+        </motion.div>
+
+        {/* Social Handle - Responsive positioning */}
+        <motion.div
+          variants={itemVariants}
+          className="md:absolute md:bottom-12 md:left-12 mb-8 md:mb-0"
+        >
+          <div className="flex items-center">
+            <span className="animate-opacity-pulse text-sm md:text-base text-muted-foreground">
+              @samanshaiza on everything
+            </span>
           </div>
-        </CardContent>
-      </Card>
-    </motion.section>
+        </motion.div>
+
+        {/* Description - Responsive positioning */}
+        <motion.div
+          variants={itemVariants}
+          className="md:absolute md:bottom-12 md:right-12 md:max-w-[40%]"
+        >
+          <p className="text-base md:text-xl text-muted-foreground">
+            {description}
+          </p>
+        </motion.div>
+      </CardContent>
+    </Card>
   );
 }
 

@@ -119,6 +119,22 @@
   animation: opacity-pulse 3s linear infinite;
 }
 
+@keyframes opacity-flicker {
+  0% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.2;
+  }
+}
+
+.animate-opacity-flicker {
+  animation: opacity-flicker 1s ease-in infinite;
+}
+
 /* Add to your global CSS */
 :focus-visible {
   outline: 2px solid var(--color-primary);
