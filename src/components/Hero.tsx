@@ -55,7 +55,7 @@ export function Hero({
   if (!mounted) return null;
 
   return (
-    <Card className="md:h-full h-[700px] bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <Card className="md:h-full h-[750px] bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <CardContent className="relative w-full h-screen p-6">
         {/* Name Section - Responsive positioning */}
         <div className="flex flex-col">

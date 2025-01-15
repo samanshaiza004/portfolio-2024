@@ -49,7 +49,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
         ${
           theme === "dark"
             ? "bg-gray-800/50 hover:shadow-gray-700/50"
-            : "bg-white hover:shadow-gray-200/50"
+            : "bg-white/50 hover:shadow-gray-200/50"
         }`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}

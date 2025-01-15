@@ -1,7 +1,199 @@
 import { ThemeToggle, useTheme } from "@/hooks/ThemeContext";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardHeader, CardContent } from "./ui/card";
+import { HoverCardTrigger, HoverCard, HoverCardContent } from "./ui/hovercard";
+import {
+  Cloud,
+  CloudLightning,
+  CloudRain,
+  CloudSnow,
+  CloudFog,
+  Sun,
+  Wind,
+} from "lucide-react";
+// Weather API types
+interface WeatherResponse {
+  weather: Array<{
+    id: number;
+    main: string;
+    description: string;
+  }>;
+  main: {
+    temp: number;
+    feels_like: number;
+    temp_min: number;
+    temp_max: number;
+    humidity: number;
+  };
+  name: string;
+  cod: number;
+}
+
+interface DateTimeFormatOptions {
+  weekday?: "long" | "short" | "narrow";
+  year?: "numeric" | "2-digit";
+  month?: "numeric" | "2-digit" | "long" | "short" | "narrow";
+  day?: "numeric" | "2-digit";
+  hour?: "numeric" | "2-digit";
+  minute?: "numeric" | "2-digit";
+  second?: "numeric" | "2-digit";
+  hour12?: boolean;
+}
+
+const TimeIndicator: React.FC = () => {
+  const [dateTime, setDateTime] = useState<Date>(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setDateTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const formatDate = (date: Date): string => {
+    const options: DateTimeFormatOptions = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+    return date.toLocaleDateString("en-US", options);
+  };
+
+  const formatTime = (date: Date): string => {
+    const options: DateTimeFormatOptions = {
+      hour: "numeric",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: true,
+    };
+    return date.toLocaleTimeString("en-US", options);
+  };
+
+  return (
+    <Card className="p-4 bg-background/60 backdrop-blur">
+      <div className="space-y-2">
+        <div className="text-sm text-muted-foreground">
+          {formatDate(dateTime)}
+        </div>
+        <div className="text-2xl font-mono">{formatTime(dateTime)}</div>
+      </div>
+    </Card>
+  );
+};
+
+interface WeatherError {
+  message: string;
+  cod: number;
+}
+
+interface WeatherState {
+  data: WeatherResponse | null;
+  loading: boolean;
+  error: string | null;
+}
+
+const WeatherIndicator: React.FC = () => {
+  const [weatherState, setWeatherState] = useState<WeatherState>({
+    data: null,
+    loading: true,
+    error: null,
+  });
+
+  useEffect(() => {
+    const fetchWeather = async (): Promise<void> => {
+      try {
+        const response = await fetch(
+          `https://api.openweathermap.org/data/2.5/weather?lat=33.1507&lon=-96.8236&appid=a1bb895d335e6a5b19bdcec9645d67b6&units=imperial`
+        );
+
+        if (!response.ok) {
+          const errorData = (await response.json()) as WeatherError;
+          throw new Error(errorData.message || "Failed to fetch weather data");
+        }
+
+        const data = (await response.json()) as WeatherResponse;
+        setWeatherState({
+          data,
+          loading: false,
+          error: null,
+        });
+      } catch (err) {
+        setWeatherState({
+          data: null,
+          loading: false,
+          error:
+            err instanceof Error ? err.message : "Failed to fetch weather data",
+        });
+      }
+    };
+
+    fetchWeather();
+    const interval = setInterval(fetchWeather, 1800000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const getWeatherIcon = (weatherCode: number): JSX.Element => {
+    const iconProps = { className: "w-8 h-8" };
+
+    switch (true) {
+      case weatherCode >= 200 && weatherCode < 300:
+        return <CloudLightning {...iconProps} />;
+      case weatherCode >= 300 && weatherCode < 600:
+        return <CloudRain {...iconProps} />;
+      case weatherCode >= 600 && weatherCode < 700:
+        return <CloudSnow {...iconProps} />;
+      case weatherCode >= 700 && weatherCode < 800:
+        return <CloudFog {...iconProps} />;
+      case weatherCode === 800:
+        return <Sun {...iconProps} />;
+      case weatherCode >= 801 && weatherCode < 900:
+        return <Cloud {...iconProps} />;
+      default:
+        return <Wind {...iconProps} />;
+    }
+  };
+
+  if (weatherState.loading) {
+    return (
+      <Card className="p-4 bg-background/60 backdrop-blur">
+        <div className="animate-pulse">Loading weather...</div>
+      </Card>
+    );
+  }
+
+  if (weatherState.error) {
+    return (
+      <Card className="p-4 bg-background/60 backdrop-blur">
+        <div className="text-red-500">{weatherState.error}</div>
+      </Card>
+    );
+  }
+
+  return (
+    <Card className="p-4 bg-background/60 backdrop-blur">
+      {weatherState.data && (
+        <div className="flex items-center justify-between">
+          <div className="space-y-1">
+            <div className="text-sm text-muted-foreground">Frisco, TX</div>
+            <div className="text-2xl">
+              {Math.round(weatherState.data.main.temp)}°F
+            </div>
+            <div className="text-sm text-muted-foreground">
+              {weatherState.data.weather[0].description}
+            </div>
+          </div>
+          <div className="text-primary">
+            {getWeatherIcon(weatherState.data.weather[0].id)}
+          </div>
+        </div>
+      )}
+    </Card>
+  );
+};
 
 function NavBox() {
   return (
@@ -81,8 +273,8 @@ function NavBox() {
         </div>
         <FavoriteTunes />
         <div className="space-y-6 border-t border-border/40 pt-6">
-          <WeatherWidget />
-          <TimeWidget />
+          <WeatherIndicator />
+          <TimeIndicator />
           <MoodWidget />
         </div>
         <img
@@ -205,14 +397,23 @@ const FavoriteTunes = () => {
 
   return (
     <div className="mt-6">
-      <h2 className=" text-xl font-bold mb-4 font-georgia text-[#009900] flex items-center gap-2">
-        <img
-          src="https://web.archive.org/web/20091026193637/http://geocities.com/EdiMusic/vorlagen/note.gif"
-          alt="soundcloud"
-          className="h-5 w-5 inline-block"
-        />{" "}
-        my fav tunes rn
-      </h2>
+      <HoverCard>
+        <HoverCardTrigger>
+          <h2 className="text-xl font-bold mb-4 font-georgia text-[#009900] flex items-center gap-2 cursor-default select-none">
+            <img
+              src="https://web.archive.org/web/20091026193637/http://geocities.com/EdiMusic/vorlagen/note.gif"
+              alt="soundcloud"
+              className="h-5 w-5 inline-block"
+            />{" "}
+            my fav tunes rn
+          </h2>
+        </HoverCardTrigger>
+        <HoverCardContent className="w-80">
+          <p className="flex justify-between space-x-4">
+            you can listen while exploring the site. try it out!
+          </p>
+        </HoverCardContent>
+      </HoverCard>
       <div className="space-y-2">
         {tracks.map((track, index) => (
           <SoundCloudEmbed

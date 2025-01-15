@@ -132,7 +132,7 @@ export default function Music() {
   if (!mounted) return null;
 
   return (
-    <div className="relative">
+    <div className="">
       <Card className="w-full bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <CardHeader>
           <motion.div variants={itemVariants}>
