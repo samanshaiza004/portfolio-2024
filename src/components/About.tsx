@@ -9,7 +9,7 @@ import { useState, useEffect, useMemo, useRef } from "react";
 const PersonalSection = () => {
   const favorites = [
     { label: "born", value: "2004" },
-    { label: "sign", value: "cancer ♋" },
+    { label: "sign", value: "gemini ♊" },
     { label: "game", value: "the great ace attorney, both of them!" },
     { label: "console", value: "3ds" },
     { label: "music", value: "all music (:" },
@@ -27,8 +27,18 @@ const PersonalSection = () => {
     >
       <Card className="overflow-hidden bg-gradient-to-br from-green-100/30 to-blue-100/30 backdrop-blur">
         <CardContent className="p-6">
-          <h3 className="text-2xl font-bold mb-6 font-calendas italic">
-            ★ my favorites ★
+          <h3 className="text-2xl font-bold mb-6 font-calendas italic flex items-center">
+            <img
+              className="w-5 h-5 mr-2"
+              src="https://web.archive.org/web/20091027065313/http://www.geocities.com/fmg1967/star.gif"
+              alt="an epic horse neighing"
+            />{" "}
+            my favorites{" "}
+            <img
+              className="w-5 h-5 ml-2"
+              src="https://web.archive.org/web/20091027065313/http://www.geocities.com/fmg1967/star.gif"
+              alt="an epic horse neighing"
+            />{" "}
           </h3>
 
           <table className="w-full border-collapse">
@@ -61,7 +71,7 @@ const PersonalSection = () => {
 
 function About() {
   const [shouldReduceMotion, setShouldReduceMotion] = useState(false);
-  const [containerHeight, setContainerHeight] = useState(0);
+  const [_containerHeight, setContainerHeight] = useState(0);
   const gravityContainerRef = useRef<HTMLDivElement>(null);
 
   // Update container height on mount and resize

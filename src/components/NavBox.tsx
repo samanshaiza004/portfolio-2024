@@ -1,5 +1,5 @@
-import { ThemeToggle, useTheme } from "@/hooks/ThemeContext";
-import React, { useEffect, useRef, useState } from "react";
+import { ThemeToggle } from "@/hooks/ThemeContext";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardHeader, CardContent } from "./ui/card";
 import { HoverCardTrigger, HoverCard, HoverCardContent } from "./ui/hovercard";
@@ -287,18 +287,6 @@ function NavBox() {
   );
 }
 
-const TimeWidget = () => (
-  <div className="my-6">
-    <iframe
-      src="https://free.timeanddate.com/clock/i9pyu8e0/n5442/fn4/fs18/fc111/tct/pct/blt0/brt0/btc00b/pl4/pr4/th1"
-      width="89"
-      height="26"
-      title="Current Time"
-      className="border-none bg-transparent"
-    />
-  </div>
-);
-
 const MoodWidget = () => (
   <div className="my-6">
     <a
@@ -315,48 +303,6 @@ const MoodWidget = () => (
     </a>
   </div>
 );
-
-const WeatherWidget = () => {
-  const containerRef = useRef(null);
-
-  const { theme } = useTheme();
-
-  useEffect(() => {
-    // Create and inject the weather widget script
-    const script = document.createElement("script");
-    script.src = "https://weatherwidget.io/js/widget.min.js";
-    script.async = true;
-    script.id = "weatherwidget-io-js";
-
-    // Only inject if not already present
-    if (!document.getElementById("weatherwidget-io-js")) {
-      document.body.appendChild(script);
-    }
-
-    return () => {
-      // Cleanup on unmount
-      const existingScript = document.getElementById("weatherwidget-io-js");
-      if (existingScript) {
-        existingScript.remove();
-      }
-    };
-  }, [theme]);
-
-  return (
-    <div ref={containerRef} className="my-6">
-      <a
-        className="weatherwidget-io"
-        href="https://forecast7.com/en/33d15n96d82/frisco/?unit=us"
-        data-font="Noto Sans"
-        data-mode="Current"
-        data-days="3"
-        data-theme={theme === "dark" ? "dark" : "clear"}
-      >
-        Frisco, TX, USA
-      </a>
-    </div>
-  );
-};
 
 type SoundCloudEmbedProps = {
   trackUrl: string;
@@ -408,9 +354,13 @@ const FavoriteTunes = () => {
             my fav tunes rn
           </h2>
         </HoverCardTrigger>
-        <HoverCardContent className="w-80">
+        <HoverCardContent
+          align="start" // This aligns the content with the left side of the trigger
+          side="bottom"
+          className="w-80 bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60 "
+        >
           <p className="flex justify-between space-x-4">
-            you can listen while exploring the site. try it out!
+            fun fact: you can listen while exploring the site. try it out!
           </p>
         </HoverCardContent>
       </HoverCard>
