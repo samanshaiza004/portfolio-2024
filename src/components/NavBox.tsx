@@ -9,7 +9,6 @@ import {
   CloudRain,
   CloudSnow,
   CloudFog,
-  Sun,
   Wind,
 } from "lucide-react";
 // Weather API types
@@ -41,16 +40,27 @@ interface DateTimeFormatOptions {
   hour12?: boolean;
 }
 
-const TimeIndicator: React.FC = () => {
+interface WeatherError {
+  message: string;
+  cod: number;
+}
+
+interface WeatherState {
+  data: WeatherResponse | null;
+  loading: boolean;
+  error: string | null;
+}
+
+const WeatherIndicator: React.FC = () => {
+  const [weatherState, setWeatherState] = useState<WeatherState>({
+    data: null,
+    loading: true,
+    error: null,
+  });
+
   const [dateTime, setDateTime] = useState<Date>(new Date());
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setDateTime(new Date());
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
+  useEffect(() => {}, []);
 
   const formatDate = (date: Date): string => {
     const options: DateTimeFormatOptions = {
@@ -72,37 +82,11 @@ const TimeIndicator: React.FC = () => {
     return date.toLocaleTimeString("en-US", options);
   };
 
-  return (
-    <Card className="p-4 bg-background/60 backdrop-blur">
-      <div className="space-y-2">
-        <div className="text-sm text-muted-foreground">
-          {formatDate(dateTime)}
-        </div>
-        <div className="text-2xl font-mono">{formatTime(dateTime)}</div>
-      </div>
-    </Card>
-  );
-};
-
-interface WeatherError {
-  message: string;
-  cod: number;
-}
-
-interface WeatherState {
-  data: WeatherResponse | null;
-  loading: boolean;
-  error: string | null;
-}
-
-const WeatherIndicator: React.FC = () => {
-  const [weatherState, setWeatherState] = useState<WeatherState>({
-    data: null,
-    loading: true,
-    error: null,
-  });
-
   useEffect(() => {
+    const timer = setInterval(() => {
+      setDateTime(new Date());
+    }, 1000);
+
     const fetchWeather = async (): Promise<void> => {
       try {
         const response = await fetch(
@@ -129,11 +113,13 @@ const WeatherIndicator: React.FC = () => {
         });
       }
     };
-
     fetchWeather();
     const interval = setInterval(fetchWeather, 1800000);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(timer);
+      clearInterval(interval);
+    };
   }, []);
 
   const getWeatherIcon = (weatherCode: number): JSX.Element => {
@@ -149,7 +135,13 @@ const WeatherIndicator: React.FC = () => {
       case weatherCode >= 700 && weatherCode < 800:
         return <CloudFog {...iconProps} />;
       case weatherCode === 800:
-        return <Sun {...iconProps} />;
+        return (
+          <img
+            {...iconProps}
+            src="https://web.archive.org/web/20091026144340/http://uk.geocities.com/stuart_denman/sun.gif"
+            alt="the sun"
+          />
+        );
       case weatherCode >= 801 && weatherCode < 900:
         return <Cloud {...iconProps} />;
       default:
@@ -160,6 +152,12 @@ const WeatherIndicator: React.FC = () => {
   if (weatherState.loading) {
     return (
       <Card className="p-4 bg-background/60 backdrop-blur">
+        <div className="space-y-2">
+          <div className="text-sm text-muted-foreground">
+            {formatDate(dateTime)}
+          </div>
+          <div className="text-2xl ">{formatTime(dateTime)}</div>
+        </div>
         <div className="animate-pulse">Loading weather...</div>
       </Card>
     );
@@ -168,6 +166,12 @@ const WeatherIndicator: React.FC = () => {
   if (weatherState.error) {
     return (
       <Card className="p-4 bg-background/60 backdrop-blur">
+        <div className="space-y-2">
+          <div className="text-sm text-muted-foreground">
+            {formatDate(dateTime)}
+          </div>
+          <div className="text-2xl ">{formatTime(dateTime)}</div>
+        </div>
         <div className="text-red-500">{weatherState.error}</div>
       </Card>
     );
@@ -175,8 +179,14 @@ const WeatherIndicator: React.FC = () => {
 
   return (
     <Card className="p-4 bg-background/60 backdrop-blur">
+      <div className="space-y-2">
+        <div className="text-sm text-muted-foreground">
+          {formatDate(dateTime)}
+        </div>
+        <div className="text-2xl ">{formatTime(dateTime)}</div>
+      </div>
       {weatherState.data && (
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between mt-4">
           <div className="space-y-1">
             <div className="text-sm text-muted-foreground">Frisco, TX</div>
             <div className="text-2xl">
@@ -274,7 +284,6 @@ function NavBox() {
         <FavoriteTunes />
         <div className="space-y-6 border-t border-border/40 pt-6">
           <WeatherIndicator />
-          <TimeIndicator />
           <MoodWidget />
         </div>
         <img

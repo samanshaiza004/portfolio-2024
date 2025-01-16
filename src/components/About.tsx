@@ -31,13 +31,13 @@ const PersonalSection = () => {
             <img
               className="w-5 h-5 mr-2"
               src="https://web.archive.org/web/20091027065313/http://www.geocities.com/fmg1967/star.gif"
-              alt="an epic horse neighing"
+              alt="star"
             />{" "}
-            my favorites{" "}
+            my favorite things{" "}
             <img
               className="w-5 h-5 ml-2"
               src="https://web.archive.org/web/20091027065313/http://www.geocities.com/fmg1967/star.gif"
-              alt="an epic horse neighing"
+              alt="star"
             />{" "}
           </h3>
 
@@ -190,7 +190,7 @@ function About() {
       <Card className="w-full bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <CardContent className="h-screen p-6">
           <div className="gap-12">
-            <div className="grid grid-cols-1 md:grid-cols-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <motion.div variants={itemVariants} className="space-y-6">
                 <div className="space-y-4">
                   <h2 className="text-3xl font-bold tracking-tight">
@@ -219,15 +219,9 @@ function About() {
                   </p>
                   <br />
                   <p className="text-lg text-muted-foreground">
-                    Beyond coding, I'm an avid composer and sound designer. I
-                    love exploring the intersection of technology and audio,
-                    whether it's building interactive sound experiences or
-                    crafting unique sonic landscapes.
-                  </p>
-                  <br />
-                  <p className="text-lg text-muted-foreground">
-                    When I'm not coding or composing, you'll find me exploring
-                    new technologies, contributing to open-source projects, or
+                    Beyond coding, I'm an avid composer and sound designer. When
+                    I'm not coding or making music, you'll find me exploring new
+                    technologies, contributing to open-source projects, or
                     sharing my knowledge through{" "}
                     <Link
                       className={cn(

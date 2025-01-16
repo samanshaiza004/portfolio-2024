@@ -33,14 +33,14 @@ const BlogCard: React.FC<BlogCardProps> = ({
       opacity: 1,
       transition: {
         staggerChildren: 0.1,
-        delayChildren: delay + 0.3,
+        delayChildren: delay + 0.2,
       },
     },
   };
 
   const item = {
     hidden: { opacity: 0 },
-    show: { opacity: 1, transition: { duration: 0.5 } },
+    show: { opacity: 1, transition: { duration: 0.4 } },
   };
 
   const content = (
@@ -53,7 +53,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
         }`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.5, delay }}
+      transition={{ duration: 0.4, delay }}
     >
       {/* <AnimatedGradient
         colors={
