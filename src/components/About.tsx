@@ -70,33 +70,22 @@ const PersonalSection = () => {
 };
 
 function About() {
-  const [shouldReduceMotion, setShouldReduceMotion] = useState(false);
-  const [_containerHeight, setContainerHeight] = useState(0);
+  const [shouldReduceMotion, _setShouldReduceMotion] = useState(false);
+  const [containerHeight, setContainerHeight] = useState(0);
   const gravityContainerRef = useRef<HTMLDivElement>(null);
 
-  // Update container height on mount and resize
   useEffect(() => {
-    const updateHeight = () => {
+    const updateDimensions = () => {
       if (gravityContainerRef.current) {
-        const viewportHeight = window.innerHeight;
-        const containerWidth = gravityContainerRef.current.offsetWidth;
-        // Adjust height based on screen size
-        const idealHeight = Math.min(
-          viewportHeight * 0.6, // Max 60% of viewport height
-          containerWidth * 0.8 // Or 80% of container width
-        );
-        setContainerHeight(idealHeight);
+        const rect = gravityContainerRef.current.getBoundingClientRect();
+        const height = Math.max(400, rect.height); // Ensure a minimum height
+        setContainerHeight(height); // Update the height for `Gravity`
       }
     };
 
-    const motionPreferences = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    );
-    setShouldReduceMotion(motionPreferences.matches);
-
-    updateHeight();
-    window.addEventListener("resize", updateHeight);
-    return () => window.removeEventListener("resize", updateHeight);
+    updateDimensions();
+    window.addEventListener("resize", updateDimensions);
+    return () => window.removeEventListener("resize", updateDimensions);
   }, []);
 
   const itemVariants = {
@@ -185,19 +174,16 @@ function About() {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true }}
-      className="relative w-full min-h-screen "
+      className="relative w-full "
     >
-      <Card className="w-full bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <CardContent className="h-screen p-6">
-          <div className="gap-12">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <motion.div variants={itemVariants} className="space-y-6">
-                <div className="space-y-4">
-                  <h2 className="text-3xl font-bold tracking-tight">
-                    who's saman?
-                  </h2>
-                </div>
-
+      <Card className="w-full h-full bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <CardContent className="p-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 h-full">
+            <motion.div variants={itemVariants} className="space-y-6">
+              <div className="space-y-4">
+                <h2 className="text-3xl font-bold tracking-tight">
+                  who's saman?
+                </h2>
                 <div className="prose prose-lg dark:prose-invert">
                   <p className="text-lg text-muted-foreground">
                     Hi, my name is Saman, i'm the webmaster of this website! I'm
@@ -236,62 +222,66 @@ function About() {
                     </Link>
                   </p>
                 </div>
-              </motion.div>
-              <PersonalSection />
-            </div>
-
-            <div className="w-full h-full flex flex-col relative font-azeretMono">
-              <div className="pt-20 text-6xl sm:text-7xl md:text-8xl text-black w-full text-center font-calendas italic">
-                skills
               </div>
+            </motion.div>
+            <PersonalSection />
+          </div>
 
-              <div
-                ref={gravityContainerRef}
-                className="w-full md:h-[500px] h-[400px] relative"
+          <div
+            ref={gravityContainerRef}
+            className="relative h-full min-h-[400px] mt-12"
+          >
+            <h2 className="text-6xl sm:text-7xl text-center font-calendas italic mb-6">
+              skills
+            </h2>
+            <div
+              style={{ height: `${containerHeight}px` }}
+              className="relative w-full"
+            >
+              <Gravity
+                gravity={{ x: 0, y: 1 }}
+                className="w-full h-full"
+                autoStart={true}
+                debug={true}
               >
-                <Gravity
-                  gravity={{ x: 0, y: 1 }}
-                  className="w-full"
-                  autoStart={true}
-                  debug={false}
-                >
-                  {skills.map((skillSet) =>
-                    skillSet.items.map((skill) => (
-                      <MatterBody
-                        key={skill}
-                        matterBodyOptions={{
-                          friction: 0.3,
-                          restitution: 0.5,
-                          density: 0.001,
-                          // Add mass scaling based on text length
-                          mass: Math.max(1, skill.length * 0.1),
+                {skills.map((skillSet) =>
+                  skillSet.items.map((skill) => (
+                    <MatterBody
+                      key={skill}
+                      matterBodyOptions={{
+                        friction: 0.3,
+                        restitution: 0.5,
+                        density: 0.001,
+                        // Add mass scaling based on text length
+                        mass: Math.max(1, skill.length * 0.1),
+                      }}
+                      x={positions[skill].x}
+                      y={positions[skill].y}
+                    >
+                      <Badge
+                        variant="outline"
+                        style={{
+                          backgroundColor: colors[skill],
+                          color: "white",
+                          textShadow: "1px 1px 1px rgba(0,0,0,0.2)",
+                          fontSize: "clamp(0.8rem, 1.5vw, 1.2rem)", // Responsive font size
+                          padding: "0.5em 1em", // Adjust padding dynamically
                         }}
-                        x={positions[skill].x}
-                        y={positions[skill].y}
+                        className={cn(
+                          "text-sm md:text-lg lg:text-xl transform-gpu",
+                          "cursor-default select-none",
+                          "px-3 py-1 md:px-4 md:py-2 lg:px-6 lg:py-3",
+                          "hover:cursor-grab",
+                          "whitespace-nowrap",
+                          "transition-colors duration-200"
+                        )}
                       >
-                        <Badge
-                          variant="outline"
-                          className={cn(
-                            "text-sm md:text-lg lg:text-xl transform-gpu",
-                            "cursor-default select-none",
-                            "rounded-full px-3 py-1 md:px-4 md:py-2 lg:px-6 lg:py-3",
-                            "hover:cursor-grab",
-                            "whitespace-nowrap",
-                            "transition-colors duration-200"
-                          )}
-                          style={{
-                            backgroundColor: colors[skill],
-                            color: "white",
-                            textShadow: "1px 1px 1px rgba(0,0,0,0.2)",
-                          }}
-                        >
-                          {skill}
-                        </Badge>
-                      </MatterBody>
-                    ))
-                  )}
-                </Gravity>
-              </div>
+                        {skill}
+                      </Badge>
+                    </MatterBody>
+                  ))
+                )}
+              </Gravity>
             </div>
           </div>
         </CardContent>

@@ -19,42 +19,52 @@ function RootLayout() {
   return (
     <ThemeProvider>
       <div className="min-h-screen">
-        {isBlogPost ? <BlogBackground /> : <Background />}
-        <main
-          className="relative md:grid flex-col flex md:grid-cols-3 gap-1 min-h-screen p-1 md:p-2"
-          id="main-content"
-          role="main"
-          tabIndex={-1}
-        >
-          <div className="page-info col-span-1 md:col-span-2">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/project/:projectId" element={<ProjectPage />} />
-              <Route path="/blog" element={<BlogIndex />} />
-              <Route path="/blog/:postId" element={<BlogPost />} />
-              <Route path="/music" element={<Music />} />
-              <Route path="/about" element={<About />} />
-              <Route
-                path="/contact"
-                element={
-                  <Contact
-                    email="samanshaiza@yahoo.com"
-                    github="https://github.com/samanshaiza004"
-                    phone="972 654 2247"
-                    linkedin="https://linkedin.com/in/samanshaiza"
-                    discord="samanshaiza"
+        <div className="fixed inset-0 z-0">
+          {isBlogPost ? <BlogBackground /> : <Background />}
+        </div>
+        <div className="relative z-10 flex-1">
+          <main
+            className="mx-auto max-w-screen px-4 py-6 sm:px-6 lg:px-8"
+            id="main-content"
+            role="main"
+            tabIndex={-1}
+          >
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+              <div className="page-info col-span-1 md:col-span-2">
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/project/:projectId" element={<ProjectPage />} />
+                  <Route path="/blog" element={<BlogIndex />} />
+                  <Route path="/blog/:postId" element={<BlogPost />} />
+                  <Route path="/music" element={<Music />} />
+                  <Route path="/about" element={<About />} />
+                  <Route
+                    path="/contact"
+                    element={
+                      <Contact
+                        email="samanshaiza@yahoo.com"
+                        github="https://github.com/samanshaiza004"
+                        phone="972 654 2247"
+                        linkedin="https://linkedin.com/in/samanshaiza"
+                        discord="samanshaiza"
+                      />
+                    }
                   />
-                }
-              />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </div>
-          <NavBox />
-        </main>
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </div>
+              <div className="lg:col-span-1">
+                <div className="sticky top-6">
+                  <NavBox />
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
 
-        <footer className="mt-auto border-t bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-100">
-          <div className="max-w-4xl mx-auto px-4 py-4">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+        <footer className="relative z-10 mt-auto border-t bg-background/60 backdrop-blur">
+          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+            <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
               <p className="text-sm text-muted-foreground">
                 {new Date().getFullYear()} Saman Shaiza. All rights reserved.
               </p>
@@ -64,7 +74,7 @@ function RootLayout() {
                   href="https://github.com/samanshaiza004"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1 hover:text-primary transition-colors font-medium"
+                  className="flex items-center gap-1 font-medium transition-colors hover:text-primary"
                   aria-label="Visit Saman Shaiza's GitHub profile (opens in new tab)"
                 >
                   <Github className="h-4 w-4" />
