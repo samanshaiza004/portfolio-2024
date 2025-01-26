@@ -160,3 +160,7 @@
 * {
   cursor: url(https://cur.cursors-4u.net/others/oth-2/oth148.cur), auto !important;
 }
+
+.responsive-header {
+  font-size: clamp(5rem, 4vw, 14rem);
+}

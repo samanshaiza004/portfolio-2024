@@ -229,7 +229,7 @@ function NavBox() {
                   src="https://web.archive.org/web/20091027153512/http://www.geocities.com/leggzz66/mustangani1.gif"
                   alt="an epic horse neighing"
                 />{" "}
-                Home
+                home
               </Link>
               <Link
                 to="/about"
@@ -240,7 +240,7 @@ function NavBox() {
                   src="https://web.archive.org/web/20090829082629/http://www.geocities.com/sergeantsafrit/Revolver.gif"
                   alt="revolver revolving"
                 />{" "}
-                About
+                about
               </Link>
               <Link
                 to="/blog"
@@ -251,7 +251,7 @@ function NavBox() {
                   src="https://web.archive.org/web/20060508022530/http://www.geocities.com:80/waterose_art/book.gif"
                   alt="book opening"
                 />
-                Blog
+                blog
               </Link>
               <Link
                 to="/music"
@@ -262,7 +262,7 @@ function NavBox() {
                   src="https://web.archive.org/web/20091027084545/http://geocities.com/pump_q/w_pasta.gif"
                   alt="pasta on fire"
                 />
-                Music
+                music
               </Link>
               <Link
                 to="/contact"
@@ -273,7 +273,7 @@ function NavBox() {
                   src="https://web.archive.org/web/20081120130831/http://cf.geocities.com/rikuriku28/Images/sonycat.gif"
                   alt="sony cat"
                 />
-                Contact
+                contact
               </Link>
               <div className="mb-2">
                 <ThemeToggle />
