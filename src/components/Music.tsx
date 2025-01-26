@@ -133,7 +133,7 @@ export default function Music() {
 
   return (
     <div className="">
-      <Card className="w-full bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <Card className="w-full bg-background/60 backdrop-blur-sm supports-backdrop-filter:bg-background/60">
         <CardHeader>
           <motion.div variants={itemVariants}>
             <h1 className="text-4xl font-bold">Music & Sound Design</h1>

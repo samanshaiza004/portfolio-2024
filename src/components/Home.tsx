@@ -59,7 +59,7 @@ function Home() {
         variants={containerVariants}
         className="relative h-full"
       >
-        <Card className="min-h-[750px] bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <Card className="min-h-[750px] bg-background/60 backdrop-blur-sm supports-backdrop-filter:bg-background/60">
           <CardContent className="relative w-full p-6 flex flex-col gap-8">
             {/* Construction Banner */}
             <div className="flex flex-col">

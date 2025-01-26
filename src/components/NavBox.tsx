@@ -151,7 +151,7 @@ const WeatherIndicator: React.FC = () => {
 
   if (weatherState.loading) {
     return (
-      <Card className="p-4 bg-background/60 backdrop-blur">
+      <Card className="p-4 bg-background/60 backdrop-blur-sm">
         <div className="space-y-2">
           <div className="text-sm text-muted-foreground">
             {formatDate(dateTime)}
@@ -165,7 +165,7 @@ const WeatherIndicator: React.FC = () => {
 
   if (weatherState.error) {
     return (
-      <Card className="p-4 bg-background/60 backdrop-blur">
+      <Card className="p-4 bg-background/60 backdrop-blur-sm">
         <div className="space-y-2">
           <div className="text-sm text-muted-foreground">
             {formatDate(dateTime)}
@@ -178,7 +178,7 @@ const WeatherIndicator: React.FC = () => {
   }
 
   return (
-    <Card className="p-4 bg-background/60 backdrop-blur">
+    <Card className="p-4 bg-background/60 backdrop-blur-sm">
       <div className="space-y-2">
         <div className="text-sm text-muted-foreground">
           {formatDate(dateTime)}
@@ -207,7 +207,7 @@ const WeatherIndicator: React.FC = () => {
 
 function NavBox() {
   return (
-    <Card className="col-start-3 bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60 h-fit md:h-full overflow-y-auto">
+    <Card className="col-start-3 bg-background/60 backdrop-blur-sm supports-backdrop-filter:bg-background/60 h-fit md:h-full overflow-y-auto">
       <CardHeader className="p-2 md:p-4">navigation ~</CardHeader>
       <CardContent className="p-2 md:p-4 space-y-4">
         <div
@@ -222,7 +222,7 @@ function NavBox() {
             <div className="flex flex-col gap-1">
               <Link
                 to="/"
-                className="hover:underline transition-colors hover:text-primary focus:ring-2 focus:ring-primary focus:outline-none rounded-md px-1 py-1 flex"
+                className="hover:underline transition-colors hover:text-primary focus:ring-2 focus:ring-primary focus:outline-hidden rounded-md px-1 py-1 flex"
               >
                 <img
                   className="w-5 h-5 mr-2"
@@ -233,7 +233,7 @@ function NavBox() {
               </Link>
               <Link
                 to="/about"
-                className="hover:underline transition-colors hover:text-primary focus:ring-2 focus:ring-primary focus:outline-none rounded-md px-1 py-1 flex"
+                className="hover:underline transition-colors hover:text-primary focus:ring-2 focus:ring-primary focus:outline-hidden rounded-md px-1 py-1 flex"
               >
                 <img
                   className="w-5 h-5 mr-2"
@@ -244,7 +244,7 @@ function NavBox() {
               </Link>
               <Link
                 to="/blog"
-                className="flex hover:underline transition-colors hovwr:text-primary focus:ring-2 focus:ring-primary focus:outline-none rounded-md px-1 py-1"
+                className="flex hover:underline transition-colors hovwr:text-primary focus:ring-2 focus:ring-primary focus:outline-hidden rounded-md px-1 py-1"
               >
                 <img
                   className="w-5 h-5 mr-2"
@@ -255,7 +255,7 @@ function NavBox() {
               </Link>
               <Link
                 to="/music"
-                className="flex hover:underline transition-colors hover:text-primary focus:ring-2 focus:ring-primary focus:outline-none rounded-md px-1 py-1"
+                className="flex hover:underline transition-colors hover:text-primary focus:ring-2 focus:ring-primary focus:outline-hidden rounded-md px-1 py-1"
               >
                 <img
                   className="w-5 h-5 mr-2"
@@ -266,7 +266,7 @@ function NavBox() {
               </Link>
               <Link
                 to="/contact"
-                className="flex hover:underline transition-colors hover:text-primary focus:ring-2 focus:ring-primary focus:outline-none rounded-md px-1 py-1"
+                className="flex hover:underline transition-colors hover:text-primary focus:ring-2 focus:ring-primary focus:outline-hidden rounded-md px-1 py-1"
               >
                 <img
                   className="w-5 h-5 mr-2"
@@ -366,7 +366,7 @@ const FavoriteTunes = () => {
         <HoverCardContent
           align="start" // This aligns the content with the left side of the trigger
           side="bottom"
-          className="w-80 bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60 "
+          className="w-80 bg-background/60 backdrop-blur-sm supports-backdrop-filter:bg-background/60 "
         >
           <p className="flex justify-between space-x-4">
             fun fact: you can listen while exploring the site. try it out!

@@ -50,6 +50,7 @@
     "zero-md": "^3.1.6"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "next",
     "@types/lodash": "^4.17.14",
     "@types/matter-js": "^0.19.8",
     "@types/node": "^22.8.4",
@@ -59,12 +60,11 @@
     "@typescript-eslint/eslint-plugin": "^7.15.0",
     "@typescript-eslint/parser": "^7.15.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
-    "autoprefixer": "^10.4.20",
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
     "postcss": "^8.4.41",
-    "tailwindcss": "^3.4.7",
+    "tailwindcss": "next",
     "terser": "^5.36.0",
     "typescript": "^5.2.2",
     "vite": "^5.4.10",

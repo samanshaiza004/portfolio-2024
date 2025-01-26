@@ -102,7 +102,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
               <Badge
                 key={tag}
                 variant={theme === "dark" ? "secondary" : "secondary"}
-                className={`font-thin flex items-center select-none bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60
+                className={`font-thin flex items-center select-none bg-background/60 backdrop-blur supports-backdrop-filter:bg-background/60
                   ${theme === "dark" ? "text-gray-200" : ""}`}
               >
                 {tag}
@@ -166,7 +166,7 @@ export function BlogIndex() {
   return (
     <div>
       {/* Main Content Card */}
-      <Card className="w-full bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <Card className="w-full bg-background/60 backdrop-blur-sm supports-backdrop-filter:bg-background/60">
         <CardContent className="h-screen p-6">
           <motion.div variants={itemVariants} className="grid gap-6">
             <div className="space-y-4">

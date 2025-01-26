@@ -1,31 +1,129 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-@font-face {
-  font-family: "PP Writer";
-  src: url("./assets/fonts/PPWriter-Regular.otf") format("opentype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-:root {
-  font-family: "PP Writer";
-  width: 100vw;
+@plugin 'tailwindcss-animate';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --color-chart-1: hsl(var(--chart-1));
+  --color-chart-2: hsl(var(--chart-2));
+  --color-chart-3: hsl(var(--chart-3));
+  --color-chart-4: hsl(var(--chart-4));
+  --color-chart-5: hsl(var(--chart-5));
+
+  --animate-background-gradient: background-gradient
+    var(--background-gradient-speed, 15s) cubic-bezier(0.445, 0.05, 0.55, 0.95)
+    infinite;
+
+  @keyframes background-gradient {
+    0%,
+    100% {
+      transform: translate(0, 0);
+      animation-delay: var(--background-gradient-delay, 0s);
+    }
+    20% {
+      transform: translate(
+        calc(100% * var(--tx-1, 1)),
+        calc(100% * var(--ty-1, 1))
+      );
+    }
+    40% {
+      transform: translate(
+        calc(100% * var(--tx-2, -1)),
+        calc(100% * var(--ty-2, 1))
+      );
+    }
+    60% {
+      transform: translate(
+        calc(100% * var(--tx-3, 1)),
+        calc(100% * var(--ty-3, -1))
+      );
+    }
+    80% {
+      transform: translate(
+        calc(100% * var(--tx-4, -1)),
+        calc(100% * var(--ty-4, -1))
+      );
+    }
+  }
 }
 
-.c-home-about_link:not(:last-child) {
-  margin-bottom: clamp(
-    calc(0.06667rem * var(--spacing-micro-mobile)),
-    calc(var(--spacing-micro) / 14.4 * 1vw),
-    calc(0.06667rem * var(--spacing-micro))
-  );
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
 }
 
-.c-button.focus-visible .c-button_label,
-.u-button-hover:hover .c-button_label {
-  text-decoration: underline;
-  text-decoration-thickness: var(--border-size);
+@layer utilities {
+  @font-face {
+    font-family: 'PP Writer';
+    src: url('./assets/fonts/PPWriter-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  :root {
+    font-family: 'PP Writer';
+    width: 100vw;
+  }
+
+  .c-home-about_link:not(:last-child) {
+    margin-bottom: clamp(
+      calc(0.06667rem * var(--spacing-micro-mobile)),
+      calc(var(--spacing-micro) / 14.4 * 1vw),
+      calc(0.06667rem * var(--spacing-micro))
+    );
+  }
+
+  .c-button.focus-visible .c-button_label,
+  .u-button-hover:hover .c-button_label {
+    text-decoration: underline;
+    text-decoration-thickness: var(--border-size);
+  }
 }
 
 @layer base {

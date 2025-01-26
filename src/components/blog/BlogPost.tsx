@@ -153,7 +153,7 @@ export function BlogPost() {
   };
 
   return (
-    <Card className="bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <Card className="bg-background/60 backdrop-blur-sm supports-backdrop-filter:bg-background/60">
       <motion.article
         initial="hidden"
         animate="visible"

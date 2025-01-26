@@ -82,7 +82,7 @@ export const ThemeToggle = () => {
       type="button"
       aria-pressed={theme === "dark"}
       aria-label={`Switch to ${theme ? "light" : "dark"} theme`}
-      className="transition-all focus:ring-2 focus:ring-primary focus:outline-none w-9 h-9 rounded-full"
+      className="transition-all focus:ring-2 focus:ring-primary focus:outline-hidden w-9 h-9 rounded-full"
     >
       {theme === "dark" ? (
         <Moon className="h-4 w-4" />

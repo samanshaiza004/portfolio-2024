@@ -25,7 +25,7 @@ const PersonalSection = () => {
       animate={{ opacity: 1, y: 0 }}
       className="mt-12"
     >
-      <Card className="overflow-hidden bg-gradient-to-br from-green-100/30 to-blue-100/30 backdrop-blur">
+      <Card className="overflow-hidden bg-linear-to-br from-green-100/30 to-blue-100/30 backdrop-blur-sm">
         <CardContent className="p-6">
           <h3 className="text-2xl font-bold mb-6 font-calendas italic flex items-center">
             <img
@@ -51,8 +51,8 @@ const PersonalSection = () => {
                   transition={{ delay: index * 0.1 }}
                   className={
                     index % 2 === 0
-                      ? "bg-background/40 backdrop-blur"
-                      : "bg-background/50 backdrop-blur"
+                      ? "bg-background/40 backdrop-blur-sm"
+                      : "bg-background/50 backdrop-blur-sm"
                   }
                 >
                   <td className="text-lg p-2 text-primary/70 font-azeretMono">
@@ -176,7 +176,7 @@ function About() {
       viewport={{ once: true }}
       className="relative w-full "
     >
-      <Card className="w-full h-full bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <Card className="w-full h-full bg-background/60 backdrop-blur-sm supports-backdrop-filter:bg-background/60">
         <CardContent className="p-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 h-full">
             <motion.div variants={itemVariants} className="space-y-6">

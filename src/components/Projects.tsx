@@ -65,7 +65,7 @@ export function Projects({ projects }: ProjectsProps) {
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project) => (
             <motion.div key={project.title} variants={projectVariants}>
-              <Card className="h-full flex flex-col hover:shadow-lg transition-all hover:scale-[1.02] transform duration-100 bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+              <Card className="h-full flex flex-col hover:shadow-lg transition-all hover:scale-[1.02] transform duration-100 bg-background/60 backdrop-blur-sm supports-backdrop-filter:bg-background/60">
                 <Link to={`/project/${project.id}`}>
                   <CardHeader>
                     <CardTitle className="flex items-start justify-between">
@@ -76,7 +76,7 @@ export function Projects({ projects }: ProjectsProps) {
                     </CardDescription>
                   </CardHeader>
 
-                  <CardContent className="flex-grow">
+                  <CardContent className="grow">
                     <div className="flex flex-wrap gap-2">
                       {project.technologies.map((tech) => (
                         <Badge
