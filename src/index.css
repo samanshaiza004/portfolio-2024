@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @plugin 'tailwindcss-animate';
 
@@ -100,14 +100,14 @@
 
 @layer utilities {
   @font-face {
-    font-family: 'PP Writer';
-    src: url('./assets/fonts/PPWriter-Regular.otf') format('opentype');
+    font-family: "PP Writer";
+    src: url("./assets/fonts/PPWriter-Regular.otf") format("opentype");
     font-weight: 400;
     font-style: normal;
     font-display: swap;
   }
   :root {
-    font-family: 'PP Writer';
+    font-family: "PP Writer";
     width: 100vw;
   }
 
@@ -235,7 +235,6 @@
   animation: opacity-flicker 1s ease-in infinite;
 }
 
-/* Add to your global CSS */
 :focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
