@@ -4,6 +4,7 @@ import { Badge } from "./ui/badge";
 /* import { Button } from "./ui/button";
 import { Play, Pause, Volume2, VolumeX } from "lucide-react"; */
 import { motion } from "framer-motion";
+// import ASCIIText from "./AsciiText.jsx";
 
 interface Track {
   id: string;
@@ -136,7 +137,6 @@ export default function Music() {
       <Card className="w-full bg-background/60 backdrop-blur-sm supports-backdrop-filter:bg-background/60">
         <CardHeader>
           <motion.div variants={itemVariants}>
-            <h1 className="text-4xl font-bold">Music & Sound Design</h1>
             <p className="text-lg text-muted-foreground">
               Explore my portfolio of original compositions and sound design
               work.

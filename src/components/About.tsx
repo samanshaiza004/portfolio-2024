@@ -1,10 +1,9 @@
 import { motion } from "framer-motion";
 import { Card, CardContent } from "./ui/card";
-import { Badge } from "./ui/badge";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import Gravity, { MatterBody } from "./fancy/gravity";
-import { useState, useEffect, useMemo, useRef } from "react";
+
+import { useState, useEffect } from "react";
 
 const PersonalSection = () => {
   const favorites = [
@@ -70,19 +69,14 @@ const PersonalSection = () => {
 };
 
 function About() {
-  const [shouldReduceMotion, _setShouldReduceMotion] = useState(false);
-  const [containerHeight, setContainerHeight] = useState(0);
-  const gravityContainerRef = useRef<HTMLDivElement>(null);
+  const [shouldReduceMotion, setShouldReduceMotion] = useState(false);
 
   useEffect(() => {
-    const updateDimensions = () => {
-      if (gravityContainerRef.current) {
-        const rect = gravityContainerRef.current.getBoundingClientRect();
-        const height = Math.max(400, rect.height); // Ensure a minimum height
-        setContainerHeight(height); // Update the height for `Gravity`
-      }
-    };
-
+    const updateDimensions = () => {};
+    const motionPreferences = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    );
+    setShouldReduceMotion(motionPreferences.matches);
     updateDimensions();
     window.addEventListener("resize", updateDimensions);
     return () => window.removeEventListener("resize", updateDimensions);
@@ -98,76 +92,6 @@ function About() {
       y: 0,
     },
   };
-
-  const skills = [
-    {
-      category: "Languages & Frameworks",
-      items: ["react", "typescript", "tailwind", "rust"],
-    },
-    {
-      category: "Backend",
-      items: ["node.js", "express", "electron"],
-    },
-    {
-      category: "Database",
-      items: ["postgresql", "sqlite", "drizzle"],
-    },
-    {
-      category: "Tools",
-      items: ["git", "docker"],
-    },
-  ];
-
-  // Generate vibrant colors for skills
-  const colors = useMemo(() => {
-    const baseColors = [
-      "#FF6B6B", // Coral Red
-      "#4ECDC4", // Turquoise
-      "#45B7D1", // Sky Blue
-      "#96CEB4", // Sage Green
-      "#FFEEAD", // Cream Yellow
-      "#D4A5A5", // Dusty Rose
-      "#9B59B6", // Purple
-      "#3498DB", // Blue
-      "#E67E22", // Orange
-      "#1ABC9C", // Teal
-    ];
-
-    return skills.reduce((acc, category) => {
-      category.items.forEach((skill) => {
-        acc[skill] = baseColors[Math.floor(Math.random() * baseColors.length)];
-      });
-      return acc;
-    }, {} as Record<string, string>);
-  }, []);
-
-  // Generate distributed positions for skills
-  // Adjust position calculation for better distribution
-  const positions = useMemo(() => {
-    const totalSkills = skills.reduce(
-      (sum, category) => sum + category.items.length,
-      0
-    );
-
-    return skills.reduce((acc, category) => {
-      category.items.forEach((skill, index) => {
-        // Create a more compact grid distribution
-        const gridSize = Math.ceil(Math.sqrt(totalSkills));
-        const row = Math.floor(index / gridSize);
-        const col = index % gridSize;
-
-        // Scale offsets based on container size
-        const randomOffset = () => (Math.random() - 0.5) * 15;
-
-        // Keep positions more centered
-        acc[skill] = {
-          x: `${(col * 80) / gridSize + randomOffset() + 20}%`,
-          y: `${(row * 80) / gridSize + randomOffset() + 20}%`,
-        };
-      });
-      return acc;
-    }, {} as Record<string, { x: string; y: string }>);
-  }, []);
 
   return (
     <motion.section
@@ -225,64 +149,6 @@ function About() {
               </div>
             </motion.div>
             <PersonalSection />
-          </div>
-
-          <div
-            ref={gravityContainerRef}
-            className="relative h-full min-h-[400px] mt-12"
-          >
-            <h2 className="text-6xl sm:text-7xl text-center font-calendas italic mb-6">
-              skills
-            </h2>
-            <div
-              style={{ height: `${containerHeight}px` }}
-              className="relative w-full"
-            >
-              <Gravity
-                gravity={{ x: 0, y: 1 }}
-                className="w-full h-full"
-                autoStart={true}
-                debug={true}
-              >
-                {skills.map((skillSet) =>
-                  skillSet.items.map((skill) => (
-                    <MatterBody
-                      key={skill}
-                      matterBodyOptions={{
-                        friction: 0.3,
-                        restitution: 0.5,
-                        density: 0.001,
-                        // Add mass scaling based on text length
-                        mass: Math.max(1, skill.length * 0.1),
-                      }}
-                      x={positions[skill].x}
-                      y={positions[skill].y}
-                    >
-                      <Badge
-                        variant="outline"
-                        style={{
-                          backgroundColor: colors[skill],
-                          color: "white",
-                          textShadow: "1px 1px 1px rgba(0,0,0,0.2)",
-                          fontSize: "clamp(0.8rem, 1.5vw, 1.2rem)", // Responsive font size
-                          padding: "0.5em 1em", // Adjust padding dynamically
-                        }}
-                        className={cn(
-                          "text-sm md:text-lg lg:text-xl transform-gpu",
-                          "cursor-default select-none",
-                          "px-3 py-1 md:px-4 md:py-2 lg:px-6 lg:py-3",
-                          "hover:cursor-grab",
-                          "whitespace-nowrap",
-                          "transition-colors duration-200"
-                        )}
-                      >
-                        {skill}
-                      </Badge>
-                    </MatterBody>
-                  ))
-                )}
-              </Gravity>
-            </div>
           </div>
         </CardContent>
       </Card>
