@@ -7,11 +7,13 @@ import { BlogIndex } from "./components/blog/BlogIndex";
 import Home from "./components/Home";
 import { ThemeProvider } from "./hooks/ThemeContext";
 import { Github } from "lucide-react";
-import Music from "./components/Music";
+import Music from "./components/Reviews";
 import About from "./components/About";
 import NavBox from "./components/NavBox";
 import Background from "./components/Background";
 import BlogBackground from "./components/BlogBackground";
+import NurtureReview from "./components/reviews/NurtureReview";
+import Reviews from "./components/Reviews";
 
 function RootLayout() {
   const location = useLocation();
@@ -36,6 +38,8 @@ function RootLayout() {
                   <Route path="/project/:projectId" element={<ProjectPage />} />
                   <Route path="/blog" element={<BlogIndex />} />
                   <Route path="/blog/:postId" element={<BlogPost />} />
+                  <Route path="/reviews" element={<Reviews />} />
+                  <Route path="/reviews/nurture" element={<NurtureReview />} />
                   <Route path="/music" element={<Music />} />
                   <Route path="/about" element={<About />} />
                   <Route

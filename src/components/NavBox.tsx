@@ -254,7 +254,7 @@ function NavBox() {
                 blog
               </Link>
               <Link
-                to="/music"
+                to="/reviews"
                 className="flex hover:underline transition-colors hover:text-primary focus:ring-2 focus:ring-primary focus:outline-hidden rounded-md px-1 py-1"
               >
                 <img
@@ -262,7 +262,7 @@ function NavBox() {
                   src="https://web.archive.org/web/20091027084545/http://geocities.com/pump_q/w_pasta.gif"
                   alt="pasta on fire"
                 />
-                music
+                reviews
               </Link>
               <Link
                 to="/contact"
