@@ -1,90 +1,92 @@
-import { useRef, useState } from "react";
-import { useThree, useFrame, Canvas } from "@react-three/fiber";
-import { useTheme } from "@/hooks/ThemeContext";
-import { Suspense } from "react";
-import * as THREE from "three";
-import { Environment } from "@react-three/drei";
-import { DepthOfField, EffectComposer } from "@react-three/postprocessing";
+import React, { useRef } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import type { Mesh } from "three"; // Add this import
 
-function Box({ z }: { z: number }) {
-  const ref = useRef<any>();
-  const { viewport, camera } = useThree();
-  const { width, height } = viewport.getCurrentViewport(camera, [0, 0, z]);
+const vertexShader = `
+  uniform float time;
+  varying vec2 vUv;
+  varying float vElevation;
+  
+  void main() {
+    vUv = uv;
+    vec3 pos = position;
+    
+    float elevation = sin(pos.x * 3.0 + time * 0.5) * 0.2
+                   + cos(pos.z * 2.0 + time * 0.3) * 0.2;
+    
+    pos.y += elevation + time * 0.2;
+    pos.y = mod(pos.y, 5.0) - 2.5;
+    
+    vElevation = elevation;
+    
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+  }
+`;
 
-  // Initialize box properties
-  const [data] = useState({
-    x: THREE.MathUtils.randFloatSpread(2),
-    y: THREE.MathUtils.randFloatSpread(height),
-    rX: Math.random() * Math.PI,
-    rY: Math.random() * Math.PI,
-    rZ: Math.random() * Math.PI,
+const fragmentShader = `
+  uniform float time;
+  varying vec2 vUv;
+  varying float vElevation;
+  
+  void main() {
+    vec3 color = vec3(0.5 + vElevation, 0.8, 1.0);
+    gl_FragColor = vec4(color, 0.7);
+  }
+`;
+
+function Cubes() {
+  const count = 50;
+  const meshRefs = useRef<(Mesh | null)[]>([]); // Add proper typing here
+
+  const uniforms = useRef({
+    time: { value: 0 },
   });
 
-  useFrame(() => {
-    ref.current.rotation.set(
-      (data.rX += 0.001),
-      (data.rY += 0.004),
-      (data.rZ += 0.005)
-    );
-    ref.current.position.set(data.x * width, (data.y += 0.01), z);
-    if (data.y > height / 1.5) {
-      data.y = -height / 1.5;
-    }
+  useFrame((state) => {
+    uniforms.current.time.value = state.clock.elapsedTime;
+
+    meshRefs.current.forEach((mesh, i) => {
+      if (mesh) {
+        mesh.rotation.x += 0.01 * (i % 2 ? 1 : -1);
+        mesh.rotation.z += 0.01 * (i % 3 ? 1 : -1);
+      }
+    });
   });
 
   return (
-    <mesh ref={ref}>
-      <boxGeometry />
-      <meshStandardMaterial
-        color={z > -20 ? "#b6e3c2" : "#93cca3"}
-        roughness={0.2}
-        metalness={0.0}
-      />
-    </mesh>
+    <>
+      {Array.from({ length: count }).map((_, i) => (
+        <mesh
+          key={i}
+          ref={(el) => (meshRefs.current[i] = el)}
+          position={[
+            (Math.random() - 0.5) * 10,
+            (Math.random() - 0.5) * 10,
+            (Math.random() - 0.5) * 10,
+          ]}
+        >
+          <boxGeometry args={[0.5, 0.5, 0.5]} />
+          <shaderMaterial
+            uniforms={uniforms.current}
+            vertexShader={vertexShader}
+            fragmentShader={fragmentShader}
+            transparent={true}
+          />
+        </mesh>
+      ))}
+    </>
   );
 }
 
-/**
- * Renders a 3D background using React Three Fiber and Drei, with dynamic lighting
- * and environment based on the current theme context.
- *
- * @param {Object} props - Component properties.
- * @param {number} [props.count=200] - Number of box elements to render.
- * @param {number} [props.depth=60] - Depth of the 3D scene.
- * @returns {JSX.Element} The background component.
- */
-
-const Background = ({ count = 200, depth = 60 }) => {
-  const { theme } = useTheme();
-
+const Background = () => {
   return (
-    <div className="fixed inset-0 w-full h-full" style={{ zIndex: -1 }}>
-      <Canvas gl={{ alpha: false }} camera={{ near: 0.01, far: 110, fov: 37 }}>
-        <color
-          attach="background"
-          args={[theme === "dark" ? "#030712" : "#ffffff"]}
-        />
-        <ambientLight intensity={theme === "dark" ? 0.5 : 0.8} />
-        <spotLight
-          position={[10, 10, 10]}
-          intensity={theme === "dark" ? 0.8 : 1}
-          color={theme === "dark" ? "#4444ff" : "#ffffff"}
-        />
-
-        <Suspense fallback={null}>
-          <Environment preset={theme === "dark" ? "night" : "sunset"} />
-          {Array.from({ length: count }, (_, i) => (
-            <Box key={i} z={-(i / count) * depth - 10} />
-          ))}
-          <EffectComposer>
-            <DepthOfField
-              target={[0, 0, depth / 4]}
-              focalLength={0.5}
-              bokehScale={theme === "dark" ? 8 : 11}
-              height={700}
-            />
-          </EffectComposer>
-        </Suspense>
+    <div
+      className="fixed inset-0 w-screen h-screen overflow-hidden"
+      style={{ zIndex: -1 }}
+    >
+      <Canvas camera={{ position: [0, 0, 10] }}>
+        <color attach="background" args={["#ffffff"]} />
+        <Cubes />
       </Canvas>
     </div>
   );

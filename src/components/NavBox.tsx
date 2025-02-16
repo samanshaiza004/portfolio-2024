@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { Card, CardHeader, CardContent } from "./ui/card";
 import { HoverCardTrigger, HoverCard, HoverCardContent } from "./ui/hovercard";
 import {
-  Cloud,
   CloudLightning,
   CloudRain,
   CloudSnow,
@@ -143,7 +142,13 @@ const WeatherIndicator: React.FC = () => {
           />
         );
       case weatherCode >= 801 && weatherCode < 900:
-        return <Cloud {...iconProps} />;
+        return (
+          <img
+            {...iconProps}
+            src="https://web.archive.org/web/20091027011328/http://geocities.com/barbara47/asuncloud.gif"
+            alt="sun cloud"
+          />
+        );
       default:
         return <Wind {...iconProps} />;
     }

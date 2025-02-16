@@ -167,7 +167,7 @@ export function BlogIndex() {
     <div>
       {/* Main Content Card */}
       <Card className="w-full bg-background/60 backdrop-blur-sm supports-backdrop-filter:bg-background/60">
-        <CardContent className="h-screen p-6">
+        <CardContent className="min:h-screen p-6">
           <motion.div variants={itemVariants} className="grid gap-6">
             <div className="space-y-4">
               <h2 className="text-3xl font-bold tracking-tight">blog</h2>

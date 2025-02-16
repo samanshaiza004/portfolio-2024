@@ -54,42 +54,34 @@ const NurtureReview: React.FC = () => {
       <section className="mb-8">
         <h3 className="text-2xl mb-4">Introduction</h3>
         <p className="text-muted-foreground">
-          Released in 2021, Nurture marks Porter Robinson's triumphant return
-          after a seven-year hiatus. This album represents a dramatic shift from
-          his previous work, incorporating more organic sounds, personal lyrics,
-          and a rawer emotional core.
+          Released in April 2021, Nurture marked Porter Robinson’s long-awaited
+          return to the forefront of electronic music, following up his seminal
+          2014 debut Worlds. After years of personal and artistic
+          struggles—including battles with depression and creative
+          stagnation—Robinson emerged with an album that feels deeply
+          introspective, emotionally raw, and stylistically distinct from his
+          earlier work.
         </p>
-      </section>
-
-      <section className="mb-8">
-        <h3 className="text-2xl mb-4">Standout Tracks</h3>
-        {standoutTracks.map((track, index) => (
-          <div
-            key={index}
-            className="bg-secondary/50 rounded-lg p-6 mb-4 backdrop-blur supports-[backdrop-filter]:bg-background/60"
-          >
-            <h4 className="text-xl mb-2">{track.title}</h4>
-            <p className="text-muted-foreground mb-4">{track.description}</p>
-            {track.youtubeId && (
-              <iframe
-                className="w-full h-[315px] rounded-lg border-none my-4"
-                src={`https://www.youtube.com/embed/${track.youtubeId}`}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            )}
-          </div>
-        ))}
       </section>
 
       <section className="mb-8">
         <h3 className="text-2xl mb-4">Overall Impression</h3>
         <p className="text-muted-foreground">
-          Nurture is a masterful blend of electronic production and organic
-          instrumentation, creating a deeply personal and emotionally resonant
-          experience. The album showcases Porter Robinson's growth as both a
-          producer and songwriter, delivering messages of hope, self-discovery,
-          and resilience through carefully crafted soundscapes.
+          Nurture is a striking departure from the maximalist, festival-ready
+          sound of Worlds. Instead of leaning on heavily processed
+          vocaloid-esque textures and soaring synths, Robinson infuses this
+          record with a delicate balance of acoustic elements, glitchy
+          electronic production, and a more organic, human touch. The album
+          features his own vocals—often pitch-shifted and modulated—creating an
+          intimate and vulnerable atmosphere. Songs like Look at the Sky and
+          Something Comforting exemplify this balance, blending lush piano
+          melodies, warm synth layers, and intricate percussive details. The
+          production across the album is meticulous, filled with soft glitches,
+          reversed samples, and an overall ethereal quality. Robinson’s ability
+          to weave hyper-detailed electronic elements with more traditional
+          singer-songwriter structures gives Nurture a unique sonic identity.
+          While the album is cohesive in tone, it does tend to lean heavily into
+          similar textures and motifs, occasionally bordering on repetitive.
         </p>
       </section>
 
