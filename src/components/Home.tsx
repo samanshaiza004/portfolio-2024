@@ -48,6 +48,13 @@ function Home() {
     },
   };
 
+  const whatImDoing = {
+    playing: ["Metaphor: ReFantazio", "Outer Wilds"],
+    justwatched: ["Blade Runner 2047 (2017)"],
+    reading: ["Homo Sapiens", "Billy Bat"],
+    workingon: ["studying computer science and making music!"],
+  };
+
   if (!mounted) return null;
 
   return (
@@ -96,11 +103,17 @@ function Home() {
                       <img
                         className="w-6 h-5 transition-transform"
                         src="https://web.archive.org/web/20090831092929/http://geocities.com/shanelaffond13/gamerzfirexboxlogo2.gif"
-                        alt="xbox logo on fire"
+                        alt="xbox on fire"
                       />
                     </div>
                     <span className="font-medium">playing:</span>
-                    <span>Metaphor: ReFantazio | Yakuza: Like a Dragon</span>
+                    {whatImDoing.playing.map((game, index) => {
+                      if (index === whatImDoing.playing.length - 1) {
+                        return <span key={index}>{game}</span>;
+                      } else {
+                        return <span key={index}>{game} |</span>;
+                      }
+                    })}
                   </li>
                   <li className="flex items-center gap-2">
                     <div className="flex items-center gap-2">
@@ -111,7 +124,13 @@ function Home() {
                       />
                     </div>
                     <span className="font-medium">working on:</span>
-                    <span>studying computer science and making music!</span>
+                    {whatImDoing.workingon.map((game, index) => {
+                      if (index === whatImDoing.workingon.length - 1) {
+                        return <span key={index}>{game}</span>;
+                      } else {
+                        return <span key={index}>{game} |</span>;
+                      }
+                    })}
                   </li>
                   <li className="flex items-center gap-2">
                     <div className="flex items-center gap-2">
@@ -121,8 +140,14 @@ function Home() {
                         alt="cheese dancing"
                       />
                     </div>
-                    <span className="font-medium">watching:</span>
-                    <span>The Simpsons S3 | Puchi Puri * Yuushi</span>
+                    <span className="font-medium">reading:</span>
+                    {whatImDoing.reading.map((game, index) => {
+                      if (index === whatImDoing.reading.length - 1) {
+                        return <span key={index}>{game}</span>;
+                      } else {
+                        return <span key={index}>{game} |</span>;
+                      }
+                    })}
                   </li>
 
                   <li className="flex items-center gap-2">
@@ -134,7 +159,13 @@ function Home() {
                       />
                     </div>
                     <span className="font-medium">recently just watched:</span>
-                    <span>Blade Runner 2047 (2017)</span>
+                    {whatImDoing.justwatched.map((game, index) => {
+                      if (index === whatImDoing.justwatched.length - 1) {
+                        return <span key={index}>{game}</span>;
+                      } else {
+                        return <span key={index}>{game} |</span>;
+                      }
+                    })}
                   </li>
 
                   <li className="flex items-center gap-2 pt-2 text-xs md:text-sm border-t border-border/40">
