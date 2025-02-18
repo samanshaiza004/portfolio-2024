@@ -61,20 +61,6 @@ function Home() {
       >
         <Card className="min-h-[750px] bg-background/60 backdrop-blur-sm supports-backdrop-filter:bg-background/60">
           <CardContent className="relative w-full p-6 flex flex-col gap-8">
-            {/* Construction Banner */}
-            <div className="flex flex-col">
-              <p
-                className="text-lg animate-opacity-flicker"
-                style={{
-                  fontFamily: "'Courier New', monospace",
-                  color: "#00aaff",
-                }}
-              >
-                &lt;website is under construction&gt;
-              </p>
-            </div>
-
-            {/* Main Content Container */}
             <div className="flex flex-col flex-1 gap-8">
               {/* Hero Section */}
               <motion.div

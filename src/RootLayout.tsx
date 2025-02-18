@@ -33,6 +33,17 @@ function RootLayout() {
           >
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
               <div className="page-info col-span-1 md:col-span-2">
+                <div className="flex flex-col">
+                  <p
+                    className="text-lg animate-opacity-flicker"
+                    style={{
+                      fontFamily: "'Courier New', monospace",
+                      color: "#00aaff",
+                    }}
+                  >
+                    &lt;website is under construction&gt;
+                  </p>
+                </div>
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/project/:projectId" element={<ProjectPage />} />
