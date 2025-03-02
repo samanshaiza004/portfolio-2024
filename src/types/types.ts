@@ -24,3 +24,16 @@ export interface BlogPost {
   tags: string[];
   content: string;
 }
+
+export interface Review {
+  id: string;
+  title: string;
+  artist?: string;
+  type: "music" | "game" | "movie" | "show" | "book";
+  description: string;
+  rating: number;
+  date: string;
+  coverImage?: string;
+  tags: string[];
+  content?: string;
+}

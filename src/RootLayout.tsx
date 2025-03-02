@@ -12,8 +12,8 @@ import About from "./components/About";
 import NavBox from "./components/NavBox";
 import Background from "./components/Background";
 import BlogBackground from "./components/BlogBackground";
-import NurtureReview from "./components/reviews/NurtureReview";
 import Reviews from "./components/Reviews";
+import { ReviewPost } from "./components/reviews/ReviewPost";
 
 function RootLayout() {
   const location = useLocation();
@@ -50,7 +50,7 @@ function RootLayout() {
                   <Route path="/blog" element={<BlogIndex />} />
                   <Route path="/blog/:postId" element={<BlogPost />} />
                   <Route path="/reviews" element={<Reviews />} />
-                  <Route path="/reviews/nurture" element={<NurtureReview />} />
+                  <Route path="/reviews/:reviewId" element={<ReviewPost />} />
                   <Route path="/music" element={<Music />} />
                   <Route path="/about" element={<About />} />
                   <Route

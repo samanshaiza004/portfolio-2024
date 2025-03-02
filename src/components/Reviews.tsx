@@ -3,34 +3,8 @@ import { Card, CardContent, CardHeader } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
-
-interface Review {
-  id: string;
-  title: string;
-  artist?: string;
-  type: "music" | "game" | "movie" | "show" | "book";
-  description: string;
-  rating: number;
-  date: string;
-  coverImage?: string;
-  tags: string[];
-}
-const reviews: Review[] = [
-  {
-    id: "nurture",
-    title: "Nurture",
-    artist: "Porter Robinson",
-    type: "music",
-    description:
-      "A masterful blend of electronic production and organic instrumentation, creating a deeply personal and emotionally resonant experience.",
-    rating: 9.5,
-    date: "2024-01-15",
-    coverImage:
-      "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fedm.com%2F.image%2Ft_share%2FMTgwNTE1MDU3Mzg0MzAxOTI4%2Fporterrobinson-nurture-album-cover-1-1611778054-scaled-1.jpg",
-    tags: ["electronic", "ambient", "pop"],
-  },
-  // Add more reviews here
-];
+import { reviews } from "@/data/reviews";
+import { Review } from "@/types/types";
 
 const ReviewCard: React.FC<{ review: Review; delay: number }> = ({
   review,
@@ -55,7 +29,7 @@ const ReviewCard: React.FC<{ review: Review; delay: number }> = ({
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Badge variant="secondary" className="text-xs">
-                {review.type.toUpperCase()}
+                {review.type}
               </Badge>
               <span className="text-sm text-muted-foreground">
                 {new Date(review.date).toLocaleDateString()}
@@ -76,7 +50,6 @@ const ReviewCard: React.FC<{ review: Review; delay: number }> = ({
                   </Badge>
                 ))}
               </div>
-              <span className="font-semibold">{review.rating}/10</span>
             </div>
           </div>
         </div>
