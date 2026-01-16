@@ -85,7 +85,7 @@ const Background = () => {
       style={{ zIndex: -1 }}
     >
       <Canvas camera={{ position: [0, 0, 10] }}>
-        <color attach="background" args={["#ffffff"]} />
+        <color attach="background" args={["#f5f5f5"]} />
         <Cubes />
       </Canvas>
     </div>

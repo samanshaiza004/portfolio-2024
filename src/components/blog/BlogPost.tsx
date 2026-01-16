@@ -8,13 +8,11 @@ import { ClassAttributes, HTMLAttributes } from "react";
 import { Highlight, themes } from "prism-react-renderer";
 import { cn } from "@/lib/utils";
 import { ExternalLink } from "lucide-react";
-import { useTheme } from "@/hooks/ThemeContext";
 import { Card } from "../ui/card";
 
 export function BlogPost() {
   const { postId } = useParams();
   const post = blogPosts.find((p) => p.id === postId);
-  const { theme } = useTheme();
 
   const motionPreferences = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
@@ -70,9 +68,7 @@ export function BlogPost() {
           <Highlight
             code={String(children).replace(/\n$/, "")}
             language={language}
-            theme={
-              theme === "dark" ? themes.jettwaveDark : themes.jettwaveLight
-            }
+            theme={themes.jettwaveLight}
           >
             {({ className, style, tokens, getLineProps, getTokenProps }) => (
               <pre

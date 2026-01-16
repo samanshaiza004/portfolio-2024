@@ -1,4 +1,3 @@
-import { ThemeToggle } from "@/hooks/ThemeContext";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardHeader, CardContent } from "./ui/card";
@@ -211,6 +210,39 @@ const WeatherIndicator: React.FC = () => {
 };
 
 function NavBox() {
+  const navLinks = [
+    {
+      to: "/",
+      label: "home",
+      iconSrc: "https://web.archive.org/web/20091027153512/http://www.geocities.com/leggzz66/mustangani1.gif",
+      iconAlt: "an epic horse neighing"
+    },
+    {
+      to: "/about",
+      label: "about",
+      iconSrc: "https://web.archive.org/web/20090829082629/http://www.geocities.com/sergeantsafrit/Revolver.gif",
+      iconAlt: "revolver revolving"
+    },
+    {
+      to: "/blog",
+      label: "blog",
+      iconSrc: "https://web.archive.org/web/20060508022530/http://www.geocities.com:80/waterose_art/book.gif",
+      iconAlt: "book opening"
+    },
+    {
+      to: "/reviews",
+      label: "reviews",
+      iconSrc: "https://web.archive.org/web/20091027084545/http://geocities.com/pump_q/w_pasta.gif",
+      iconAlt: "pasta on fire"
+    },
+    {
+      to: "/contact",
+      label: "contact",
+      iconSrc: "https://web.archive.org/web/20081120130831/http://cf.geocities.com/rikuriku28/Images/sonycat.gif",
+      iconAlt: "sony cat"
+    }
+  ];
+
   return (
     <Card className="col-start-3 bg-background/60 backdrop-blur-sm supports-backdrop-filter:bg-background/60 h-fit md:h-full overflow-y-auto">
       <CardHeader className="p-2 md:p-4">navigation ~</CardHeader>
@@ -225,64 +257,20 @@ function NavBox() {
               Skip to main content
             </a>
             <div className="flex flex-col gap-1">
-              <Link
-                to="/"
-                className="hover:underline transition-colors hover:text-primary focus:ring-2 focus:ring-primary focus:outline-hidden rounded-md px-1 py-1 flex"
-              >
-                <img
-                  className="w-5 h-5 mr-2"
-                  src="https://web.archive.org/web/20091027153512/http://www.geocities.com/leggzz66/mustangani1.gif"
-                  alt="an epic horse neighing"
-                />{" "}
-                home
-              </Link>
-              <Link
-                to="/about"
-                className="hover:underline transition-colors hover:text-primary focus:ring-2 focus:ring-primary focus:outline-hidden rounded-md px-1 py-1 flex"
-              >
-                <img
-                  className="w-5 h-5 mr-2"
-                  src="https://web.archive.org/web/20090829082629/http://www.geocities.com/sergeantsafrit/Revolver.gif"
-                  alt="revolver revolving"
-                />{" "}
-                about
-              </Link>
-              <Link
-                to="/blog"
-                className="flex hover:underline transition-colors hovwr:text-primary focus:ring-2 focus:ring-primary focus:outline-hidden rounded-md px-1 py-1"
-              >
-                <img
-                  className="w-5 h-5 mr-2"
-                  src="https://web.archive.org/web/20060508022530/http://www.geocities.com:80/waterose_art/book.gif"
-                  alt="book opening"
-                />
-                blog
-              </Link>
-              <Link
-                to="/reviews"
-                className="flex hover:underline transition-colors hover:text-primary focus:ring-2 focus:ring-primary focus:outline-hidden rounded-md px-1 py-1"
-              >
-                <img
-                  className="w-5 h-5 mr-2"
-                  src="https://web.archive.org/web/20091027084545/http://geocities.com/pump_q/w_pasta.gif"
-                  alt="pasta on fire"
-                />
-                reviews
-              </Link>
-              <Link
-                to="/contact"
-                className="flex hover:underline transition-colors hover:text-primary focus:ring-2 focus:ring-primary focus:outline-hidden rounded-md px-1 py-1"
-              >
-                <img
-                  className="w-5 h-5 mr-2"
-                  src="https://web.archive.org/web/20081120130831/http://cf.geocities.com/rikuriku28/Images/sonycat.gif"
-                  alt="sony cat"
-                />
-                contact
-              </Link>
-              <div className="mb-2">
-                <ThemeToggle />
-              </div>
+              {navLinks.map((link) => (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  className="flex hover:underline transition-colors hover:text-primary focus:ring-1 focus:ring-primary focus:outline-hidden rounded-md mx-0.5 my-0.5 p-1"
+                >
+                  <img
+                    className="w-5 h-5 mr-2"
+                    src={link.iconSrc}
+                    alt={link.iconAlt}
+                  />
+                  {link.label}
+                </Link>
+              ))}
             </div>
           </nav>
         </div>

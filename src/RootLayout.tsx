@@ -5,7 +5,6 @@ import Contact from "./components/Contact";
 import { BlogPost } from "./components/blog/BlogPost";
 import { BlogIndex } from "./components/blog/BlogIndex";
 import Home from "./components/Home";
-import { ThemeProvider } from "./hooks/ThemeContext";
 import { Github } from "lucide-react";
 import Music from "./components/Reviews";
 import About from "./components/About";
@@ -19,8 +18,7 @@ function RootLayout() {
   const location = useLocation();
   const isBlogPost = location.pathname.match(/^\/blog\/[^/]+$/);
   return (
-    <ThemeProvider>
-      <div className="min-h-screen">
+    <div className="min-h-screen">
         <div className="fixed inset-0 z-0">
           {isBlogPost ? <BlogBackground /> : <Background />}
         </div>
@@ -100,7 +98,6 @@ function RootLayout() {
           </div>
         </footer>
       </div>
-    </ThemeProvider>
   );
 }
 

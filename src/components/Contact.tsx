@@ -75,22 +75,30 @@ export function Contact({
   ].filter((method) => method.value);
 
   return (
-    <motion.div
+    <motion.section
       initial="hidden"
-      animate="visible"
+      whileInView="visible"
+      viewport={{ once: true }}
       variants={containerVariants}
-      className="min-h-screen flex flex-col items-center justify-center  py-12 px-4"
+      className="relative w-full"
     >
-      <div className="w-full max-w-3xl mx-auto">
-        <div className="text-center mb-12 transition-all">
-          <h1 className="text-4xl font-bold tracking-tight mb-4">{title}</h1>
-          <motion.p
-            variants={itemVariants}
-            className="text-lg text-gray-600 bg-background/80 backdrop-blur-mdrk:text-gray-400"
-          >
-            {subtitle}
-          </motion.p>
-        </div>
+      <Card className="w-full bg-background/60 backdrop-blur-sm supports-backdrop-filter:bg-background/60">
+        <CardContent className="p-6">
+          <div className="w-full max-w-3xl mx-auto">
+            <div className="text-center mb-12">
+              <motion.h1
+                variants={itemVariants}
+                className="text-4xl font-bold tracking-tight mb-4"
+              >
+                {title}
+              </motion.h1>
+              <motion.p
+                variants={itemVariants}
+                className="text-lg text-muted-foreground"
+              >
+                {subtitle}
+              </motion.p>
+            </div>
 
         <motion.div
           variants={itemVariants}
@@ -102,7 +110,7 @@ export function Contact({
               className="transform transition-all duration-100 hover:scale-[1.02] hover:shadow-lg"
             >
               <CardContent className="flex flex-col items-center justify-center p-6">
-                <div className="rounded-full bg-gray-100 dark:bg-gray-800 p-4 mb-4">
+                <div className="rounded-full bg-gray-100 p-4 mb-4">
                   <method.icon className="h-6 w-6" />
                 </div>
                 <h3 className="font-medium mb-2">{method.label}</h3>
@@ -116,7 +124,7 @@ export function Contact({
                       ? "noopener noreferrer"
                       : undefined
                   }
-                  className="text-blue-600 dark:text-blue-400 hover:underline text-center break-all"
+                  className="text-blue-600 hover:underline text-center break-all"
                 >
                   {method.value}
                 </a>
@@ -125,13 +133,15 @@ export function Contact({
           ))}
         </motion.div>
 
-        <motion.div variants={itemVariants} className="mt-12 text-center">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            Looking forward to connecting with you!
-          </p>
-        </motion.div>
-      </div>
-    </motion.div>
+            <motion.div variants={itemVariants} className="text-center">
+              <p className="text-sm text-muted-foreground">
+                Looking forward to connecting with you!
+              </p>
+            </motion.div>
+          </div>
+        </CardContent>
+      </Card>
+    </motion.section>
   );
 }
 

@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { blogPosts } from "@/data/posts";
 import { Badge } from "@/components/ui/badge";
-import { useTheme } from "@/hooks/ThemeContext";
 import { Card, CardContent } from "../ui/card";
 
 interface BlogCardProps {
@@ -25,8 +24,6 @@ const BlogCard: React.FC<BlogCardProps> = ({
   tags,
   link,
 }) => {
-  const { theme } = useTheme(); // Get current theme
-
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -45,12 +42,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
 
   const content = (
     <motion.div
-      className={`relative overflow-hidden h-full rounded-lg hover:shadow-lg transition-shadow
-        ${
-          theme === "dark"
-            ? "bg-gray-800/50 hover:shadow-gray-700/50"
-            : "bg-white/50 hover:shadow-gray-200/50"
-        }`}
+      className="relative overflow-hidden h-full rounded-lg hover:shadow-lg transition-shadow bg-gray-50/50 hover:shadow-gray-200/50"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4, delay }}
@@ -65,16 +57,13 @@ const BlogCard: React.FC<BlogCardProps> = ({
         blur="medium"
       /> */}
       <motion.div
-        className={`relative z-10 p-3 sm:p-5 md:p-8
-          ${theme === "dark" ? "text-gray-100" : "text-foreground"}`}
+        className="relative z-10 p-3 sm:p-5 md:p-8 text-foreground"
         variants={container}
         initial="hidden"
         animate="show"
       >
         <motion.p
-          className={`text-sm mb-4 ${
-            theme === "dark" ? "text-gray-300" : "opacity-80"
-          }`}
+          className="text-sm mb-4 opacity-80"
           variants={item}
         >
           {value}
@@ -88,9 +77,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
 
         {description && (
           <motion.p
-            className={`mb-4 ${
-              theme === "dark" ? "text-gray-300" : "text-gray-600"
-            }`}
+            className="mb-4 text-gray-600"
             variants={item}
           >
             {description}
@@ -101,9 +88,8 @@ const BlogCard: React.FC<BlogCardProps> = ({
             {tags.map((tag) => (
               <Badge
                 key={tag}
-                variant={theme === "dark" ? "secondary" : "secondary"}
-                className={`font-thin flex items-center select-none bg-background/60 backdrop-blur supports-backdrop-filter:bg-background/60
-                  ${theme === "dark" ? "text-gray-200" : ""}`}
+                variant="secondary"
+                className="font-thin flex items-center select-none bg-background/60 backdrop-blur supports-backdrop-filter:bg-background/60"
               >
                 {tag}
               </Badge>
@@ -112,9 +98,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
         )}
         {subtitle && (
           <motion.p
-            className={`text-sm mt-4 ${
-              theme === "dark" ? "text-gray-400" : "opacity-80"
-            }`}
+            className="text-sm mt-4 opacity-80"
             variants={item}
           >
             {subtitle}
@@ -130,7 +114,6 @@ const BlogCard: React.FC<BlogCardProps> = ({
 // Helper function to adjust colors for dark mode
 
 export function BlogIndex() {
-  const { theme } = useTheme();
   const motionPreferences = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
   );
@@ -145,22 +128,15 @@ export function BlogIndex() {
       opacity: 1,
       y: 0,
     },
-  }; // Light mode gradients
+  };   // Light gradients
   const lightGradients = [
     ["#A8E6CF", "#DCEDC1"],
     ["#95E1D3", "#EAFFD0"],
   ];
 
-  // Dark mode gradients - slightly darker and more saturated
-  const darkGradients = [
-    ["#88C6AF", "#BCCD91"],
-    ["#D36161", "#DCc36A"],
-  ];
-
   /******  0dba0bb8-e892-4848-9e3e-d4ddd0d0f62b  *******/
   const getRandomColors = () => {
-    const gradients = theme === "dark" ? darkGradients : lightGradients;
-    return gradients[Math.floor(Math.random() * gradients.length)];
+    return lightGradients[Math.floor(Math.random() * lightGradients.length)];
   };
 
   return (

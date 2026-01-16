@@ -108,7 +108,7 @@ function About() {
                 <h2 className="text-3xl font-bold tracking-tight">
                   who's saman?
                 </h2>
-                <div className="prose prose-lg dark:prose-invert">
+                <div className="prose prose-lg">
                   <p className="text-lg text-muted-foreground">
                     Hi, my name is Saman, i'm the webmaster of this website! I'm
                     a passionate software developer with a strong focus on

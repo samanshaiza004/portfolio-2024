@@ -49,10 +49,10 @@ function Home() {
   };
 
   const whatImDoing = {
-    playing: ["Metaphor: ReFantazio", "Outer Wilds"],
-    justwatched: ["Blade Runner 2047 (2017)"],
-    reading: ["Homo Sapiens", "Billy Bat"],
-    workingon: ["studying computer science and making music!"],
+    playing: ["The Walking Dead: The Telltale Series", "Clair Obscur: Expedition 33"],
+    justwatched: ["Talladega Nights"],
+    reading: ["20th Century Boys (again)"],
+    workingon: ["studying computer science and running!"],
   };
 
   if (!mounted) return null;
@@ -169,13 +169,11 @@ function Home() {
                   </li>
 
                   <li className="flex items-center gap-2 pt-2 text-xs md:text-sm border-t border-border/40">
-                    <span>Last updated: 1/13/2025</span>
+                    <span>Last updated: 1/16/2026</span>
                   </li>
-                  {/* ... rest of the status items ... */}
                 </ul>
               </motion.div>
 
-              {/* Bottom Section */}
               <div className="flex flex-col md:flex-row justify-between gap-6 mt-auto pt-6 border-t border-border/40">
                 {/* Social Handle */}
                 <motion.div variants={itemVariants}>
