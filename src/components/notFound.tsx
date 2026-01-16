@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 import Screensaver from "./Screensaver";
 import { useRef } from "react";
 
-import photo from "/Photo-1.jpeg";
-
 function NotFound() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const photo = ["/Photo-1.jpeg"];
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <h1 className="text-2xl font-bold mb-4">Page Not Found</h1>
