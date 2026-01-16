@@ -40,7 +40,7 @@
     "react-helmet-async": "^2.0.5",
     "react-markdown": "^9.0.1",
     "react-router-dom": "^6.27.0",
-    "react-syntax-highlighter": "^15.6.1",
+    "react-syntax-highlighter": "^16.1.0",
     "rehype-prism-plus": "^2.0.0",
     "remark-gfm": "^4.0.0",
     "svg-path-commander": "^2.1.7",
@@ -50,7 +50,7 @@
     "zero-md": "^3.1.6"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "next",
+    "@tailwindcss/postcss": "^4.1.18",
     "@types/lodash": "^4.17.14",
     "@types/matter-js": "^0.19.8",
     "@types/node": "^22.8.4",
@@ -64,10 +64,10 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
     "postcss": "^8.4.41",
-    "tailwindcss": "next",
+    "tailwindcss": "^4.1.18",
     "terser": "^5.36.0",
     "typescript": "^5.2.2",
-    "vite": "^5.4.10",
-    "vite-plugin-node-polyfills": "^0.22.0"
+    "vite": "^7.3.1",
+    "vite-plugin-node-polyfills": "^0.25.0"
   }
 }
